@@ -23,6 +23,7 @@ export async function generateMetadata({
         : 'Five enterprise technology services: Software Engineering, Artificial Intelligence, Data Analytics, Cloud Infrastructure, and Blockchain & Distributed Ledger.';
 
     return {
+        metadataBase: new URL(BASE),
         title,
         description,
         alternates: {

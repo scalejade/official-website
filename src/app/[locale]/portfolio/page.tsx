@@ -22,6 +22,7 @@ export async function generateMetadata({
         : 'A selection of work we have delivered for clients across industries — from financial platforms to AI-powered systems and blockchain networks.';
 
     return {
+        metadataBase: new URL(BASE),
         title,
         description,
         alternates: {

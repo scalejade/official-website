@@ -58,7 +58,7 @@ export function Footer() {
                             Resources
                         </h4>
                         <ul className="space-y-4 text-sm text-scalejade-100/70">
-                            <li><Link href="#" className="hover:text-white transition-colors">Blog</Link></li>
+                            <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
                             <li><Link href="#" className="hover:text-white transition-colors">Research</Link></li>
                         </ul>
                     </div>

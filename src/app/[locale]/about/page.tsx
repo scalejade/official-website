@@ -20,6 +20,7 @@ export async function generateMetadata({
         : 'ScaleJade is a technology firm partnering with enterprises and institutions to build their digital foundation — across software, AI, blockchain, and cloud. Headquartered in Singapore and Jakarta.';
 
     return {
+        metadataBase: new URL(BASE),
         title,
         description,
         alternates: {

@@ -20,6 +20,7 @@ export async function generateMetadata({
         : 'Tell us about your project and we will find a time to connect. A straightforward discussion about what we can build together — no pressure.';
 
     return {
+        metadataBase: new URL(BASE),
         title,
         description,
         alternates: {

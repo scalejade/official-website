@@ -119,6 +119,7 @@ export async function generateMetadata({
     const description = `${service.oneLine} ${service.overview.slice(0, 120)}...`;
 
     return {
+        metadataBase: new URL(BASE),
         title,
         description,
         keywords: [

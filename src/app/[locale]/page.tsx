@@ -25,6 +25,7 @@ export async function generateMetadata({
         : 'ScaleJade (PT Skala Kecerdasan Nusantara / ScaleJade Technology Ltd) helps enterprises build reliable software, AI systems, blockchain networks, and cloud infrastructure — built to perform, built to last.';
 
     return {
+        metadataBase: new URL(BASE),
         title,
         description,
         alternates: {

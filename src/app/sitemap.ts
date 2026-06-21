@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { getAllPosts } from '@/data/blog';
 
 const BASE_URL = 'https://scalejade.com';
 const locales = ['en', 'id'] as const;
@@ -17,11 +18,13 @@ const staticRoutes = [
     '/sectors',
     '/portfolio',
     '/about',
+    '/blog',
     '/demo',
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const now = new Date();
+    const blogPosts = await getAllPosts();
 
     const staticEntries = staticRoutes.flatMap(route =>
         locales.map(locale => ({
@@ -53,5 +56,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
         }))
     );
 
-    return [...staticEntries, ...serviceEntries];
+    const blogEntries = blogPosts.flatMap(post =>
+        locales.map(locale => ({
+            url: `${BASE_URL}/${locale}/blog/${post.slug}`,
+            lastModified: new Date(post.date),
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+            alternates: {
+                languages: {
+                    en: `${BASE_URL}/en/blog/${post.slug}`,
+                    id: `${BASE_URL}/id/blog/${post.slug}`,
+                },
+            },
+        }))
+    );
+
+    return [...staticEntries, ...serviceEntries, ...blogEntries];
 }

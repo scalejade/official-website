@@ -21,6 +21,7 @@ export async function generateMetadata({
         : 'ScaleJade serves financial institutions, energy & resources, healthcare, education, manufacturing, mining, and wholesale & distribution across Southeast Asia and beyond.';
 
     return {
+        metadataBase: new URL(BASE),
         title,
         description,
         alternates: {
