@@ -2,7 +2,7 @@
 // the default locale (en) is served without a prefix (/blog), other locales
 // are prefixed (/id/blog). Keep canonical + hreflang consistent with routing.
 
-export const SITE_URL = 'https://scalejade.com';
+export const SITE_URL = 'https://www.scalejade.com';
 
 export const DEFAULT_LOCALE = 'en';
 

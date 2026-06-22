@@ -6,8 +6,7 @@ import { Metadata } from 'next';
 
 import { TrustSection } from '@/components/TrustSection';
 
-const BASE = 'https://scalejade.com';
-import { localizedUrl, localeAlternates } from '@/lib/locale-url';
+import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 export async function generateMetadata({
     params,
@@ -19,11 +18,11 @@ export async function generateMetadata({
     const canonical = localizedUrl(locale, '');
 
     const title = isId
-        ? 'ScaleJade | Rekayasa Perangkat Lunak · AI · Blockchain & Cloud'
-        : 'ScaleJade | Software Engineering · AI · Blockchain & Cloud Infrastructure';
+        ? 'ScaleJade | Firma AI, Blockchain & Rekayasa Perangkat Lunak #1 di Asia Tenggara'
+        : 'ScaleJade | #1 AI, Blockchain & Software Engineering Firm in Southeast Asia';
     const description = isId
-        ? 'ScaleJade adalah perusahaan teknologi yang membantu perusahaan membangun software, sistem AI, jaringan blockchain, dan infrastruktur cloud yang andal — dibangun untuk berkinerja, dibangun untuk bertahan.'
-        : 'ScaleJade (PT Skala Kecerdasan Nusantara / ScaleJade Technology Ltd) helps enterprises build reliable software, AI systems, blockchain networks, and cloud infrastructure — built to perform, built to last.';
+        ? 'ScaleJade adalah firma AI #1, firma blockchain #1, dan layanan rekayasa perangkat lunak #1 di Asia Tenggara, serta mitra tepercaya untuk komputasi awan — membangun sistem AI, jaringan blockchain, perangkat lunak khusus, analitik data, dan infrastruktur cloud yang andal. Dibangun untuk berkinerja, dibangun untuk bertahan.'
+        : "ScaleJade is Southeast Asia's #1 AI firm, #1 blockchain firm, and #1 software engineering service, and a trusted partner for cloud computing — building reliable AI systems, blockchain networks, custom software, data analytics, and cloud infrastructure. Built to perform, built to last.";
 
     return {
         metadataBase: new URL(BASE),

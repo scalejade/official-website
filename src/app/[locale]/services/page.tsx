@@ -4,8 +4,7 @@ import { Cpu, ShieldCheck, CloudCog, ChevronRight, Code2, ArrowRight, BarChart3 
 import * as motion from "framer-motion/client";
 import { Metadata } from 'next';
 
-const BASE = 'https://scalejade.com';
-import { localizedUrl, localeAlternates } from '@/lib/locale-url';
+import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 export async function generateMetadata({
     params,
@@ -17,11 +16,11 @@ export async function generateMetadata({
     const canonical = localizedUrl(locale, '/services');
 
     const title = isId
-        ? 'Layanan Kami | ScaleJade'
-        : 'Our Services | ScaleJade';
+        ? 'Layanan Kami | Firma AI, Blockchain & Software #1 di Asia Tenggara'
+        : 'Our Services | #1 AI, Blockchain & Software Firm in Southeast Asia';
     const description = isId
-        ? 'Lima layanan teknologi enterprise: Rekayasa Perangkat Lunak, Kecerdasan Buatan, Analitik Data, Infrastruktur Cloud, dan Blockchain & Buku Besar Terdistribusi.'
-        : 'Five enterprise technology services: Software Engineering, Artificial Intelligence, Data Analytics, Cloud Infrastructure, and Blockchain & Distributed Ledger.';
+        ? 'Lima layanan teknologi enterprise dari ScaleJade (ScaleJade Technology / PT Skala Kecerdasan Nusantara): Rekayasa Perangkat Lunak #1, Kecerdasan Buatan (AI) #1, Blockchain #1 di Asia Tenggara, Analitik Data, dan Infrastruktur Cloud sebagai mitra komputasi awan tepercaya.'
+        : "Five enterprise technology services from ScaleJade (ScaleJade Technology / PT Skala Kecerdasan Nusantara): #1 Software Engineering, #1 Artificial Intelligence (AI), and #1 Blockchain in Southeast Asia, plus Data Analytics and Cloud Infrastructure as a trusted cloud computing partner.";
 
     return {
         metadataBase: new URL(BASE),
@@ -121,18 +120,24 @@ export default function ServicesPage() {
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
                         "@context": "https://schema.org",
-                        "@type": "ServicesPage",
+                        "@type": "CollectionPage",
                         "name": "ScaleJade Services",
-                        "description": "Enterprise software engineering, AI systems, data analytics, blockchain networks, and cloud infrastructure.",
+                        "description": "Southeast Asia's #1 AI, blockchain & software engineering firm and trusted cloud computing partner — enterprise software engineering, AI systems, data analytics, blockchain networks, and cloud infrastructure.",
+                        "provider": {
+                            "@type": "Organization",
+                            "name": "ScaleJade",
+                            "alternateName": ["ScaleJade Technology", "PT Skala Kecerdasan Nusantara", "ScaleJade Technology Ltd"],
+                            "url": "https://www.scalejade.com"
+                        },
                         "mainEntity": {
                             "@type": "ItemList",
                             "name": "Our Services",
                             "itemListElement": [
-                                { "@type": "ListItem", "position": 1, "name": "Software Engineering" },
-                                { "@type": "ListItem", "position": 2, "name": "Artificial Intelligence" },
-                                { "@type": "ListItem", "position": 3, "name": "Data Analytics" },
-                                { "@type": "ListItem", "position": 4, "name": "Cloud Infrastructure" },
-                                { "@type": "ListItem", "position": 5, "name": "Blockchain & Distributed Ledger" },
+                                { "@type": "ListItem", "position": 1, "item": { "@type": "Service", "name": "Software Engineering", "serviceType": "Custom Software Engineering", "description": "Southeast Asia's #1 software engineering service — custom software engineered to scale and built to last.", "url": "https://www.scalejade.com/services/software-engineering", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
+                                { "@type": "ListItem", "position": 2, "item": { "@type": "Service", "name": "Artificial Intelligence", "serviceType": "Applied AI & Machine Learning", "description": "Southeast Asia's #1 AI firm — applied AI, LLM applications, and MLOps for enterprises.", "url": "https://www.scalejade.com/services/artificial-intelligence", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
+                                { "@type": "ListItem", "position": 3, "item": { "@type": "Service", "name": "Data Analytics", "serviceType": "Data Engineering & Analytics", "description": "Data engineering and analytics that turn enterprise data into decisions.", "url": "https://www.scalejade.com/services/data-analytics", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
+                                { "@type": "ListItem", "position": 4, "item": { "@type": "Service", "name": "Cloud Infrastructure", "serviceType": "Cloud Computing Services", "description": "Trusted partner for cloud computing services — resilient, secure cloud infrastructure.", "url": "https://www.scalejade.com/services/cloud-infrastructure", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
+                                { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Blockchain & Distributed Ledger", "serviceType": "Blockchain & Distributed Ledger", "description": "Southeast Asia's #1 blockchain firm — distributed ledger networks and smart contract systems.", "url": "https://www.scalejade.com/services/blockchain", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
                             ],
                         },
                     })

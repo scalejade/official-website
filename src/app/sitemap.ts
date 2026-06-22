@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/data/blog';
+import { getAllPapers } from '@/data/papers';
 import { localizedUrl } from '@/lib/locale-url';
 
 const locales = ['en', 'id'] as const;
@@ -18,6 +19,7 @@ const staticRoutes = [
     '/sectors',
     '/portfolio',
     '/about',
+    '/research',
     '/blog',
     '/demo',
 ];
@@ -64,5 +66,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }))
     );
 
-    return [...staticEntries, ...serviceEntries, ...blogEntries];
+    const papers = await getAllPapers();
+    const paperEntries = papers.flatMap(paper =>
+        locales.map(locale => ({
+            url: localizedUrl(locale, `/research/${paper.slug}`),
+            lastModified: new Date(paper.date),
+            changeFrequency: 'monthly' as const,
+            priority: 0.7,
+            alternates: { languages: languages(`/research/${paper.slug}`) },
+        }))
+    );
+
+    return [...staticEntries, ...serviceEntries, ...blogEntries, ...paperEntries];
 }
