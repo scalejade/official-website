@@ -3,8 +3,7 @@ import * as motion from "framer-motion/client";
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Metadata } from 'next';
 import { getAllPosts } from '@/data/blog';
-
-const BASE = 'https://scalejade.com';
+import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 export async function generateMetadata({
     params,
@@ -19,8 +18,18 @@ export async function generateMetadata({
 
     const pageNum = Math.max(1, Number(page) || 1);
     const suffix = pageNum > 1 ? `?page=${pageNum}` : '';
-    const canonical = `${BASE}/${locale}/blog${suffix}`;
     const pageLabel = pageNum > 1 ? (isId ? ` — Halaman ${pageNum}` : ` — Page ${pageNum}`) : '';
+
+    const alternates = localeAlternates(locale, '/blog');
+    const canonical = alternates.canonical + suffix;
+    if (suffix) {
+        alternates.canonical = canonical;
+        alternates.languages = {
+            en: alternates.languages.en + suffix,
+            id: alternates.languages.id + suffix,
+            'x-default': alternates.languages['x-default'] + suffix,
+        };
+    }
 
     const title = (isId ? 'Wawasan' : 'Insights') + pageLabel;
     const description = isId
@@ -31,14 +40,7 @@ export async function generateMetadata({
         metadataBase: new URL(BASE),
         title,
         description,
-        alternates: {
-            canonical,
-            languages: {
-                'en': `${BASE}/en/blog${suffix}`,
-                'id': `${BASE}/id/blog${suffix}`,
-                'x-default': `${BASE}/en/blog${suffix}`,
-            },
-        },
+        alternates,
         openGraph: {
             type: 'website',
             url: canonical,
@@ -78,7 +80,7 @@ export default async function BlogPage({
         "@context": "https://schema.org",
         "@type": "Blog",
         "name": "ScaleJade Insights",
-        "url": `${BASE}/${locale}/blog`,
+        "url": localizedUrl(locale, '/blog'),
         "publisher": {
             "@type": "Organization",
             "name": "ScaleJade",
@@ -91,7 +93,7 @@ export default async function BlogPage({
             "description": post.excerpt,
             "datePublished": new Date(post.date).toISOString(),
             "author": { "@type": "Organization", "name": post.author },
-            "url": `${BASE}/${locale}/blog/${post.slug}`,
+            "url": localizedUrl(locale, `/blog/${post.slug}`),
         })),
     };
 
@@ -99,8 +101,8 @@ export default async function BlogPage({
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${BASE}/${locale}` },
-            { "@type": "ListItem", "position": 2, "name": "Insights", "item": `${BASE}/${locale}/blog` },
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": localizedUrl(locale, '') },
+            { "@type": "ListItem", "position": 2, "name": "Insights", "item": localizedUrl(locale, '/blog') },
         ],
     };
 

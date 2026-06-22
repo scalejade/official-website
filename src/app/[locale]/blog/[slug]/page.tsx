@@ -5,8 +5,7 @@ import * as motion from "framer-motion/client";
 import { ArrowRight, ChevronRight, Share2, Mail } from 'lucide-react';
 import { Metadata } from 'next';
 import { getAllPosts, getPostBySlug, getCoverImage } from '@/data/blog';
-
-const BASE = 'https://scalejade.com';
+import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 export async function generateStaticParams() {
     const locales = ["en", "id"];
@@ -25,7 +24,7 @@ export async function generateMetadata({
     const post = await getPostBySlug(slug);
     if (!post) return {};
 
-    const canonical = `${BASE}/${locale}/blog/${slug}`;
+    const canonical = localizedUrl(locale, `/blog/${slug}`);
     const title = post.title;
     const cover = getCoverImage(post);
 
@@ -36,14 +35,7 @@ export async function generateMetadata({
         keywords: [post.category.toLowerCase(), 'ScaleJade', 'enterprise technology', 'insights'],
         authors: [{ name: post.author, url: BASE }],
         category: post.category,
-        alternates: {
-            canonical,
-            languages: {
-                'en': `${BASE}/en/blog/${slug}`,
-                'id': `${BASE}/id/blog/${slug}`,
-                'x-default': `${BASE}/en/blog/${slug}`,
-            },
-        },
+        alternates: localeAlternates(locale, `/blog/${slug}`),
         openGraph: {
             type: 'article',
             url: canonical,
@@ -82,7 +74,7 @@ export default async function BlogPostPage({
     const allPosts = await getAllPosts();
     const related = allPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
 
-    const url = `${BASE}/${locale}/blog/${slug}`;
+    const url = localizedUrl(locale, `/blog/${slug}`);
     const cover = getCoverImage(post);
     const wordCount = post.sections
         .flatMap((s) => [s.heading ?? '', ...s.paragraphs])
@@ -116,8 +108,8 @@ export default async function BlogPostPage({
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": `${BASE}/${locale}` },
-            { "@type": "ListItem", "position": 2, "name": "Insights", "item": `${BASE}/${locale}/blog` },
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": localizedUrl(locale, '') },
+            { "@type": "ListItem", "position": 2, "name": "Insights", "item": localizedUrl(locale, '/blog') },
             { "@type": "ListItem", "position": 3, "name": post.title, "item": url },
         ],
     };
