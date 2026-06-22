@@ -95,14 +95,9 @@ export const metadata: Metadata = {
     description: 'Software engineering, AI, data analytics, blockchain & cloud for regulated industries and enterprises.',
     images: [`${BASE}/opengraph-image`],
   },
-  alternates: {
-    canonical: BASE,
-    languages: {
-      'en': `${BASE}/en`,
-      'id': `${BASE}/id`,
-      'x-default': `${BASE}/en`,
-    },
-  },
+  // Canonical + hreflang are set per-page via generateMetadata (localeAlternates),
+  // so each route is self-referential. No static fallback here — inheriting a
+  // homepage canonical on a sub-page that forgot its own would be an SEO bug.
   category: 'Technology',
   classification: 'Enterprise Technology Services',
   referrer: 'origin-when-cross-origin',
