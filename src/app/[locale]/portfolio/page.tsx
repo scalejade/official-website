@@ -6,6 +6,7 @@ import { ArrowRight, ShieldCheck, Activity } from 'lucide-react';
 import { Metadata } from 'next';
 
 const BASE = 'https://scalejade.com';
+import { localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 export async function generateMetadata({
     params,
@@ -14,7 +15,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { locale } = await params;
     const isId = locale === 'id';
-    const canonical = `${BASE}/${locale}/portfolio`;
+    const canonical = localizedUrl(locale, '/portfolio');
 
     const title = isId ? 'Portofolio | ScaleJade' : 'Portfolio | ScaleJade';
     const description = isId
@@ -25,14 +26,7 @@ export async function generateMetadata({
         metadataBase: new URL(BASE),
         title,
         description,
-        alternates: {
-            canonical,
-            languages: {
-                'en': `${BASE}/en/portfolio`,
-                'id': `${BASE}/id/portfolio`,
-                'x-default': `${BASE}/en/portfolio`,
-            },
-        },
+        alternates: localeAlternates(locale, '/portfolio'),
         openGraph: {
             type: 'website',
             url: canonical,

@@ -178,7 +178,7 @@ export default async function BlogPage({
                             <span className="inline-flex items-center self-start rounded-full bg-scalejade-50 text-scalejade-700 text-xs font-semibold tracking-wide px-3 py-1 border border-scalejade-600/15">
                                 {featured.category}
                             </span>
-                            <span className="text-sm text-slate-400 font-medium md:mt-1">
+                            <span className="text-sm text-slate-500 font-medium md:mt-1">
                                 {formatDate(featured.date, locale)}
                             </span>
                         </div>
@@ -218,7 +218,7 @@ export default async function BlogPage({
                                     <span className="text-xs font-semibold tracking-[0.15em] uppercase text-scalejade-600">
                                         {post.category}
                                     </span>
-                                    <span className="text-sm text-slate-400 font-medium">
+                                    <span className="text-sm text-slate-500 font-medium">
                                         {formatDate(post.date, locale)}
                                     </span>
                                 </div>
@@ -229,7 +229,7 @@ export default async function BlogPage({
                                     <p className="text-slate-500 leading-relaxed font-light">
                                         {post.excerpt}
                                     </p>
-                                    <span className="mt-3 inline-block text-sm text-slate-400 font-medium md:hidden">
+                                    <span className="mt-3 inline-block text-sm text-slate-500 font-medium md:hidden">
                                         {post.readingTime}
                                     </span>
                                 </div>

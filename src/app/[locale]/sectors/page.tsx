@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 
 const BASE = 'https://scalejade.com';
+import { localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 export async function generateMetadata({
     params,
@@ -13,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { locale } = await params;
     const isId = locale === 'id';
-    const canonical = `${BASE}/${locale}/sectors`;
+    const canonical = localizedUrl(locale, '/sectors');
 
     const title = isId ? 'Industri yang Kami Layani | ScaleJade' : 'Industries We Serve | ScaleJade';
     const description = isId
@@ -24,14 +25,7 @@ export async function generateMetadata({
         metadataBase: new URL(BASE),
         title,
         description,
-        alternates: {
-            canonical,
-            languages: {
-                'en': `${BASE}/en/sectors`,
-                'id': `${BASE}/id/sectors`,
-                'x-default': `${BASE}/en/sectors`,
-            },
-        },
+        alternates: localeAlternates(locale, '/sectors'),
         openGraph: {
             type: 'website',
             url: canonical,

@@ -7,6 +7,7 @@ import { Metadata } from 'next';
 import { TrustSection } from '@/components/TrustSection';
 
 const BASE = 'https://scalejade.com';
+import { localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 export async function generateMetadata({
     params,
@@ -15,7 +16,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { locale } = await params;
     const isId = locale === 'id';
-    const canonical = `${BASE}/${locale}`;
+    const canonical = localizedUrl(locale, '');
 
     const title = isId
         ? 'ScaleJade | Rekayasa Perangkat Lunak · AI · Blockchain & Cloud'
@@ -28,14 +29,7 @@ export async function generateMetadata({
         metadataBase: new URL(BASE),
         title,
         description,
-        alternates: {
-            canonical,
-            languages: {
-                'en': `${BASE}/en`,
-                'id': `${BASE}/id`,
-                'x-default': `${BASE}/en`,
-            },
-        },
+        alternates: localeAlternates(locale, ''),
         openGraph: {
             type: 'website',
             url: canonical,

@@ -4,6 +4,7 @@ import { ShieldCheck, ActivitySquare, Globe, LockKeyhole } from 'lucide-react';
 import { Metadata } from 'next';
 
 const BASE = 'https://scalejade.com';
+import { localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 export async function generateMetadata({
     params,
@@ -12,7 +13,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { locale } = await params;
     const isId = locale === 'id';
-    const canonical = `${BASE}/${locale}/about`;
+    const canonical = localizedUrl(locale, '/about');
 
     const title = isId ? 'Tentang Kami | ScaleJade' : 'About Us | ScaleJade';
     const description = isId
@@ -23,14 +24,7 @@ export async function generateMetadata({
         metadataBase: new URL(BASE),
         title,
         description,
-        alternates: {
-            canonical,
-            languages: {
-                'en': `${BASE}/en/about`,
-                'id': `${BASE}/id/about`,
-                'x-default': `${BASE}/en/about`,
-            },
-        },
+        alternates: localeAlternates(locale, '/about'),
         openGraph: {
             type: 'website',
             url: canonical,

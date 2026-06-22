@@ -69,9 +69,9 @@ export function Navigation({ locale }: { locale: string }) {
                     <a
                         href={getTogglePath()}
                         className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-scalejade-800 transition-colors px-3 py-2 rounded-md hover:bg-slate-50"
-                        aria-label="Toggle Language"
+                        aria-label={`${locale.toUpperCase()} — switch language`}
                     >
-                        <Globe className="w-4 h-4" />
+                        <Globe className="w-4 h-4" aria-hidden="true" />
                         <span className="uppercase">{locale}</span>
                     </a>
 

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import * as motion from "framer-motion/client";
 import { ArrowRight, ChevronRight, ShieldCheck } from 'lucide-react';
 import { Metadata } from 'next';
+import { localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 const BASE = 'https://scalejade.com';
 
@@ -114,7 +115,7 @@ export async function generateMetadata({
     const service = serviceData[slug];
     if (!service) return {};
 
-    const canonical = `${BASE}/${locale}/services/${slug}`;
+    const canonical = localizedUrl(locale, `/services/${slug}`);
     const title = `${service.name} | ScaleJade`;
     const description = `${service.oneLine} ${service.overview.slice(0, 120)}...`;
 
@@ -130,14 +131,7 @@ export async function generateMetadata({
             'Indonesia',
             ...service.subServices.map(s => s.title.toLowerCase()),
         ],
-        alternates: {
-            canonical,
-            languages: {
-                'en': `${BASE}/en/services/${slug}`,
-                'id': `${BASE}/id/services/${slug}`,
-                'x-default': `${BASE}/en/services/${slug}`,
-            },
-        },
+        alternates: localeAlternates(locale, `/services/${slug}`),
         openGraph: {
             type: 'website',
             url: canonical,

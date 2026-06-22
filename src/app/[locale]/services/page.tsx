@@ -5,6 +5,7 @@ import * as motion from "framer-motion/client";
 import { Metadata } from 'next';
 
 const BASE = 'https://scalejade.com';
+import { localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 export async function generateMetadata({
     params,
@@ -13,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { locale } = await params;
     const isId = locale === 'id';
-    const canonical = `${BASE}/${locale}/services`;
+    const canonical = localizedUrl(locale, '/services');
 
     const title = isId
         ? 'Layanan Kami | ScaleJade'
@@ -26,14 +27,7 @@ export async function generateMetadata({
         metadataBase: new URL(BASE),
         title,
         description,
-        alternates: {
-            canonical,
-            languages: {
-                'en': `${BASE}/en/services`,
-                'id': `${BASE}/id/services`,
-                'x-default': `${BASE}/en/services`,
-            },
-        },
+        alternates: localeAlternates(locale, '/services'),
         openGraph: {
             type: 'website',
             url: canonical,

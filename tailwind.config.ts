@@ -13,7 +13,7 @@ const config: Config = {
         canvas: "#FFFFFF",
         surface: "#F8FAFC",
         scalejade: {
-          600: "#059669", // Action items & Hero highlights
+          600: "#047857", // Action items & Hero highlights (AA contrast on white)
           800: "#065f46", // Sophisticated borders & Typography
           900: "#064e3b", // Deep Dark Footer & Contrast Sections
         },

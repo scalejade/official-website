@@ -4,6 +4,7 @@ import { Mail, CalendarDays, ArrowRight, ShieldAlert } from 'lucide-react';
 import { Metadata } from 'next';
 
 const BASE = 'https://scalejade.com';
+import { localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 export async function generateMetadata({
     params,
@@ -12,7 +13,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { locale } = await params;
     const isId = locale === 'id';
-    const canonical = `${BASE}/${locale}/demo`;
+    const canonical = localizedUrl(locale, '/demo');
 
     const title = isId ? 'Mulai Percakapan | ScaleJade' : 'Start a Conversation | ScaleJade';
     const description = isId
@@ -23,14 +24,7 @@ export async function generateMetadata({
         metadataBase: new URL(BASE),
         title,
         description,
-        alternates: {
-            canonical,
-            languages: {
-                'en': `${BASE}/en/demo`,
-                'id': `${BASE}/id/demo`,
-                'x-default': `${BASE}/en/demo`,
-            },
-        },
+        alternates: localeAlternates(locale, '/demo'),
         openGraph: {
             type: 'website',
             url: canonical,
