@@ -265,7 +265,7 @@ export default async function BlogPostPage({
                         {locale === 'id' ? 'Punya proyek yang perlu dibangun dengan benar?' : 'Have something that needs to be built properly?'}
                     </p>
                     <Link
-                        href={`/${locale}/demo`}
+                        href={`${locale === 'en' ? '' : `/${locale}`}/contact`}
                         className="inline-flex items-center justify-center gap-2 bg-white text-scalejade-900 hover:bg-slate-100 px-7 py-3.5 rounded-md font-semibold transition-all w-full sm:w-auto md:shrink-0"
                     >
                         {locale === 'id' ? 'Mulai Percakapan' : 'Start a Conversation'}

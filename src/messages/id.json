@@ -1,10 +1,10 @@
 {
   "Hero": {
-    "badge": "Software · AI · Blockchain · Cloud",
-    "title": "Membangun Teknologi yang Andal, Bersama.",
-    "subtitle": "Kami bermitra dengan perusahaan dan institusi untuk merancang dan menghadirkan solusi software, AI, blockchain, dan cloud yang dibangun untuk jangka panjang.",
-    "cta_primary": "Jelajahi Layanan Kami",
-    "cta_secondary": "Mulai Percakapan"
+    "badge": "Singapura · Jakarta",
+    "title": "Tidak semua firma teknologi bekerja di industri teregulasi.",
+    "subtitle": "Kami salah satunya. ScaleJade membangun sistem yang harus lolos audit di institusi-institusi Asia Tenggara — dan tetap tinggal untuk mengoperasikannya.",
+    "cta_primary": "Lihat cara kami bekerja",
+    "cta_secondary": "Bicara dengan insinyur kami"
   },
   "Services": {
     "software_title": "Pengembangan Perangkat Lunak",
@@ -36,12 +36,12 @@
   },
   "Sectors": {
     "finance": "Institusi Keuangan",
-    "education": "Pendidikan",
-    "energy": "Energi & Rantai Pasok",
-    "wholesale": "Grosir & Distribusi",
-    "healthcare": "Layanan Kesehatan",
-    "mining": "Pertambangan & Sumber Daya",
-    "manufacturing": "Manufaktur"
+    "public": "Pemerintah & Sektor Publik",
+    "education": "Pendidikan & Riset",
+    "manufacturing": "Manufaktur",
+    "healthcare": "Layanan kesehatan",
+    "wholesale": "Grosir & distribusi",
+    "energy_mining": "Energi, pertambangan & sumber daya"
   },
   "ServiceDetails": {
     "header_badge": "Layanan Kami",
@@ -53,19 +53,26 @@
     "infra_desc": "Kami merancang dan mengelola lingkungan cloud yang aman, patuh regulasi, dan siap berkembang — sehingga tim Anda dapat melakukan deployment dengan percaya diri setiap saat."
   },
   "SectorDetails": {
-    "header_badge": "Yang Kami Layani",
-    "header_title": "Tujuh Sektor. Satu Standar.",
-    "header_sub": "Kami membangun fondasi teknologi yang menggerakkan industri-industri terpenting di dunia. Pekerjaan kami didefinisikan oleh kemitraan, presisi, dan komitmen terhadap hasil jangka panjang.",
-    "finance_desc": "Kami bermitra dengan bank dan penyedia pembayaran untuk membangun infrastruktur inti yang menjaga layanan keuangan berjalan dengan andal. Dari sistem pembayaran digital hingga platform siap regulasi, kami menghadirkan fondasi yang dapat diandalkan institusi Anda.",
-    "education_desc": "Kami membantu institusi akademik dan platform pembelajaran memodernisasi cara pendidikan disampaikan dan dikelola. Pekerjaan kami mengubah sistem yang usang menjadi lingkungan digital yang terhubung, melayani baik pendidik maupun pelajar.",
-    "energy_desc": "Kami memberikan visibilitas operasional yang dibutuhkan perusahaan energi dan operator logistik untuk bergerak dengan percaya diri. Platform kami menghubungkan berbagai titik dalam rantai pasok yang kompleks, mengurangi inefisiensi dan meningkatkan pengambilan keputusan di setiap tahap.",
-    "wholesale_desc": "Kami mengoptimalkan jaringan distribusi untuk operator grosir yang mengelola perdagangan dalam skala besar. Sistem kami membawa kejelasan pada operasi bervolume tinggi — dari manajemen inventaris hingga pemenuhan pesanan — sehingga bisnis Anda berjalan lancar seiring pertumbuhannya.",
-    "healthcare_desc": "Kami membangun sistem data yang aman dan terstruktur untuk penyedia layanan kesehatan dan institusi klinis. Pekerjaan kami memastikan data pasien yang sensitif dikelola dengan baik, dan teknologi mendukung — bukan mengganggu — pemberian layanan kesehatan berkualitas.",
-    "mining_desc": "Kami membekali perusahaan pertambangan dan sumber daya alam dengan sistem operasional yang andal untuk meningkatkan manajemen lokasi, kepatuhan keselamatan, dan pelacakan sumber daya. Teknologi kami menghubungkan operasi lapangan dengan tim back-office — mengurangi downtime dan meningkatkan efisiensi ekstraksi.",
-    "manufacturing_desc": "Kami membantu produsen memodernisasi alur kerja produksi melalui sistem terintegrasi yang menghubungkan lantai pabrik dengan rantai pasok. Dari otomatisasi inventaris hingga manajemen kualitas, platform kami mengurangi hambatan operasional dan memungkinkan manufaktur yang lebih cerdas dalam skala besar.",
-    "cta_title": "Siap Mendiskusikan Peta Jalan Teknologi Anda?",
-    "cta_sub": "Kami menyambut percakapan dengan pemimpin industri yang sedang memikirkan masa depan teknologi mereka dengan serius. Beri tahu kami apa yang sedang Anda bangun — kami akan dengan senang hati mengeksplorasi bagaimana kami dapat membantu.",
-    "cta_button": "Mulai Percakapan"
+    "header_badge": "Yang kami layani",
+    "header_title": "Tiga sektor yang kami kuasai.",
+    "header_sub": "Setiap sistem yang dibangun ScaleJade di ketiga sektor ini tunduk pada regulator yang punya nama. Batasan itu membentuk arsitekturnya jauh sebelum membentuk dokumentasinya.",
+    "proof_regulations": "Mengacu pada",
+    "proof_work": "Pekerjaan",
+    "proof_lead": "Pemimpin sektor",
+    "count_studies": "{count, plural, =0 {Belum ada studi} other {# studi}}",
+    "count_papers": "{count, plural, =0 {belum ada publikasi} other {# publikasi}}",
+    "view": "Lihat sektor",
+    "also_title": "Juga bekerja di",
+    "cta_title": "Ceritakan apa yang sedang Anda bangun.",
+    "cta_sub": "Kami akan mengatakan sejujurnya apakah kami tim yang tepat untuk itu.",
+    "cta_button": "Bicara dengan insinyur kami",
+    "also_line": "Jika pekerjaan Anda ada di sini, percakapannya dimulai dengan cara yang sama: apa yang tidak boleh gagal, dan apa yang terjadi ketika itu gagal.",
+    "also_qualifier": {
+      "energy_mining": "Platform data operasional",
+      "manufacturing": "Integrasi produksi dan inventaris",
+      "healthcare": "Infrastruktur data klinis",
+      "wholesale": "Sistem pesanan dan pemenuhan"
+    }
   },
   "ServiceApproach": {
     "label": "Metode Kami",
@@ -81,30 +88,59 @@
   },
   "TrustSection": {
     "badge": "Mitra Kami",
-    "title_main": "Dipercaya oleh pemimpin industri ",
-    "title_highlight": "untuk menghadirkan keunggulan.",
+    "title_main": "Bekerja bersama institusi di Asia Tenggara, tempat satu kegagalan adalah ",
+    "title_highlight": "peristiwa yang wajib dilaporkan.",
     "tag_1": "Institusi Keuangan",
-    "tag_2": "Energi & Sumber Daya",
-    "tag_3": "Industri Teregulasi",
-    "tag_4": "Pemerintah & Sektor Publik"
+    "tag_2": "Pemerintah & Sektor Publik",
+    "tag_3": "Pendidikan & Riset"
   },
   "About": {
-    "intro_badge": "Tentang ScaleJade",
-    "intro_title": "Mitra Teknologi yang Dapat Anda Andalkan.",
-    "intro_text": "ScaleJade adalah agen teknologi yang membantu perusahaan membangun fondasi digital untuk masa depan mereka — di bidang software, AI, blockchain, dan cloud.",
-    "who_we_are_title": "Siapa Kami",
-    "who_we_are_text": "Kami adalah tim insinyur perangkat lunak, ilmuwan data, pengembang blockchain, dan arsitek cloud dengan pengalaman mendalam di industri teregulasi dan berkembang pesat. Kami bekerja sama erat dengan klien kami — bukan sekadar sebagai vendor, melainkan sebagai mitra teknologi jangka panjang yang berkomitmen pada keberhasilan Anda.",
-    "mission_title": "Misi Kami",
-    "mission_text": "Membantu perusahaan dan institusi membangun teknologi yang dapat mereka andalkan — andal, aman, dan siap berkembang bersama bisnis mereka.",
-    "values_title": "Nilai Kami",
-    "value_1_title": "Keandalan di Atas Segalanya",
-    "value_1_desc": "Kami membangun sistem yang dirancang untuk bertahan dalam tuntutan dunia nyata — baik melayani ratusan maupun jutaan pengguna.",
-    "value_2_title": "Keamanan Sejak Awal",
-    "value_2_desc": "Keamanan bukan tambahan belakangan — melainkan tertanam di setiap lapisan yang kami hadirkan, dari arsitektur hingga deployment.",
-    "value_3_title": "Siap Regulasi",
-    "value_3_desc": "Kami memahami lingkungan regulasi tempat klien kami beroperasi, dan kami merancang sistem kami untuk memenuhinya.",
-    "value_4_title": "Dibangun untuk Berkembang",
-    "value_4_desc": "Setiap solusi yang kami bangun dirancang dengan pertumbuhan sebagai prioritas, sehingga teknologi Anda berkembang seiring organisasi Anda."
+    "intro_badge": "Tentang",
+    "intro_title": "[N] insinyur di Singapura dan Jakarta.",
+    "intro_text": "Kami membangun dan menjalankan perangkat lunak untuk institusi tempat kegagalan adalah peristiwa yang wajib dilaporkan. Tanpa manajer akun, tanpa lapisan pengiriman, tanpa bangku cadangan.",
+    "founding_title": "Mengapa kami ada",
+    "founding_text": "[Founder] menghabiskan [N] tahun membangun [sistem spesifik] di [institusi]. Masalah yang berulang bukanlah teknologi — melainkan bahwa perusahaan yang mampu melakukan rekayasa tidak memahami regulasi, dan perusahaan yang memahami regulasi mensubkontrakkan rekayasanya. ScaleJade hadir untuk menjadi satu tim yang melakukan keduanya.",
+    "team_title": "Tim",
+    "team_intro": "Kami adalah [N] insinyur di Singapura dan Jakarta. Tanpa manajer akun, tanpa lapisan pengiriman, tanpa bangku cadangan. Orang yang menentukan cakupan proyek Anda adalah orang yang membangunnya, dan orang yang Anda email jam 11 malam adalah orang yang menulis kodenya.",
+    "how_we_work_title": "Cara kami bekerja",
+    "engagement_title": "Model keterlibatan",
+    "engagement_text": "Kami menawarkan [dua/tiga] model keterlibatan: [pengiriman dengan cakupan tetap untuk proyek yang terdefinisi dengan baik, tim tertanam untuk pekerjaan produk berkelanjutan, dan operasi terkelola untuk sistem yang harus tetap berjalan]. Masing-masing dimulai dengan pertanyaan yang sama: apa yang tidak boleh gagal, dan apa yang terjadi jika gagal.",
+    "composition_title": "Komposisi tim",
+    "composition_text": "Keterlibatan tipikal terdiri dari [N] insinyur, salah satunya adalah seorang principal, selama [N] bulan. Anda mendapatkan orang yang Anda temui di panggilan penentuan cakupan — bukan tim yang berbeda di hari pertama. Tanpa junior yang ditagih dengan tarif senior, tanpa serah terima ke luar negeri.",
+    "ownership_title": "Apa yang dimiliki klien",
+    "ownership_text": "Anda memiliki kode, dokumentasi, konfigurasi infrastruktur, dan kekayaan intelektual. Setiap keterlibatan mencakup paket serah terima yang ditulis selama pembangunan — bukan dirangkai di akhir — sehingga tim Anda dapat mengoperasikan dan memperluas sistem tanpa kami.",
+    "start_title": "Bagaimana kami memulai",
+    "start_text": "Kami memulai dengan penemuan berbayar selama [dua minggu]. Kami mempelajari arsitektur Anda, batasan Anda, dan tim Anda yang ada. Di akhir, Anda menerima dokumen cakupan dengan jadwal tetap, tim tetap, dan harga tetap. Jika kami bukan mitra yang tepat, kami akan memberi tahu dan Anda tidak berutang apa pun.",
+    "evidence_title": "Fondasi kami",
+    "evidence_1_label": "Keandalan",
+    "evidence_1_text": "SLA standar: [waktu respons / komitmen uptime]. Model on-call: [deskripsi]. Kebijakan tinjauan insiden: [deskripsi]. Uptime terukur di seluruh keterlibatan: [metrik].",
+    "evidence_2_label": "Keamanan",
+    "evidence_2_text": "Status ISO 27001: [tersertifikasi / dalam proses, target QX 20XX]. Frekuensi uji penetrasi: [frekuensi], dilakukan oleh [perusahaan]. Data klien dihosting di [yurisdiksi]. Akses produksi: [siapa yang memegangnya, dengan kontrol apa].",
+    "evidence_3_label": "Kepatuhan",
+    "evidence_3_text": "Kerangka kerja yang telah kami bangun: [POJK / Pedoman MAS TRM / UU PDP No. 27/2022 / PDPA / ISO 20022 / lainnya]. Kami merancang dan mendokumentasikan sesuai regulasi yang disebutkan, bukan klaim 'siap regulasi' yang generik.",
+    "evidence_4_label": "Keberlanjutan",
+    "evidence_4_text": "Escrow kode sumber: [penyedia, ketentuan]. Kepemilikan IP: klien memilikinya, dinyatakan dalam kontrak. Kebijakan serah terima terdokumentasi: termasuk dalam setiap keterlibatan. Jika perusahaan berhenti beroperasi: [kode Anda, infrastruktur Anda, jalur migrasi Anda].",
+    "facts_title": "Fakta",
+    "fact_founded": "Didirikan",
+    "fact_founded_value": "[tahun]",
+    "fact_team": "Tim",
+    "fact_team_value": "[N] insinyur · Singapura, Jakarta",
+    "fact_entities": "Entitas",
+    "fact_entities_value": "ScaleJade Technology Ltd (Singapura) · UEN [nomor]  PT Skala Kecerdasan Nusantara (Indonesia) · NIB [nomor]",
+    "fact_clients": "Klien",
+    "fact_clients_value": "[N] institusi di bidang perbankan, pendidikan, sektor publik",
+    "fact_certifications": "Sertifikasi",
+    "fact_certifications_value": "ISO 27001 — [status] · SOC 2 — [status]",
+    "fact_data_residency": "Residensi data",
+    "fact_data_residency_value": "[tempat data klien dihosting, berdasarkan yurisdiksi]",
+    "fact_languages": "Bahasa",
+    "fact_languages_value": "Inggris · Bahasa Indonesia · [lainnya]",
+    "research_title": "Riset",
+    "research_text": "Preprint riset kami ditulis oleh orang-orang di halaman ini. Kami mempublikasikan secara terbuka karena institusi yang kami layani perlu melihat pekerjaannya sebelum mereka mempercayai implementasinya.",
+    "research_cta": "Baca riset kami",
+    "careers_title": "Bergabunglah",
+    "careers_text": "Kami merekrut sesekali dan dengan sengaja. Jika Anda membangun sistem produksi di lingkungan yang teregulasi dan ingin bekerja pada masalah di mana kebenaran tidak bisa ditawar, perkenalkan diri Anda.",
+    "careers_cta": "Hubungi kami"
   },
   "Portfolio": {
     "badge": "Karya Kami",
@@ -141,5 +177,192 @@
     "area_4_desc": "Tolok ukur yang ketat dan eksperimen yang dapat direproduksi untuk memastikan apa yang benar-benar berhasil sebelum masuk ke sistem Anda.",
     "approach_title": "Pendekatan Kami",
     "approach_text": "Kami meneliti secara terbuka, mengukur dengan jujur, dan hanya merilis yang tahan terhadap tuntutan dunia nyata."
+  },
+  "SectorPages": {
+    "common": {
+      "back": "Semua sektor",
+      "see_title": "Yang kami lihat di sektor ini",
+      "regulations_title": "Standar yang kami acu",
+      "regulations_note": "Kerangka yang menjadi acuan perancangan dan dokumentasi kami.",
+      "build_title": "Yang kami bangun",
+      "proof_title": "Bukti",
+      "proof_clients": "Klien dan mitra",
+      "proof_work": "Pekerjaan terpilih",
+      "proof_research": "Riset",
+      "proof_empty": "Belum ada yang kami publikasikan di sektor ini. Pekerjaannya ada; tulisannya belum. Kami memilih membiarkan bagian ini kosong daripada mengisinya dengan sesuatu yang tidak bisa kami pertanggungjawabkan.",
+      "lead_title": "Siapa yang memimpin sektor ini",
+      "read_paper": "Baca publikasinya",
+      "view_work": "Lihat pekerjaannya"
+    },
+    "financial-institutions": {
+      "claim": "ScaleJade membangun lapisan di antara sistem core banking yang tidak bisa dimatikan dan tenggat settlement yang tidak bisa digeser.",
+      "card_summary": "Integrasi core banking, penyaringan real-time, dan pelaporan yang bisa ditelusuri pemeriksa dari ujung ke ujung.",
+      "intro": "Bank-bank di Indonesia menyerap settlement BI-FAST, interoperabilitas QRIS, dan pelaporan AML yang kian ketat pada saat yang sama — biasanya di atas sistem inti yang usianya lebih tua dari ketiganya dan tidak bisa dimatikan hanya untuk mengetahui apa yang akan rusak.",
+      "pressures": [
+        {
+          "title": "Jendela settlement yang tidak bisa digeser",
+          "desc": "BI-FAST menyelesaikan transaksi dalam hitungan detik, dan jendela itu tidak peduli bahwa sistem inti Anda sedang di tengah batch. Throughput harus bertahan pada menit terburuk dalam sebulan, bukan menit rata-rata."
+        },
+        {
+          "title": "Sistem inti yang lebih tua dari aturannya",
+          "desc": "Interoperabilitas QRIS dan open API SNAP diminta dari sistem yang dirancang satu dekade sebelum keduanya ada — dan tidak ada jendela pemeliharaan yang cukup panjang untuk mencari tahu apa yang akan rusak."
+        },
+        {
+          "title": "Penyaringan yang harus selesai sebelum dananya",
+          "desc": "Kewajiban APU-PPT menempatkan pemeriksaan kepatuhan di dalam jalur pembayaran. Setiap milidetik yang dipakainya adalah milidetik yang diambil dari settlement."
+        }
+      ],
+      "systems": [
+        {
+          "title": "Lapisan integrasi core banking",
+          "desc": "Adapter dan anti-corruption layer yang memungkinkan layanan baru berbicara dengan sistem inti yang tidak boleh Anda ubah."
+        },
+        {
+          "title": "Penyaringan AML dan sanksi real-time",
+          "desc": "Penyaringan di dalam jalur pembayaran, diukur pada p99 di bawah beban produksi, bukan di dalam benchmark."
+        },
+        {
+          "title": "Alur pelaporan regulator",
+          "desc": "Pelaporan yang bisa ditelusuri pemeriksa dari entri buku besar sampai angka yang disetorkan, tanpa spreadsheet di tengahnya."
+        },
+        {
+          "title": "Sistem settlement dan rekonsiliasi",
+          "desc": "Finalitas yang deterministik, dan cerita rekonsiliasi yang tetap utuh ketika sistem di hilir tidak sepakat."
+        }
+      ],
+      "cta_title": "Sedang menggarap migrasi sistem inti, jalur penyaringan, atau kewajiban pelaporan?",
+      "cta_body": "Sebutkan batasan yang tidak bisa Anda siasati. Percakapan itu lebih berguna daripada satu dek kapabilitas."
+    },
+    "public-sector": {
+      "claim": "ScaleJade membangun sistem yang selamat melewati serah terima — terdokumentasi, dapat diaudit, dan dimiliki oleh institusinya, bukan oleh vendornya.",
+      "card_summary": "Sistem yang masih bisa dijalankan sebuah institusi publik sepuluh tahun lagi, tanpa vendor yang membangunnya.",
+      "intro": "Teknologi sektor publik di Indonesia kini harus memenuhi ketentuan arsitektur SPBE, residensi pusat data nasional, dan UU PDP — sekaligus tetap bisa dioperasikan oleh tim yang masih akan menjalankannya sepuluh tahun lagi.",
+      "pressures": [
+        {
+          "title": "Arsitektur ditentukan sebelum pengerjaan dimulai",
+          "desc": "SPBE menetapkan bentuk sistemnya, sehingga keputusan interoperabilitas dan model data diambil sejak pengadaan. Salah di titik itu bukan hal yang bisa diperbaiki sprint berikutnya."
+        },
+        {
+          "title": "Residensi membatasi rancangan, bukan hanya kontrak",
+          "desc": "Ketentuan Pusat Data Nasional menentukan di mana datanya berada, yang menentukan skema failover-nya, yang menentukan arsitekturnya."
+        },
+        {
+          "title": "Serah terima adalah hasil akhirnya",
+          "desc": "Sistem yang tidak bisa dijalankan institusinya tanpa vendor yang membangunnya bukanlah sistem yang diserahkan. Itu sistem yang disewa."
+        }
+      ],
+      "systems": [
+        {
+          "title": "Lapisan interoperabilitas antarinstansi",
+          "desc": "Layanan bersama dan API yang dibangun mengikuti model data SPBE, sehingga instansi berikutnya yang terhubung tidak perlu integrasi khusus."
+        },
+        {
+          "title": "Platform data warga di bawah UU PDP",
+          "desc": "Persetujuan, retensi, dan pencatatan akses dirancang ke dalam model datanya, bukan ditambal setelah audit pertama."
+        },
+        {
+          "title": "Penerapan sovereign dan on-premise",
+          "desc": "Infrastruktur yang memenuhi ketentuan residensi tanpa melepas perkakas operasional yang diharapkan tim modern."
+        },
+        {
+          "title": "Paket dokumentasi dan serah terima",
+          "desc": "Runbook, catatan keputusan arsitektur, dan pelatihan yang ditulis selama pengerjaan, bukan dirangkai di ujungnya."
+        }
+      ],
+      "cta_title": "Sedang menyusun sistem yang selaras SPBE, atau mewarisi satu?",
+      "cta_body": "Sebutkan apa yang harus bisa dijalankan sendiri oleh institusinya. Kami akan menyebutkan berapa biayanya untuk dibangun dengan benar."
+    },
+    "education-research": {
+      "claim": "ScaleJade membangun infrastruktur datanya — dan mempublikasikan hasil evaluasinya, termasuk bagian yang tidak memuji modelnya.",
+      "card_summary": "Infrastruktur data mahasiswa, dan tolok ukur terbuka untuk perangkat AI yang kini harus dinilai institusi.",
+      "intro": "Universitas menyimpan sebagian data pribadi paling sensitif di negeri ini di atas sebagian sistem paling tua, dan kini diminta menilai perangkat AI yang belum pernah diukur siapa pun untuk bahasa maupun cara mengajar mereka.",
+      "pressures": [
+        {
+          "title": "Data paling sensitif di sistem paling tua",
+          "desc": "Data mahasiswa jelas berada di bawah UU PDP, dan biasanya tersimpan di sistem yang dibangun sebelum siapa pun perlu memikirkan persetujuan atau retensi."
+        },
+        {
+          "title": "Perangkat AI yang belum diukur untuk Anda",
+          "desc": "Institusi diminta menilai perangkat tutor dan asesmen yang dinilai dari akurasi jawaban dalam bahasa Inggris — yang nyaris tidak mengatakan apa pun tentang kemampuannya mengajar dalam Bahasa Indonesia."
+        },
+        {
+          "title": "Pelaporan yang harus cocok",
+          "desc": "Laporan PDDIKTI harus sesuai dengan sistem sumber kebenaran, dan itu lebih sulit dari kedengarannya begitu tiga unit sama-sama menyimpan versinya sendiri."
+        }
+      ],
+      "systems": [
+        {
+          "title": "Platform data mahasiswa di bawah UU PDP",
+          "desc": "Persetujuan, retensi, dan kontrol akses dirancang ke dalam model datanya, bukan ditempelkan pada aplikasinya."
+        },
+        {
+          "title": "Evaluasi model bahasa untuk pengajaran",
+          "desc": "Tolok ukur dan rubrik yang mengukur mutu pedagogis, bukan akurasi jawaban. TutorBench adalah milik kami, dan sudah dipublikasikan."
+        },
+        {
+          "title": "Praktik data bahasa Asia Tenggara",
+          "desc": "Pengumpulan dan anotasi data oleh manusia untuk Bahasa Indonesia dan bahasa daerah — himpunan pelatihan dan evaluasi yang dibangun oleh penuturnya."
+        },
+        {
+          "title": "Integrasi pelaporan dan rekam akademik",
+          "desc": "PDDIKTI dan pelaporan internal direkonsiliasi terhadap satu sumber kebenaran, bukan tiga."
+        }
+      ],
+      "cta_title": "Sedang menilai sebuah perangkat AI, atau memodernkan rekam akademik?",
+      "cta_body": "Kami mempublikasikan hasil evaluasi kami. Bacalah dulu, lalu ceritakan apa yang sebenarnya ingin Anda ukur."
+    }
+  },
+  "Nav": {
+    "services": "Layanan",
+    "sectors": "Sektor",
+    "work": "Proyek",
+    "insights": "Wawasan",
+    "about": "Tentang Kami",
+    "cta": "Hubungi Kami",
+    "skip": "Lewati ke konten",
+    "main_label": "Utama",
+    "menu_open": "Buka menu",
+    "menu_close": "Tutup menu",
+    "language": "Bahasa"
+  },
+  "Home": {
+    "problems": {
+      "items": [
+        {
+          "title": "Sebagian besar sistem inti perbankan lebih tua daripada aturan yang kini harus dipenuhinya",
+          "body": "Settlement BI-FAST, interoperabilitas QRIS, dan pelaporan AML yang kian ketat semuanya datang setelah sistem yang harus memikulnya. Solusi yang biasa dipakai — modul vendor yang ditempelkan di samping — gagal karena alasan struktural: modul itu tidak bisa disetel di dalam jendela settlement, dan sistem intinya tidak bisa dimatikan hanya untuk mengetahui apa yang akan rusak. Celah antara aturan dan sistem itulah tempat ScaleJade bekerja."
+        },
+        {
+          "title": "Firma yang mampu mengerjakan rekayasanya tidak memahami aturannya",
+          "body": "Pengetahuan domain dan kemampuan pengerjaan biasanya dipegang perusahaan yang berbeda. Itulah sebabnya begitu banyak pekerjaan teregulasi sampai sebagai subkontrak dua lapis di bawah pihak yang menandatangani kontraknya. Insinyur kami pernah menjalankan sistem produksi di bawah aturan-aturan ini. Orang yang menyusun lingkup pekerjaan Anda adalah orang yang membangunnya."
+        },
+        {
+          "title": "Model yang dievaluasi dalam bahasa Inggris tidak mengatakan apa pun tentang kinerjanya dalam Bahasa Indonesia",
+          "body": "Tolok ukur yang menentukan pengadaan hampir seluruhnya berbahasa Inggris, dan jarak antara skor tolok ukur dengan perilaku nyata dalam bahasa-bahasa Asia Tenggara tidaklah kecil. ScaleJade menjalankan praktik data manusia khusus untuk melatih dan mengevaluasi model dalam Bahasa Indonesia dan bahasa-bahasa di kawasan ini, serta mempublikasikan tolok ukurnya."
+        }
+      ]
+    },
+    "proof": {
+      "title": "Sedang menghadapi sistem yang tidak boleh gagal?",
+      "body": "Baik Anda sedang mengintegrasikan platform core banking, menyiapkan penyaringan yang harus selesai sebelum settlement, atau bermigrasi di bawah ketentuan residensi data — tim kami pernah mengerjakannya di lingkungan seperti milik Anda.",
+      "label": "Studi kasus unggulan",
+      "cta": "Lihat pekerjaan kami lainnya"
+    },
+    "sectors": {
+      "label": "Tempat kami bekerja",
+      "title": "Tiga sektor yang kami kuasai.",
+      "cta": "Semua sektor"
+    },
+    "research": {
+      "label": "Riset",
+      "title": "Tolok ukurnya dipublikasikan, bukan sekadar diklaim.",
+      "body": "ScaleJade mempublikasikan hasil evaluasinya — termasuk bagian yang tidak memuji modelnya.",
+      "cta": "Baca risetnya"
+    },
+    "close": {
+      "title": "Ceritakan apa yang sedang Anda bangun.",
+      "body": "Kami akan mengatakan sejujurnya apakah kami tim yang tepat untuk itu.",
+      "cta": "Bicara dengan insinyur kami"
+    }
   }
 }

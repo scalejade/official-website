@@ -50,7 +50,7 @@ export default async function ResearchPage({
     const heading = isId ? 'Riset & Publikasi' : 'Research & Papers';
     const intro = isId
         ? 'Penelitian terapan dari tim ScaleJade. Kami meneliti secara terbuka, mengukur dengan jujur, dan merilis sistem yang tahan terhadap tuntutan dunia nyata.'
-        : 'Applied research from the ScaleJade team. We work in the open, measure honestly, and publish systems that hold up under real-world demands.';
+        : 'Applied research from the ScaleJade team. ScaleJade works in the open, measures honestly, and publishes systems that hold up under real-world demands.';
     const allLabel = isId ? 'Semua' : 'All';
 
     return (

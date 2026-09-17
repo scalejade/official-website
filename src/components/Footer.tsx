@@ -19,10 +19,10 @@ export function Footer() {
                             className="object-contain transition-opacity hover:opacity-90"
                         />
                     </div>
-                    <p className="text-scalejade-100/70 text-sm leading-relaxed mb-6">
-                        Architecting high-assurance intelligence and mission-critical infrastructure for regulated markets worldwide.
+                    <p className="text-scalejade-100/85 text-sm leading-relaxed mb-6">
+                        Architecting high-assurance intelligence and mission-critical infrastructure for regulated markets in Southeast Asia.
                     </p>
-                    <p className="text-scalejade-100/40 text-xs leading-relaxed">
+                    <p className="text-scalejade-100/70 text-xs leading-relaxed">
                         PT Skala Kecerdasan Nusantara<br />
                         ScaleJade Technology Ltd
                     </p>
@@ -36,15 +36,15 @@ export function Footer() {
                         <h4 className="text-white font-semibold mb-6 tracking-wider text-sm uppercase">
                             Offices
                         </h4>
-                        <ul className="space-y-5 text-xs text-scalejade-100/60 leading-relaxed">
+                        <ul className="space-y-5 text-xs text-scalejade-100/85 leading-relaxed">
                             <li>
-                                <p className="text-scalejade-100/40 font-semibold uppercase tracking-widest text-[10px] mb-1">Singapore</p>
+                                <p className="text-scalejade-100/70 font-semibold uppercase tracking-widest text-[10px] mb-1">Singapore</p>
                                 9 Raffles Place, #16-20<br />
                                 Republic Plaza II<br />
                                 Singapore 048619
                             </li>
                             <li>
-                                <p className="text-scalejade-100/40 font-semibold uppercase tracking-widest text-[10px] mb-1">Jakarta</p>
+                                <p className="text-scalejade-100/70 font-semibold uppercase tracking-widest text-[10px] mb-1">Jakarta</p>
                                 Kb. Melati, Tanah Abang<br />
                                 Jakarta Pusat 10230<br />
                                 Indonesia
@@ -57,7 +57,7 @@ export function Footer() {
                         <h4 className="text-white font-semibold mb-6 tracking-wider text-sm uppercase">
                             Resources
                         </h4>
-                        <ul className="space-y-4 text-sm text-scalejade-100/70">
+                        <ul className="space-y-4 text-sm text-scalejade-100/85">
                             <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
                             <li><Link href="/research" className="hover:text-white transition-colors">Research</Link></li>
                         </ul>
@@ -91,8 +91,8 @@ export function Footer() {
             </div>
 
             {/* Bottom Legal Bar */}
-            <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-scalejade-800/50 flex flex-col md:flex-row items-center justify-between text-xs text-scalejade-100/50">
-                <p>&copy; {currentYear} Scalejade Systems. All rights reserved.</p>
+            <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-scalejade-800/50 flex flex-col md:flex-row items-center justify-between text-xs text-scalejade-100/70">
+                <p>&copy; {currentYear} ScaleJade Systems. All rights reserved.</p>
                 <div className="flex gap-6 mt-4 md:mt-0">
                     <Link href="#" className="hover:text-white transition-colors">Privacy Standard</Link>
                     <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>

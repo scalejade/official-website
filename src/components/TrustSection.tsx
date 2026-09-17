@@ -9,12 +9,8 @@ import clientData from '@/data/clients.json';
 export function TrustSection() {
     const t = useTranslations('TrustSection');
 
-    const tags = [
-        t('tag_1'),
-        t('tag_2'),
-        t('tag_3'),
-        t('tag_4'),
-    ];
+    // The three core sectors from src/data/sectors.ts, localised.
+    const tags = [t('tag_1'), t('tag_2'), t('tag_3')];
 
     // Kita gandakan data array agar efek marquee tidak terputus
     const duplicatedClients = [...clientData, ...clientData];

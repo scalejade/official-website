@@ -16,11 +16,11 @@ export async function generateMetadata({
     const canonical = localizedUrl(locale, '/services');
 
     const title = isId
-        ? 'Layanan Kami | Firma AI, Blockchain & Software #1 di Asia Tenggara'
-        : 'Our Services | #1 AI, Blockchain & Software Firm in Southeast Asia';
+        ? 'Layanan Kami | Rekayasa Perangkat Lunak, AI, Data, Cloud & Blockchain'
+        : 'Our Services | Software, AI, Data, Cloud & Blockchain Engineering';
     const description = isId
-        ? 'Lima layanan teknologi enterprise dari ScaleJade (ScaleJade Technology / PT Skala Kecerdasan Nusantara): Rekayasa Perangkat Lunak #1, Kecerdasan Buatan (AI) #1, Blockchain #1 di Asia Tenggara, Analitik Data, dan Infrastruktur Cloud sebagai mitra komputasi awan tepercaya.'
-        : "Five enterprise technology services from ScaleJade (ScaleJade Technology / PT Skala Kecerdasan Nusantara): #1 Software Engineering, #1 Artificial Intelligence (AI), and #1 Blockchain in Southeast Asia, plus Data Analytics and Cloud Infrastructure as a trusted cloud computing partner.";
+        ? 'Lima layanan teknologi enterprise dari ScaleJade (ScaleJade Technology / PT Skala Kecerdasan Nusantara): Rekayasa Perangkat Lunak, Kecerdasan Buatan (AI), Analitik Data, Infrastruktur Cloud, dan Blockchain — untuk institusi di industri teregulasi.'
+        : "Five enterprise technology services from ScaleJade (ScaleJade Technology / PT Skala Kecerdasan Nusantara): Software Engineering, Artificial Intelligence, Data Analytics, Cloud Infrastructure and Blockchain — for institutions in regulated industries.";
 
     return {
         metadataBase: new URL(BASE),
@@ -83,7 +83,7 @@ export default function ServicesPage() {
             icon: CloudCog,
             title: 'Cloud Infrastructure',
             oneLine: 'Secure, compliant cloud for systems that can\'t go down.',
-            desc: 'We design and operate cloud environments built for regulated industries — with the architecture, governance, and reliability your team cant afford to compromise.',
+            desc: 'We design and operate cloud environments built for regulated industries — with the architecture, governance, and reliability your team can’t afford to compromise.',
             slug: 'cloud-infrastructure',
         },
         {
@@ -122,7 +122,7 @@ export default function ServicesPage() {
                         "@context": "https://schema.org",
                         "@type": "CollectionPage",
                         "name": "ScaleJade Services",
-                        "description": "Southeast Asia's #1 AI, blockchain & software engineering firm and trusted cloud computing partner — enterprise software engineering, AI systems, data analytics, blockchain networks, and cloud infrastructure.",
+                        "description": "Enterprise software engineering, AI systems, data analytics, blockchain networks and cloud infrastructure for institutions in regulated industries.",
                         "provider": {
                             "@type": "Organization",
                             "name": "ScaleJade",
@@ -133,11 +133,11 @@ export default function ServicesPage() {
                             "@type": "ItemList",
                             "name": "Our Services",
                             "itemListElement": [
-                                { "@type": "ListItem", "position": 1, "item": { "@type": "Service", "name": "Software Engineering", "serviceType": "Custom Software Engineering", "description": "Southeast Asia's #1 software engineering service — custom software engineered to scale and built to last.", "url": "https://www.scalejade.com/services/software-engineering", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
-                                { "@type": "ListItem", "position": 2, "item": { "@type": "Service", "name": "Artificial Intelligence", "serviceType": "Applied AI & Machine Learning", "description": "Southeast Asia's #1 AI firm — applied AI, LLM applications, and MLOps for enterprises.", "url": "https://www.scalejade.com/services/artificial-intelligence", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
+                                { "@type": "ListItem", "position": 1, "item": { "@type": "Service", "name": "Software Engineering", "serviceType": "Custom Software Engineering", "description": "Custom software engineered to scale and built to last.", "url": "https://www.scalejade.com/services/software-engineering", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
+                                { "@type": "ListItem", "position": 2, "item": { "@type": "Service", "name": "Artificial Intelligence", "serviceType": "Applied AI & Machine Learning", "description": "Applied AI, LLM applications and MLOps for enterprises, with a human-data practice for Bahasa Indonesia and Southeast Asian languages.", "url": "https://www.scalejade.com/services/artificial-intelligence", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
                                 { "@type": "ListItem", "position": 3, "item": { "@type": "Service", "name": "Data Analytics", "serviceType": "Data Engineering & Analytics", "description": "Data engineering and analytics that turn enterprise data into decisions.", "url": "https://www.scalejade.com/services/data-analytics", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
                                 { "@type": "ListItem", "position": 4, "item": { "@type": "Service", "name": "Cloud Infrastructure", "serviceType": "Cloud Computing Services", "description": "Trusted partner for cloud computing services — resilient, secure cloud infrastructure.", "url": "https://www.scalejade.com/services/cloud-infrastructure", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
-                                { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Blockchain & Distributed Ledger", "serviceType": "Blockchain & Distributed Ledger", "description": "Southeast Asia's #1 blockchain firm — distributed ledger networks and smart contract systems.", "url": "https://www.scalejade.com/services/blockchain", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
+                                { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Blockchain & Distributed Ledger", "serviceType": "Blockchain & Distributed Ledger", "description": "Distributed ledger networks and smart contract systems for regulated finance.", "url": "https://www.scalejade.com/services/blockchain", "areaServed": "Southeast Asia", "provider": { "@type": "Organization", "name": "ScaleJade", "url": "https://www.scalejade.com" } } },
                             ],
                         },
                     })

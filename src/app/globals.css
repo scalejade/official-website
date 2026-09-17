@@ -4,10 +4,33 @@
 @theme {
   --color-canvas: #FFFFFF;
   --color-surface: #F8FAFC;
+  /* Full jade scale. Tailwind v4 only generates utilities for steps declared
+     here — previously 50/100/400/700 were used in markup but never declared,
+     so those classes compiled to nothing and silently inherited. */
+  --color-scalejade-50:  #ecfdf5;
+  --color-scalejade-100: #d1fae5;
+  --color-scalejade-200: #a7f3d0;
+  --color-scalejade-300: #6ee7b7;
+  --color-scalejade-400: #34d399;
+  --color-scalejade-500: #10b981;
   --color-scalejade-600: #047857;
+  --color-scalejade-700: #056b4e;
   --color-scalejade-800: #065f46;
   --color-scalejade-900: #064e3b;
+  /* #0f1a13 was declared as the theme-color and then never used on the page.
+     It is the anchor for the dark full-bleed bands on the sector pages. */
+  --color-ink-900: #0f1a13;
+  /* Warm neutrals used by the header. The rest of the site is still on cool
+     `slate` until the palette migration lands — see Audit 5.4. Every step used
+     in markup is declared here; an undeclared one compiles to nothing. */
+  --color-ink-700: #44463c;
+  --color-ink-500: #74766a;
+  --color-line:    #e4e2da;
+
   --font-sans: var(--font-dm-sans), 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  /* Mono is used for spec lines — regulation names, sector eyebrows, labels.
+     Small, uppercase, tight. Reads as an engineering firm rather than an agency. */
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Daftarkan nama animasinya di sini */
   --animate-marquee: marquee 30s linear infinite;
@@ -24,6 +47,34 @@
   }
 }
 
+/* Entrance reveal, applied as progressive enhancement.
+   Elements are visible in the server-rendered HTML and animate only once CSS
+   loads, so the hero never ships at opacity:0 the way the JS-driven version did. */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.reveal { animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Mobile nav overlay: fade plus a short rise, never a slide-in from the edge. */
+@keyframes overlay-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.overlay-in { animation: overlay-in 0.15s ease-out both; }
+.reveal-delay-1 { animation-delay: 0.1s; }
+.reveal-delay-2 { animation-delay: 0.2s; }
+.reveal-delay-3 { animation-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .overlay-in,
+  .animate-marquee {
+    animation: none !important;
+  }
+}
+
 /* Core shadcn/ui variables */
 @layer base {
   :root {
@@ -34,6 +85,11 @@
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
   }
+}
+
+/* Sticky header is 72px (64px scrolled); keep in-page anchors clear of it. */
+html {
+  scroll-padding-top: 88px;
 }
 
 /* Force the Elite Light-Mode Canvas */

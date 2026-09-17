@@ -1,10 +1,10 @@
 {
   "Hero": {
-    "badge": "Software · AI · Blockchain · Cloud",
-    "title": "Building Reliable Technology, Together.",
-    "subtitle": "We partner with enterprises and institutions to design and deliver software, AI, blockchain, and cloud solutions that are built to last.",
-    "cta_primary": "Explore Our Services",
-    "cta_secondary": "Start a Conversation"
+    "badge": "Singapore · Jakarta",
+    "title": "Not every technology firm works in regulated industries.",
+    "subtitle": "We do. ScaleJade builds the systems Southeast Asian institutions are audited on — and stays on to run them.",
+    "cta_primary": "See how we work",
+    "cta_secondary": "Talk to an engineer"
   },
   "Services": {
     "software_title": "Software Development",
@@ -36,12 +36,12 @@
   },
   "Sectors": {
     "finance": "Financial Institutions",
-    "education": "Education",
-    "energy": "Energy & Supply Chain",
-    "wholesale": "Wholesale & Distribution",
+    "public": "Government & Public Sector",
+    "education": "Education & Research",
+    "manufacturing": "Manufacturing",
     "healthcare": "Healthcare",
-    "mining": "Mining & Resources",
-    "manufacturing": "Manufacturing"
+    "wholesale": "Wholesale & distribution",
+    "energy_mining": "Energy, mining & resources"
   },
   "ServiceDetails": {
     "header_badge": "Our Services",
@@ -53,19 +53,26 @@
     "infra_desc": "We design and manage secure, compliant cloud environments built to scale — so your team can deploy with confidence, every time."
   },
   "SectorDetails": {
-    "header_badge": "Who We Serve",
-    "header_title": "Seven Sectors. One Standard.",
-    "header_sub": "We build the technological foundations that power the world's most important industries. Our work is defined by partnership, precision, and a commitment to long-term outcomes.",
-    "finance_desc": "We partner with banks and payment providers to build the core infrastructure that keeps financial services running reliably. From digital payment systems to compliance-ready platforms, we deliver foundations your institution can depend on.",
-    "education_desc": "We help academic institutions and learning platforms modernize the way education is delivered and managed. Our work transforms legacy systems into connected, digital-first environments that serve both educators and students.",
-    "energy_desc": "We give energy companies and logistics operators the operational visibility they need to move with confidence. Our platforms connect the dots across complex supply chains, reducing inefficiency and improving decision-making at every stage.",
-    "wholesale_desc": "We optimize distribution networks for wholesale operators managing commerce at scale. Our systems bring clarity to high-volume operations — from inventory management to order fulfillment — so your business runs smoothly as it grows.",
-    "healthcare_desc": "We build secure, well-structured data systems for healthcare providers and clinical institutions. Our work ensures that sensitive patient data is managed with care, and that technology supports — rather than disrupts — the delivery of quality care.",
-    "mining_desc": "We equip mining and natural resource companies with robust operational systems that improve site management, safety compliance, and resource tracking. Our technology connects field operations with back-office teams — reducing downtime and increasing extraction efficiency.",
-    "manufacturing_desc": "We help manufacturers modernize production workflows through integrated systems that connect the factory floor to the supply chain. From inventory automation to quality management, our platforms reduce operational friction and enable smarter manufacturing at scale.",
-    "cta_title": "Ready to Discuss Your Technical Roadmap?",
-    "cta_sub": "We welcome conversations with industry leaders who are thinking carefully about their technology future. Let us know what you are building — we would be glad to explore how we can help.",
-    "cta_button": "Start a Conversation"
+    "header_badge": "Who we serve",
+    "header_title": "Three sectors we know deeply.",
+    "header_sub": "Every system ScaleJade builds in these three sectors answers to a named regulator. That constraint shapes the architecture long before it shapes the documentation.",
+    "proof_regulations": "Built against",
+    "proof_work": "Work",
+    "proof_lead": "Sector lead",
+    "count_studies": "{count, plural, =0 {No studies yet} one {# study} other {# studies}}",
+    "count_papers": "{count, plural, =0 {no papers} one {# paper} other {# papers}}",
+    "view": "View sector",
+    "also_title": "Also working in",
+    "cta_title": "Tell us what you are building.",
+    "cta_sub": "We will tell you honestly whether we are the right team for it.",
+    "cta_button": "Talk to an engineer",
+    "also_line": "If your work sits here, the conversation starts the same way: what can't fail, and what happens when it does.",
+    "also_qualifier": {
+      "energy_mining": "Operational data platforms",
+      "manufacturing": "Production and inventory integration",
+      "healthcare": "Clinical data infrastructure",
+      "wholesale": "Order and fulfilment systems"
+    }
   },
   "ServiceApproach": {
     "label": "Our Method",
@@ -81,30 +88,59 @@
   },
   "TrustSection": {
     "badge": "Our Partners",
-    "title_main": "Trusted by industry leaders ",
-    "title_highlight": "to deliver excellence.",
+    "title_main": "Working with institutions across Southeast Asia where ",
+    "title_highlight": "a failure is a reportable event.",
     "tag_1": "Financial Institutions",
-    "tag_2": "Energy & Resources",
-    "tag_3": "Regulated Industries",
-    "tag_4": "Government & Public Sector"
+    "tag_2": "Government & Public Sector",
+    "tag_3": "Education & Research"
   },
   "About": {
-    "intro_badge": "About ScaleJade",
-    "intro_title": "A Technology Partner You Can Rely On.",
-    "intro_text": "ScaleJade is a technology firm helping enterprises build the digital foundation for their future — across software, AI, blockchain, and cloud.",
-    "who_we_are_title": "Who We Are",
-    "who_we_are_text": "We are a team of software engineers, data scientists, blockchain developers, and cloud architects with deep experience in regulated and high-growth industries. We work closely with our clients — not just as vendors, but as long-term technology partners committed to your success.",
-    "mission_title": "Our Mission",
-    "mission_text": "To help enterprises and institutions build technology they can depend on — reliable, secure, and ready to grow with their business.",
-    "values_title": "Our Values",
-    "value_1_title": "Reliability First",
-    "value_1_desc": "We build systems designed to hold up under real-world demands — whether you're serving hundreds or millions of users.",
-    "value_2_title": "Security by Design",
-    "value_2_desc": "Security isn't an afterthought — it's built into every layer of what we deliver, from architecture to deployment.",
-    "value_3_title": "Compliance-Ready",
-    "value_3_desc": "We understand the regulatory environments our clients operate in, and we design our systems to meet them.",
-    "value_4_title": "Built to Scale",
-    "value_4_desc": "Every solution we build is designed with growth in mind, so your technology evolves as your organization does."
+    "intro_badge": "About",
+    "intro_title": "[N] engineers in Singapore and Jakarta.",
+    "intro_text": "We build and run software for institutions where a failure is a reportable event. No account managers, no delivery layer, no bench.",
+    "founding_title": "Why we exist",
+    "founding_text": "[Founder] spent [N] years building [specific system] at [institution]. The recurring problem was not technology — it was that the firms capable of the engineering did not understand the regulation, and the firms that understood the regulation subcontracted the engineering. ScaleJade exists to be one team that does both.",
+    "team_title": "The team",
+    "team_intro": "We are [N] engineers across Singapore and Jakarta. No account managers, no delivery layer, no bench. The person who scopes your engagement is the person who builds it, and the person you email at 11pm is the person who wrote the code.",
+    "how_we_work_title": "How we work",
+    "engagement_title": "Engagement models",
+    "engagement_text": "We offer [two/three] engagement models: [fixed-scope delivery for well-defined projects, embedded team for ongoing product work, and managed operations for systems that need to run]. Each starts with the same question: what cannot fail, and what happens when it does.",
+    "composition_title": "Team composition",
+    "composition_text": "A typical engagement is [N] engineers, one of whom is a principal, for [N] months. You get the people you met in the scoping call — not a different team on day one. No juniors billed at senior rates, no offshore handoff.",
+    "ownership_title": "What the client owns",
+    "ownership_text": "You own the code, the documentation, the infrastructure configuration, and the IP. Every engagement includes a handover package written during the build — not assembled at the end — so your team can operate and extend the system without us.",
+    "start_title": "How we start",
+    "start_text": "We begin with a [two-week] paid discovery. We study your architecture, your constraints, and your existing team. At the end you receive a scoping document with a fixed timeline, a fixed team, and a fixed price. If we are not the right fit, we tell you and you owe nothing further.",
+    "evidence_title": "What we're built on",
+    "evidence_1_label": "Reliability",
+    "evidence_1_text": "Standard SLA: [response time / uptime commitment]. On-call model: [description]. Incident review policy: [description]. Measured uptime across engagements: [metric].",
+    "evidence_2_label": "Security",
+    "evidence_2_text": "ISO 27001 status: [certified / in progress, targeting QX 20XX]. Penetration-test cadence: [frequency], performed by [firm]. Client data hosted in [jurisdiction]. Production access: [who holds it, under what controls].",
+    "evidence_3_label": "Compliance",
+    "evidence_3_text": "Frameworks we have built against: [POJK / MAS TRM Guidelines / UU PDP No. 27/2022 / PDPA / ISO 20022 / others]. We design and document to the named regulation, not to a generic 'compliance-ready' claim.",
+    "evidence_4_label": "Continuity",
+    "evidence_4_text": "Source-code escrow: [provider, terms]. IP ownership: the client owns it, stated in contract. Documented handover policy: included in every engagement. If the firm ceases trading: [your code, your infrastructure, your migration path].",
+    "facts_title": "The facts",
+    "fact_founded": "Founded",
+    "fact_founded_value": "[year]",
+    "fact_team": "Team",
+    "fact_team_value": "[N] engineers · Singapore, Jakarta",
+    "fact_entities": "Entities",
+    "fact_entities_value": "ScaleJade Technology Ltd (Singapore) · UEN [number]  PT Skala Kecerdasan Nusantara (Indonesia) · NIB [number]",
+    "fact_clients": "Clients",
+    "fact_clients_value": "[N] institutions across banking, education, public sector",
+    "fact_certifications": "Certifications",
+    "fact_certifications_value": "ISO 27001 — [status] · SOC 2 — [status]",
+    "fact_data_residency": "Data residency",
+    "fact_data_residency_value": "[where client data is hosted, by jurisdiction]",
+    "fact_languages": "Languages",
+    "fact_languages_value": "English · Bahasa Indonesia · [others]",
+    "research_title": "Research",
+    "research_text": "Our research preprints are authored by the people on this page. We publish in the open because the institutions we serve need to see the work before they trust the implementation.",
+    "research_cta": "Read our research",
+    "careers_title": "Join us",
+    "careers_text": "We hire occasionally and deliberately. If you build production systems in regulated environments and you want to work on problems where correctness is non-negotiable, introduce yourself.",
+    "careers_cta": "Talk to us"
   },
   "Portfolio": {
     "badge": "Our Work",
@@ -141,5 +177,192 @@
     "area_4_desc": "Rigorous benchmarking and reproducible experiments that tell us what actually works before it reaches your stack.",
     "approach_title": "Our Approach",
     "approach_text": "We research in the open, measure honestly, and only ship what holds up under real-world demands."
+  },
+  "SectorPages": {
+    "common": {
+      "back": "All sectors",
+      "see_title": "What we see in this sector",
+      "regulations_title": "What we build against",
+      "regulations_note": "Frameworks we design and document against.",
+      "build_title": "What we build",
+      "proof_title": "Proof",
+      "proof_clients": "Clients and partners",
+      "proof_work": "Selected work",
+      "proof_research": "Research",
+      "proof_empty": "Nothing published in this sector yet. The engagements exist; the write-ups do not. We would rather leave this block empty than fill it with something we cannot stand behind.",
+      "lead_title": "Who leads this sector",
+      "read_paper": "Read the paper",
+      "view_work": "View the work"
+    },
+    "financial-institutions": {
+      "claim": "ScaleJade builds the layer between a core banking system that cannot be taken offline and a settlement deadline that will not move.",
+      "card_summary": "Core banking integration, real-time screening, and reporting an examiner can follow end to end.",
+      "intro": "Indonesian banks are absorbing BI-FAST settlement, QRIS interoperability and tightening AML reporting at the same time — usually on core systems that predate all three and cannot be taken offline to find out what breaks.",
+      "pressures": [
+        {
+          "title": "Settlement windows that do not move",
+          "desc": "BI-FAST clears in seconds, and the window does not care that your core is mid-batch. Throughput has to hold at the worst minute of the month, not the average one."
+        },
+        {
+          "title": "Cores older than the rules they now satisfy",
+          "desc": "QRIS interoperability and SNAP open APIs are being asked of systems specified a decade before either existed — and there is no maintenance window long enough to find out what breaks."
+        },
+        {
+          "title": "Screening that has to clear before the money does",
+          "desc": "APU-PPT obligations put a compliance check inside the payment path. Every millisecond it costs is a millisecond taken from settlement."
+        }
+      ],
+      "systems": [
+        {
+          "title": "Core banking integration layers",
+          "desc": "Adapters and anti-corruption layers that let new services talk to a core you are not permitted to modify."
+        },
+        {
+          "title": "Real-time AML and sanctions screening",
+          "desc": "Screening inside the payment path, measured at p99 under production load rather than in a benchmark."
+        },
+        {
+          "title": "Regulatory reporting pipelines",
+          "desc": "Reporting an examiner can follow from the ledger entry to the submitted figure without a spreadsheet in the middle."
+        },
+        {
+          "title": "Settlement and reconciliation systems",
+          "desc": "Deterministic finality, and a reconciliation story that still holds when a downstream system disagrees."
+        }
+      ],
+      "cta_title": "Working on a core migration, a screening path, or a reporting obligation?",
+      "cta_body": "Tell us the constraint you cannot design around. That conversation is more useful than a capability deck."
+    },
+    "public-sector": {
+      "claim": "ScaleJade builds systems that survive the handover — documented, auditable, and owned by the institution rather than the vendor.",
+      "card_summary": "Systems a public institution can still operate in ten years, without the vendor that built them.",
+      "intro": "Public sector technology in Indonesia now has to satisfy SPBE architecture requirements, national data centre residency, and UU PDP — while remaining operable by teams who will still be running it in ten years.",
+      "pressures": [
+        {
+          "title": "Architecture decided before delivery starts",
+          "desc": "SPBE sets the shape of the system, so interoperability and data model decisions are made at procurement. Getting them wrong is not something a later sprint fixes."
+        },
+        {
+          "title": "Residency constrains the design, not just the contract",
+          "desc": "Pusat Data Nasional requirements decide where the data sits, which decides the failover story, which decides the architecture."
+        },
+        {
+          "title": "The handover is the deliverable",
+          "desc": "A system the institution cannot operate without the vendor that built it has not been delivered. It has been rented."
+        }
+      ],
+      "systems": [
+        {
+          "title": "Interoperability layers between agencies",
+          "desc": "Shared services and APIs built to the SPBE data model, so the next agency to connect does not need a bespoke integration."
+        },
+        {
+          "title": "Citizen data platforms under UU PDP",
+          "desc": "Consent, retention and access logging designed into the data model rather than retrofitted after the first audit."
+        },
+        {
+          "title": "Sovereign and on-premise deployments",
+          "desc": "Infrastructure that satisfies residency requirements without giving up the operational tooling a modern team expects."
+        },
+        {
+          "title": "Documentation and handover packages",
+          "desc": "Runbooks, architecture decision records and training written during the engagement rather than assembled at the end of it."
+        }
+      ],
+      "cta_title": "Scoping an SPBE-aligned system, or inheriting one?",
+      "cta_body": "Tell us what the institution has to be able to run on its own. We will tell you what that costs to build properly."
+    },
+    "education-research": {
+      "claim": "ScaleJade builds the data infrastructure underneath — and publishes the evaluation work, including the parts that did not flatter the model.",
+      "card_summary": "Student data infrastructure, and published benchmarks for the AI tools institutions are being asked to evaluate.",
+      "intro": "Universities hold some of the most sensitive personal data in the country on some of the oldest systems, and are now being asked to evaluate AI tools nobody has benchmarked for their languages or their teaching.",
+      "pressures": [
+        {
+          "title": "The most sensitive data on the oldest systems",
+          "desc": "Student records fall squarely under UU PDP, and they usually live in systems built before anyone had to think about consent or retention."
+        },
+        {
+          "title": "AI tools nobody has benchmarked for you",
+          "desc": "Institutions are asked to evaluate tutoring and assessment tools scored on English answer accuracy — which says almost nothing about whether they can teach in Bahasa Indonesia."
+        },
+        {
+          "title": "Reporting that has to reconcile",
+          "desc": "PDDIKTI submissions have to agree with the systems of record, which is harder than it sounds once three departments each keep their own."
+        }
+      ],
+      "systems": [
+        {
+          "title": "Student data platforms under UU PDP",
+          "desc": "Consent, retention and access control designed into the data model rather than bolted onto the application."
+        },
+        {
+          "title": "Language model evaluation for teaching",
+          "desc": "Benchmarks and rubrics that measure pedagogy rather than answer accuracy. TutorBench is ours, and it is published."
+        },
+        {
+          "title": "Southeast Asian language data practice",
+          "desc": "Human data collection and annotation for Bahasa Indonesia and regional languages — training and evaluation sets built by people who speak them."
+        },
+        {
+          "title": "Reporting and records integration",
+          "desc": "PDDIKTI and internal reporting reconciled against one system of record instead of three."
+        }
+      ],
+      "cta_title": "Evaluating an AI tool, or modernising student records?",
+      "cta_body": "We publish our evaluation work. Read it first, then tell us what you are actually trying to measure."
+    }
+  },
+  "Nav": {
+    "services": "Services",
+    "sectors": "Sectors",
+    "work": "Work",
+    "insights": "Insights",
+    "about": "About",
+    "cta": "Talk to us",
+    "skip": "Skip to content",
+    "main_label": "Main",
+    "menu_open": "Open menu",
+    "menu_close": "Close menu",
+    "language": "Language"
+  },
+  "Home": {
+    "problems": {
+      "items": [
+        {
+          "title": "Most core banking systems predate the regulations they now have to satisfy",
+          "body": "BI-FAST settlement, QRIS interoperability and tightening AML reporting all arrived after the systems that have to carry them. The usual fix — a vendor module bolted to the side — fails for a structural reason: it can't be tuned inside the settlement window, and the core can't be taken offline to find out what breaks. That gap between the regulation and the system is where ScaleJade works."
+        },
+        {
+          "title": "The firms that can do the engineering don't know the regulation",
+          "body": "Domain knowledge and delivery capability are usually held by different companies, which is why so much regulated work arrives as a subcontract two layers down from whoever signed the contract. Our engineers have run production systems under these rules. The person who scopes your engagement is the person who builds it."
+        },
+        {
+          "title": "A model evaluated in English tells you nothing about how it performs in Bahasa Indonesia",
+          "body": "Benchmarks that decide procurement are almost entirely English-language, and the gap between benchmark performance and behaviour in Southeast Asian languages is not small. ScaleJade runs a dedicated human-data practice for training and evaluating models in Bahasa Indonesia and the region's languages, and publishes the benchmarks."
+        }
+      ]
+    },
+    "proof": {
+      "title": "Facing a system that can't be allowed to fail?",
+      "body": "Whether you're integrating a core banking platform, standing up screening that has to clear before settlement, or migrating under data residency rules — our team has delivered in environments like yours.",
+      "label": "Highlight case study",
+      "cta": "See more of our work"
+    },
+    "sectors": {
+      "label": "Where we work",
+      "title": "Three sectors we know deeply.",
+      "cta": "All sectors"
+    },
+    "research": {
+      "label": "Research",
+      "title": "The benchmarks are published, not just claimed.",
+      "body": "ScaleJade publishes its evaluation work — including the parts that did not flatter the model.",
+      "cta": "Read the research"
+    },
+    "close": {
+      "title": "Tell us what you're building.",
+      "body": "We'll tell you honestly whether we're the right team for it.",
+      "cta": "Talk to an engineer"
+    }
   }
 }

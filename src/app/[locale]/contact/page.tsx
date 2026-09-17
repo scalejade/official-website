@@ -13,7 +13,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
     const { locale } = await params;
     const isId = locale === 'id';
-    const canonical = localizedUrl(locale, '/demo');
+    const canonical = localizedUrl(locale, '/contact');
 
     const title = isId ? 'Mulai Percakapan | ScaleJade' : 'Start a Conversation | ScaleJade';
     const description = isId
@@ -24,7 +24,7 @@ export async function generateMetadata({
         metadataBase: new URL(BASE),
         title,
         description,
-        alternates: localeAlternates(locale, '/demo'),
+        alternates: localeAlternates(locale, '/contact'),
         openGraph: {
             type: 'website',
             url: canonical,
@@ -67,7 +67,7 @@ export default function DemoPage() {
             />
 
             {/* 1. Header Section */}
-            <section className="px-6 max-w-5xl mx-auto text-center mb-20" aria-labelledby="demo-heading">
+            <section className="px-6 max-w-5xl mx-auto text-center mb-20" aria-labelledby="contact-heading">
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -78,7 +78,7 @@ export default function DemoPage() {
                 </motion.div>
 
                 <motion.h1
-                    id="demo-heading"
+                    id="contact-heading"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}

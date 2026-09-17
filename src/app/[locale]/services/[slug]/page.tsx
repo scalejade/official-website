@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { CORE_SECTOR_SLUGS, SECTOR_NAMES_EN } from '@/data/sectors';
 import Link from 'next/link';
 import * as motion from "framer-motion/client";
 import { ArrowRight, ChevronRight, ShieldCheck } from 'lucide-react';
@@ -150,12 +151,9 @@ export async function generateMetadata({
     };
 }
 
-const sectors = [
-    "Financial Institutions",
-    "Energy & Resources",
-    "Regulated Industries",
-    "Government & Public Sector",
-];
+// Same taxonomy as /sectors. "Regulated Industries" was dropped deliberately:
+// it is a descriptor, not a sector, and it overlapped three of the others.
+const sectors = CORE_SECTOR_SLUGS.map((slug) => SECTOR_NAMES_EN[slug]);
 
 export default async function ServiceDetailPage({
     params,
@@ -222,7 +220,7 @@ export default async function ServiceDetailPage({
                             {service.heroParagraph}
                         </p>
                         <Link
-                            href={`/${locale}/demo`}
+                            href={`${locale === 'en' ? '' : `/${locale}`}/contact`}
                             className="inline-flex items-center gap-2 bg-scalejade-600 hover:bg-scalejade-800 text-white px-6 md:px-7 py-3 md:py-3.5 rounded-md font-medium transition-all shadow-sm text-sm md:text-base"
                         >
                             Start a Conversation
@@ -321,7 +319,7 @@ export default async function ServiceDetailPage({
                         </p>
                     </motion.div>
                     <Link
-                        href={`/${locale}/demo`}
+                        href={`${locale === 'en' ? '' : `/${locale}`}/contact`}
                         className="inline-flex items-center justify-center gap-2 bg-white text-scalejade-900 hover:bg-slate-100 px-7 py-3.5 rounded-md font-semibold transition-all w-full sm:w-auto md:shrink-0"
                     >
                         Start a Conversation

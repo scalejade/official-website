@@ -21,7 +21,7 @@ const staticRoutes = [
     '/about',
     '/research',
     '/blog',
-    '/demo',
+    '/contact',
 ];
 
 // hreflang alternates respecting the `as-needed` prefix (en has no prefix).
