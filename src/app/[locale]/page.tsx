@@ -90,39 +90,68 @@ export default async function HomePage({
                 addressLocality of "Global", which told retrieval systems there
                 might be two companies. Entity resolution needs exactly one. */}
 
-            {/* Hero Section */}
-            <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 max-w-7xl mx-auto flex flex-col items-center text-center">
+            {/* Hero Section
+
+                Left-aligned and bounded, not centred inside a full-viewport box.
+                Fixed padding (7rem/9rem) is sized so the top edge of the problems
+                section clears the fold — that cut line is what prompts the scroll.
+                See Hero Review v2 §2.1–2.3. */}
+            <section className="relative bg-paper pt-24 pb-28 md:pt-28 md:pb-36">
                 {/* The hero is rendered visible in SSR and animated with CSS only.
                     Framer's `initial` prop inlined style="opacity:0" into the server HTML,
                     so the hero was blank without JS and hurt LCP. */}
-                <div className="reveal mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-scalejade-800/20 bg-surface text-scalejade-800 text-sm font-medium tracking-wide">
-                    <span className="w-2 h-2 rounded-full bg-scalejade-600" />
-                    {t('badge')}
-                </div>
+                {/* max-w-7xl, matching the header's container: the eyebrow's left
+                    edge has to land on the logo's, or the hero reads as inset. The
+                    measure is held by the 26ch/54ch caps, not by this width. */}
+                <div className="max-w-7xl mx-auto px-6">
+                    {/* Mono eyebrow, no pill and no status dot — the pill reads as a
+                        SaaS status page; the mono line reads as an engineering firm.
+                        The short jade rule is the only brand mark above the headline;
+                        it does the work the pill was doing, without the SaaS tic. */}
+                    <div className="reveal">
+                        <span aria-hidden className="block h-[2px] w-10 bg-scalejade-600" />
+                        <p className="mt-5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-500">
+                            {t('badge')}
+                        </p>
+                    </div>
 
-                <h1 className="reveal reveal-delay-1 text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 max-w-4xl">
-                    {t('title')}
-                </h1>
+                    {/* 26ch plus `text-wrap: balance` breaks this into two balanced
+                        lines instead of three ragged ones with a one-word orphan.
+                        Weight 600, capped near 64px: confident, not shouting. */}
+                    <h1 className="reveal reveal-delay-1 mt-7 text-[clamp(2.5rem,4.2vw+1rem,4rem)] font-semibold leading-[1.04] tracking-[-0.022em] text-ink-950 max-w-[26ch] text-balance">
+                        {t('title')}
+                    </h1>
 
-                <p className="reveal reveal-delay-2 mt-6 text-lg md:text-xl text-slate-700 max-w-2xl font-normal leading-relaxed">
-                    {t('subtitle')}
-                </p>
+                    {/* The name is set in jade so it reads as the brand rather than
+                        as another word in the sentence. It stays inside the string via
+                        a <brand> tag, so both locales keep the emphasis in the right
+                        place — Indonesian puts the name at a different offset. */}
+                    <p className="reveal reveal-delay-2 mt-6 text-[clamp(1.0625rem,0.6vw+0.9rem,1.25rem)] font-normal leading-[1.6] text-ink-700 max-w-[54ch]">
+                        {t.rich('subtitle', {
+                            brand: (chunks) => (
+                                <span className="font-medium text-scalejade-800">{chunks}</span>
+                            ),
+                        })}
+                    </p>
 
-                <div className="reveal reveal-delay-3 mt-10 flex flex-col sm:flex-row gap-4">
-                    <Link
-                        href={`${prefix}/services`}
-                        className="bg-scalejade-600 hover:bg-scalejade-800 text-white px-8 py-4 rounded-md font-medium transition-all flex items-center justify-center gap-2 shadow-sm"
-                    >
-                        {t('cta_primary')}
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Link>
+                    <div className="reveal reveal-delay-3 mt-10 flex flex-col sm:flex-row gap-3">
+                        <Link
+                            href={`${prefix}/services`}
+                            className="group bg-jade-deep hover:bg-ink-900 text-white px-6 py-3.5 rounded-[3px] text-[0.9375rem] font-medium transition-colors flex items-center justify-center gap-2"
+                        >
+                            {t('cta_primary')}
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                        </Link>
 
-                    <Link
-                        href={`${prefix}/contact`}
-                        className="bg-surface hover:bg-slate-100 text-slate-900 border border-slate-200 px-8 py-4 rounded-md font-medium transition-all flex items-center justify-center"
-                    >
-                        {t('cta_secondary')}
-                    </Link>
+                        {/* An outline, not a pale grey fill — a filled grey box beside a
+                            solid primary reads as disabled rather than as an alternative. */}
+                        <Link
+                            href={`${prefix}/contact`}
+                            className="text-ink-950 border border-ink-950/[0.18] hover:border-ink-950/40 px-6 py-3.5 rounded-[3px] text-[0.9375rem] font-medium transition-colors flex items-center justify-center"
+                        >
+                            {t('cta_secondary')}
+                        </Link>
+                    </div>
                 </div>
             </section>
 
@@ -131,7 +160,7 @@ export default async function HomePage({
                 reader's situation as fact; each body names the mechanism under
                 the obvious symptom; ScaleJade appears last, in one short clause.
                 This sits before any proof, per the reference teardown. */}
-            <section className="px-6 py-16 md:py-24 border-t border-slate-100">
+            <section className="px-6 py-16 md:py-24">
                 <div className="max-w-5xl mx-auto grid grid-cols-1 gap-14 md:gap-20">
                     {problems.map((problem) => (
                         <article key={problem.title} className="grid grid-cols-1 gap-5 md:grid-cols-[minmax(0,22rem)_1fr] md:gap-16">

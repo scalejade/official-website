@@ -23,9 +23,18 @@
   /* Warm neutrals used by the header. The rest of the site is still on cool
      `slate` until the palette migration lands — see Audit 5.4. Every step used
      in markup is declared here; an undeclared one compiles to nothing. */
+  --color-ink-950: #14150f;
   --color-ink-700: #44463c;
-  --color-ink-500: #74766a;
+  /* #74766a (the review's value) is 4.39:1 on the paper ground — under AA for
+     the 11px eyebrow. Darkened just enough to clear 4.5:1 on paper and on white,
+     which also lifts the inactive language toggle in the header. */
+  --color-ink-500: #6b6d61;
   --color-line:    #e4e2da;
+  /* Warm paper ground for the hero, and the jade the primary CTA sits on.
+     Both are the first pieces of the Audit 5.4 palette migration to land:
+     the rest of the page is still on white + `scalejade-600` until it does. */
+  --color-paper:     #faf9f5;
+  --color-jade-deep: #17332a;
 
   --font-sans: var(--font-dm-sans), 'DM Sans', ui-sans-serif, system-ui, sans-serif;
   /* Mono is used for spec lines — regulation names, sector eyebrows, labels.
@@ -67,11 +76,16 @@
 .reveal-delay-2 { animation-delay: 0.2s; }
 .reveal-delay-3 { animation-delay: 0.3s; }
 
+/* Blanket guard, not a list of three class names: anything added later is
+   covered without having to remember to add it here. */
 @media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .overlay-in,
-  .animate-marquee {
-    animation: none !important;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
