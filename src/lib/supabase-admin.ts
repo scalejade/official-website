@@ -1,5 +1,6 @@
 import 'server-only';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { env } from '@/lib/env';
 
 // Service-role client. Bypasses RLS, so it must never reach the browser —
 // `server-only` turns an accidental client-side import into a build error.
@@ -12,8 +13,8 @@ let client: SupabaseClient | null = null;
 export function supabaseAdmin(): SupabaseClient {
     if (client) return client;
 
-    const url = process.env.SUPABASE_URL;
-    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const url = env('SUPABASE_URL');
+    const key = env('SUPABASE_SERVICE_ROLE_KEY');
     if (!url || !key) {
         throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY.');
     }

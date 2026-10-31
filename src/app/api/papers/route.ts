@@ -1,17 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import type { PaperSection, PaperLinks } from '@/data/papers';
+import { env } from '@/lib/env';
 
-const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseUrl = env('SUPABASE_URL');
 // Prefer the service-role key for writes (bypasses RLS); fall back to the
 // publishable key, which can only read: supabase/schema.sql grants writes to
 // service_role alone, so POST/DELETE need SUPABASE_SERVICE_ROLE_KEY.
 const writeKey =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.SUPABASE_PUBLISHABLE_KEY;
+    env('SUPABASE_SERVICE_ROLE_KEY') ||
+    env('SUPABASE_PUBLISHABLE_KEY');
 
 // Reuse the blog token if a papers-specific one isn't set.
-const API_TOKEN = process.env.PAPERS_API_TOKEN || process.env.BLOG_API_TOKEN;
+const API_TOKEN = env('PAPERS_API_TOKEN') || env('BLOG_API_TOKEN');
 
 const CORS_HEADERS: Record<string, string> = {
     'Access-Control-Allow-Origin': '*',

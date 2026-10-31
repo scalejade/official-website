@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { env } from '@/lib/env';
 
-const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseUrl = env('SUPABASE_URL');
 const writeKey =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.SUPABASE_PUBLISHABLE_KEY;
+    env('SUPABASE_SERVICE_ROLE_KEY') ||
+    env('SUPABASE_PUBLISHABLE_KEY');
 
-const API_TOKEN = process.env.PAPERS_API_TOKEN || process.env.BLOG_API_TOKEN;
+const API_TOKEN = env('PAPERS_API_TOKEN') || env('BLOG_API_TOKEN');
 
 const CORS_HEADERS: Record<string, string> = {
     'Access-Control-Allow-Origin': '*',

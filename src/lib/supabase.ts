@@ -1,4 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { env } from '@/lib/env';
 
 // Public (publishable-key) client for reading published posts and papers.
 //
@@ -11,8 +12,8 @@ let client: SupabaseClient | null | undefined;
 
 export function publicDb(): SupabaseClient | null {
     if (client !== undefined) return client;
-    const url = process.env.SUPABASE_URL;
-    const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+    const url = env('SUPABASE_URL');
+    const key = env('SUPABASE_PUBLISHABLE_KEY');
     if (!url || !key) {
         console.error('Missing SUPABASE_URL or SUPABASE_PUBLISHABLE_KEY; posts and papers will be empty.');
         client = null;

@@ -1,9 +1,10 @@
 import 'server-only';
 import { NextRequest, NextResponse } from 'next/server';
+import { env } from '@/lib/env';
 
 // Shared plumbing for the /api route handlers.
 
-const API_TOKEN = process.env.BLOG_API_TOKEN;
+const API_TOKEN = env('BLOG_API_TOKEN');
 
 export function corsHeaders(methods: string): Record<string, string> {
     return {
