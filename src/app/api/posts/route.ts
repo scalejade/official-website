@@ -1,15 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import type { BlogSection } from '@/data/blog';
+import { isAllowedImageUrl } from '@/lib/images';
+import { pathFromPublicUrl, removeObject } from '@/lib/media';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 // Prefer the service-role key for writes (bypasses RLS); fall back to the
-// publishable key (requires an insert RLS policy — see migration 0003).
+// publishable key, which can only read: supabase/schema.sql grants writes to
+// service_role alone, so POST/PATCH/DELETE need SUPABASE_SERVICE_ROLE_KEY.
 const writeKey =
     process.env.SUPABASE_SERVICE_ROLE_KEY ||
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
 const API_TOKEN = process.env.BLOG_API_TOKEN;
+
+// The blog keeps at most this many posts. Creating a post past the limit deletes
+// the oldest ones (by date, then creation time), including their uploaded cover
+// images. Override with BLOG_MAX_POSTS; default 300.
+const MAX_POSTS = Math.max(1, Number(process.env.BLOG_MAX_POSTS) || 300);
 
 const CORS_HEADERS: Record<string, string> = {
     'Access-Control-Allow-Origin': '*',
@@ -86,12 +94,24 @@ function validateSections(sections: unknown): sections is BlogSection[] {
 }
 
 // GET /api/posts  -> list published posts (lightweight)
-export async function GET() {
+// GET /api/posts?all=true with the token -> drafts included, with is_published
+export async function GET(req: NextRequest) {
+    const all = new URL(req.url).searchParams.get('all') === 'true';
+    if (all && !isAuthorized(req)) {
+        return json({ error: 'Unauthorized' }, 401);
+    }
     try {
-        const { data, error } = await db()
+        let query = db()
             .from('blog_posts')
-            .select('slug, title, excerpt, category, author, published_at, reading_time, cover_image')
-            .order('published_at', { ascending: false });
+            .select(
+                all
+                    ? 'slug, title, excerpt, category, author, published_at, reading_time, cover_image, is_published'
+                    : 'slug, title, excerpt, category, author, published_at, reading_time, cover_image'
+            )
+            .order('published_at', { ascending: false })
+            .order('created_at', { ascending: false });
+        if (!all) query = query.eq('is_published', true);
+        const { data, error } = await query;
 
         if (error) {
             return json({ error: error.message }, 500);
@@ -122,6 +142,20 @@ export async function POST(req: NextRequest) {
         return json({ error: '`sections` must be a non-empty array of { heading?, paragraphs: string[], image?, imageCaption? }' }, 400);
     }
 
+    if (payload.date !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(payload.date)) {
+        return json({ error: '`date` must be YYYY-MM-DD' }, 400);
+    }
+    if (payload.isPublished !== undefined && typeof payload.isPublished !== 'boolean') {
+        return json({ error: '`isPublished` must be a boolean' }, 400);
+    }
+
+    const images = [payload.coverImage, ...(payload.sections ?? []).map((s) => s.image)].filter(
+        (u): u is string => typeof u === 'string' && u !== ''
+    );
+    if (images.some((u) => !isAllowedImageUrl(u))) {
+        return json({ error: 'Images must be https URLs from images.unsplash.com or uploaded through /api/media.' }, 400);
+    }
+
     const sections = payload.sections as BlogSection[];
     const row = {
         slug: payload.slug ? slugify(payload.slug) : slugify(payload.title),
@@ -140,14 +174,22 @@ export async function POST(req: NextRequest) {
         const { data, error } = await db()
             .from('blog_posts')
             .insert(row)
-            .select('slug, title, category, author, published_at, reading_time, cover_image')
+            .select('slug, title, category, author, published_at, reading_time, cover_image, is_published')
             .single();
 
         if (error) {
             const status = error.code === '23505' ? 409 : 500; // unique_violation -> 409
             return json({ error: error.message, code: error.code }, status);
         }
-        return json({ post: data }, 201);
+
+        // The post is saved; a failed clean-up must not turn that into an error.
+        let pruned: string[] = [];
+        try {
+            pruned = await pruneOldest();
+        } catch (e) {
+            console.error('Failed to prune old blog posts:', (e as Error).message);
+        }
+        return json({ post: data, ...(pruned.length ? { pruned } : {}) }, 201);
     } catch (e) {
         return json({ error: (e as Error).message }, 500);
     }
@@ -191,4 +233,26 @@ export async function DELETE(req: NextRequest) {
     } catch (e) {
         return json({ error: (e as Error).message }, 500);
     }
+}
+
+/** Delete every post beyond the newest MAX_POSTS. Returns the deleted slugs. */
+async function pruneOldest(): Promise<string[]> {
+    const client = db();
+    const { data: excess, error } = await client
+        .from('blog_posts')
+        .select('id, slug, cover_image')
+        .order('published_at', { ascending: false })
+        .order('created_at', { ascending: false })
+        .range(MAX_POSTS, MAX_POSTS + 999);
+    if (error) throw new Error(error.message);
+    if (!excess || excess.length === 0) return [];
+
+    const { error: deleteError } = await client
+        .from('blog_posts')
+        .delete()
+        .in('id', excess.map((p) => p.id));
+    if (deleteError) throw new Error(deleteError.message);
+
+    await Promise.all(excess.map((p) => removeObject(pathFromPublicUrl(p.cover_image))));
+    return excess.map((p) => p.slug);
 }

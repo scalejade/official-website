@@ -1,10 +1,12 @@
-import { useTranslations, useLocale } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { Landmark, Building2, GraduationCap, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
 
 import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
 import { CORE_SECTORS, ALSO_WORKING_IN, SECTOR_NAMES_EN, type CoreSector } from '@/data/sectors';
+import { getAllProjects } from '@/data/projects';
+import { getAllPapers } from '@/data/papers';
 
 const ICONS = {
     landmark: Landmark,
@@ -28,7 +30,7 @@ export async function generateMetadata({
 
     return {
         metadataBase: new URL(BASE),
-        title,
+        title: { absolute: title },
         description,
         alternates: localeAlternates(locale, '/sectors'),
         openGraph: {
@@ -44,11 +46,21 @@ export async function generateMetadata({
     };
 }
 
-export default function SectorsPage() {
-    const t = useTranslations('SectorDetails');
-    const s = useTranslations('Sectors');
-    const p = useTranslations('SectorPages');
-    const locale = useLocalePrefix();
+export default async function SectorsPage({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale: lang } = await params;
+    const t = await getTranslations({ locale: lang, namespace: 'SectorDetails' });
+    const s = await getTranslations({ locale: lang, namespace: 'Sectors' });
+    const p = await getTranslations({ locale: lang, namespace: 'SectorPages' });
+    const locale = lang === 'en' ? '' : `/${lang}`;
+
+    const projects = await getAllProjects();
+    const studiesIn = (sector: CoreSector) => projects.filter((pr) => pr.sector === sector.messageKey).length;
+    const published = new Set((await getAllPapers()).map((paper) => paper.slug));
+    const papersIn = (sector: CoreSector) => sector.paperSlugs.filter((slug) => published.has(slug)).length;
 
     return (
         <div className="min-h-screen bg-canvas" role="main">
@@ -77,7 +89,7 @@ export default function SectorsPage() {
             {/* 1. Header — states the regulatory reality, not a promise about partnership */}
             <section className="pt-24 md:pt-32 pb-14 md:pb-20 px-6 border-b border-slate-100">
                 <div className="max-w-4xl mx-auto">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-scalejade-600 mb-5 block">
+                    <span className="text-sm font-medium text-scalejade-600 mb-5 block">
                         {t('header_badge')}
                     </span>
                     <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-slate-900 tracking-tight leading-[1.05] mb-6">
@@ -104,8 +116,8 @@ export default function SectorsPage() {
                                 regulations: t('proof_regulations'),
                                 work: t('proof_work'),
                                 lead: t('proof_lead'),
-                                studies: t('count_studies', { count: sector.workIds.length }),
-                                papers: t('count_papers', { count: sector.paperSlugs.length }),
+                                studies: t('count_studies', { count: studiesIn(sector) }),
+                                papers: t('count_papers', { count: papersIn(sector) }),
                                 view: t('view'),
                             }}
                             prefix={locale}
@@ -120,7 +132,7 @@ export default function SectorsPage() {
                 if a sector is worth listing it is worth reading. */}
             <section className="px-6 pb-20 md:pb-28" aria-labelledby="also-heading">
                 <div className="max-w-7xl mx-auto border-t border-slate-200 pt-10">
-                    <h2 id="also-heading" className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-500 mb-3">
+                    <h2 id="also-heading" className="text-sm font-medium text-slate-500 mb-3">
                         {t('also_title')}
                     </h2>
                     <p className="text-slate-700 leading-relaxed max-w-[58ch] mb-8">
@@ -133,7 +145,7 @@ export default function SectorsPage() {
                                 className="grid grid-cols-1 gap-x-8 gap-y-1 py-4 sm:grid-cols-[minmax(0,17rem)_1fr] sm:items-baseline"
                             >
                                 <dt className="font-medium text-slate-900">{s(key)}</dt>
-                                <dd className="font-mono text-xs uppercase tracking-[0.08em] text-slate-600">
+                                <dd className="text-xs font-medium text-slate-600">
                                     {t(`also_qualifier.${key}`)}
                                 </dd>
                             </div>
@@ -204,17 +216,17 @@ function SectorCard({
                 a piece of published work, and a named human. */}
             <dl className="mt-auto space-y-3.5 border-t border-slate-200 pt-6 text-sm">
                 <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500 mb-1.5">
+                    <dt className="text-sm font-medium text-slate-500 mb-1.5">
                         {labels.regulations}
                     </dt>
-                    <dd className="font-mono text-xs leading-relaxed text-slate-800">
+                    <dd className="text-xs leading-relaxed text-slate-800">
                         {shownRegs.join(' · ')}
                         {extraRegs > 0 && <span className="text-slate-500"> +{extraRegs}</span>}
                     </dd>
                 </div>
 
                 <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500 mb-1.5">
+                    <dt className="text-sm font-medium text-slate-500 mb-1.5">
                         {labels.work}
                     </dt>
                     <dd className="text-slate-800">
@@ -226,7 +238,7 @@ function SectorCard({
                     better than a placeholder human. */}
                 {sector.lead && (
                     <div>
-                        <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-slate-500 mb-1.5">
+                        <dt className="text-sm font-medium text-slate-500 mb-1.5">
                             {labels.lead}
                         </dt>
                         <dd className="text-slate-800">
@@ -245,7 +257,3 @@ function SectorCard({
 }
 
 /** next-intl serves the default locale unprefixed; mirror that in internal links. */
-function useLocalePrefix() {
-    const locale = useLocale();
-    return locale === 'en' ? '' : `/${locale}`;
-}

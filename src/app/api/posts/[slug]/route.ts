@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import type { BlogSection } from '@/data/blog';
+import { slugify } from '@/lib/api';
+import { isAllowedImageUrl } from '@/lib/images';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const writeKey =
@@ -10,7 +13,7 @@ const API_TOKEN = process.env.BLOG_API_TOKEN;
 
 const CORS_HEADERS: Record<string, string> = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, DELETE, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, PATCH, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
     'Access-Control-Max-Age': '86400',
 };
@@ -81,6 +84,99 @@ export async function DELETE(
         if (error) return json({ error: error.message }, 500);
         if (!data) return json({ error: 'Not found' }, 404);
         return json({ deleted: data });
+    } catch (e) {
+        return json({ error: (e as Error).message }, 500);
+    }
+}
+
+type PostPatch = {
+    title?: string;
+    slug?: string;
+    excerpt?: string;
+    category?: string;
+    author?: string;
+    date?: string; // YYYY-MM-DD
+    readingTime?: string;
+    coverImage?: string | null;
+    sections?: BlogSection[];
+    isPublished?: boolean;
+};
+
+const PATCH_COLUMNS: Record<keyof PostPatch, string> = {
+    title: 'title',
+    slug: 'slug',
+    excerpt: 'excerpt',
+    category: 'category',
+    author: 'author',
+    date: 'published_at',
+    readingTime: 'reading_time',
+    coverImage: 'cover_image',
+    sections: 'sections',
+    isPublished: 'is_published',
+};
+
+// PATCH /api/posts/{slug} -> update any subset of fields (token required).
+// Set `isPublished: false` to take a post down without deleting it.
+export async function PATCH(
+    req: NextRequest,
+    { params }: { params: Promise<{ slug: string }> }
+) {
+    if (!isAuthorized(req)) {
+        return json({ error: 'Unauthorized' }, 401);
+    }
+
+    let payload: PostPatch;
+    try {
+        payload = await req.json();
+    } catch {
+        return json({ error: 'Invalid JSON body' }, 400);
+    }
+
+    if (payload.date !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(payload.date)) {
+        return json({ error: '`date` must be YYYY-MM-DD' }, 400);
+    }
+    if (
+        payload.sections !== undefined &&
+        !(
+            Array.isArray(payload.sections) &&
+            payload.sections.length > 0 &&
+            payload.sections.every((s) => s && Array.isArray(s.paragraphs) && s.paragraphs.every((p) => typeof p === 'string'))
+        )
+    ) {
+        return json({ error: '`sections` must be a non-empty array of { heading?, paragraphs: string[], image?, imageCaption? }' }, 400);
+    }
+    if (payload.isPublished !== undefined && typeof payload.isPublished !== 'boolean') {
+        return json({ error: '`isPublished` must be a boolean' }, 400);
+    }
+
+    const images = [payload.coverImage ?? undefined, ...(payload.sections ?? []).map((s) => s.image)].filter(
+        (u): u is string => typeof u === 'string' && u !== ''
+    );
+    if (images.some((u) => !isAllowedImageUrl(u))) {
+        return json({ error: 'Images must be https URLs from images.unsplash.com or uploaded through /api/media.' }, 400);
+    }
+
+    const row: Record<string, unknown> = {};
+    for (const [key, column] of Object.entries(PATCH_COLUMNS)) {
+        const value = payload[key as keyof PostPatch];
+        if (value !== undefined) row[column] = key === 'slug' ? slugify(String(value)) : value;
+    }
+    if (Object.keys(row).length === 0) {
+        return json({ error: 'Nothing to update' }, 400);
+    }
+
+    const { slug } = await params;
+    try {
+        const { data, error } = await db()
+            .from('blog_posts')
+            .update(row)
+            .eq('slug', slug)
+            .select('slug, title, category, author, published_at, reading_time, cover_image, is_published')
+            .maybeSingle();
+
+        if (error) return json({ error: error.message, code: error.code }, error.code === '23505' ? 409 : 500);
+        if (!data) return json({ error: 'Not found' }, 404);
+        return json({ post: data });
     } catch (e) {
         return json({ error: (e as Error).message }, 500);
     }

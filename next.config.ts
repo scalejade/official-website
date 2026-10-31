@@ -8,6 +8,8 @@ const nextConfig = {
     images: {
         remotePatterns: [
             { protocol: 'https' as const, hostname: 'images.unsplash.com' },
+            // Supabase Storage — project galleries and uploaded media (/api/media).
+            { protocol: 'https' as const, hostname: '*.supabase.co', pathname: '/storage/v1/object/public/**' },
         ],
     },
     async redirects() {

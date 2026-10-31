@@ -1,67 +1,43 @@
-import { useTranslations } from 'next-intl';
-import * as motion from "framer-motion/client";
-import { ArrowUpRight } from 'lucide-react';
-import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
+import { Metadata } from 'next';
 
-const BASE = 'https://scalejade.com';
-import { localizedUrl, localeAlternates } from '@/lib/locale-url';
+import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
+import { CONTACT_EMAIL, LEGAL_ENTITIES } from '@/lib/company';
+import { CORE_SECTORS } from '@/data/sectors';
+import { getAllPapers } from '@/data/papers';
 
-/* HIDDEN with the team section below — restore both together.
+// Structure follows Jane Street (facts woven into the story, values as concrete
+// commitments, entity disclosure), Monzo (registration shown as a trust signal)
+// and Hudson River Trading (engineer-led headline, dated history, office list).
+//
+// The team section was removed while its people were placeholders; the old
+// component is in git history (commit bcc0562) if it needs restoring.
 
-const TEAM = [
-  {
-    initials: 'AP',
-    name: 'A. Pradana',
-    role: 'Principal Engineer, AI & Evaluation',
-    history: 'Built evaluation infrastructure and LLM benchmarking pipelines for regulated institutions. Leads the firm\'s applied AI research practice.',
-    prior: 'Previously at [prior employer]',
-    papers: ['tutorbench'],
-    linkedin: '#',
-  },
-  {
-    initials: 'MW',
-    name: 'M. Wibowo',
-    role: 'Senior Engineer, Distributed Systems',
-    history: 'Designed and operated consensus and replication layers for financial settlement systems. Leads the firm\'s blockchain infrastructure work.',
-    prior: 'Previously at [prior employer]',
-    papers: ['tutorbench'],
-    linkedin: '#',
-  },
-  {
-    initials: 'ST',
-    name: 'S. Tan',
-    role: 'Engineer, AI & Data',
-    history: 'Built data annotation pipelines and evaluation rubrics for Southeast Asian language models. Leads data practice for education-sector engagements.',
-    prior: 'Previously at [prior employer]',
-    papers: ['tutorbench'],
-    linkedin: '#',
-  },
-  {
-    initials: 'RH',
-    name: 'R. Halim',
-    role: 'Principal Engineer, Blockchain & Security',
-    history: 'Architected verifiable settlement protocols and cryptographic proof systems for permissioned ledger networks. Leads the firm\'s financial infrastructure practice.',
-    prior: 'Previously at [prior employer]',
-    papers: ['ledgerproof'],
-    linkedin: '#',
-  },
-  {
-    initials: 'DP',
-    name: 'D. Putri',
-    role: 'Senior Engineer, Distributed Systems',
-    history: 'Built BFT consensus implementations and proof-aggregation schemes for regulated financial networks. Leads deployment for the firm\'s blockchain engagements.',
-    prior: 'Previously at [prior employer]',
-    papers: ['ledgerproof'],
-    linkedin: '#',
-  },
+/**
+ * Copy still carrying a `[placeholder]` is never rendered. Fill the value in the
+ * message catalogs and the block appears on its own — no code change needed.
+ * Publishing "[N] engineers" to a bank's procurement team is worse than
+ * publishing nothing.
+ */
+const isDraft = (text: string) => /\[[^\]]*\]/.test(text);
+
+/** `requires: 'papers'` — shown only once research is published. */
+type Item = { title: string; text: string; requires?: 'papers' };
+
+const OFFICES = [
+    {
+        city: 'Singapore',
+        entity: LEGAL_ENTITIES.sg,
+        lines: ['9 Raffles Place, #16-20', 'Republic Plaza II', 'Singapore 048619'],
+    },
+    {
+        city: 'Jakarta',
+        entity: LEGAL_ENTITIES.id,
+        lines: ['Kb. Melati, Tanah Abang', 'Jakarta Pusat 10230', 'Indonesia'],
+    },
 ];
-
-const PAPER_LINKS: Record<string, string> = {
-  tutorbench: '/research/tutorbench',
-  ledgerproof: '/research/ledgerproof',
-};
-*/
 
 export async function generateMetadata({
     params,
@@ -74,12 +50,12 @@ export async function generateMetadata({
 
     const title = isId ? 'Tentang | ScaleJade' : 'About | ScaleJade';
     const description = isId
-        ? 'Insinyur di Singapura dan Jakarta. Kami membangun dan menjalankan perangkat lunak untuk institusi tempat kegagalan adalah peristiwa yang wajib dilaporkan. Tanpa manajer akun, tanpa lapisan pengiriman, tanpa bangku cadangan.'
-        : 'Engineers in Singapore and Jakarta. We build and run software for institutions where a failure is a reportable event. No account managers, no delivery layer, no bench.';
+        ? 'Dibangun oleh insinyur, dipimpin oleh insinyur. ScaleJade membangun dan menjalankan perangkat lunak untuk institusi teregulasi dari Singapura dan Jakarta.'
+        : 'Built by engineers, led by engineers. ScaleJade builds and runs software for regulated institutions from Singapore and Jakarta.';
 
     return {
         metadataBase: new URL(BASE),
-        title,
+        title: { absolute: title },
         description,
         alternates: localeAlternates(locale, '/about'),
         openGraph: {
@@ -95,343 +71,264 @@ export async function generateMetadata({
     };
 }
 
-export default function AboutPage() {
-    const t = useTranslations('About');
+function SectionTitle({ id, children }: { id: string; children: React.ReactNode }) {
+    return (
+        <h2 id={id} className="text-2xl md:text-3xl font-semibold text-slate-900 tracking-tight mb-10">
+            {children}
+        </h2>
+    );
+}
 
-    const facts = [
-        { label: t('fact_founded'), value: t('fact_founded_value') },
-        { label: t('fact_team'), value: t('fact_team_value') },
-        { label: t('fact_entities'), value: t('fact_entities_value') },
-        { label: t('fact_clients'), value: t('fact_clients_value') },
-        { label: t('fact_certifications'), value: t('fact_certifications_value') },
-        { label: t('fact_data_residency'), value: t('fact_data_residency_value') },
-        { label: t('fact_languages'), value: t('fact_languages_value') },
+export default async function AboutPage({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}) {
+    const { locale } = await params;
+    const prefix = locale === 'en' ? '' : `/${locale}`;
+    const t = await getTranslations({ locale, namespace: 'About' });
+
+    const papers = await getAllPapers();
+    const founded = t('stat_founded_value');
+
+    const stats = [
+        { value: founded, label: t('stat_founded') },
+        { value: String(OFFICES.length), label: t('stat_offices') },
+        { value: String(CORE_SECTORS.length), label: t('stat_sectors') },
+        { value: String(papers.length), label: t('stat_papers') },
+        { value: t('stat_engineers_value'), label: t('stat_engineers') },
+        { value: t('stat_clients_value'), label: t('stat_clients') },
+    ].filter((s) => !isDraft(s.value) && s.value !== '0');
+
+    const values = [
+        ...(t.raw('values') as Item[]),
+        ...(t.raw('commitments') as Item[]),
+    ].filter((v) => !isDraft(v.text) && !(v.requires === 'papers' && papers.length === 0));
+
+    const working = (t.raw('working') as Item[]).filter((w) => !isDraft(w.text));
+    const founding = t('founding_text');
+
+    // History: dated facts only. Add milestones here as they become public.
+    const history: { year: string; text: string; href?: string }[] = [
+        ...(isDraft(founded) ? [] : [{ year: founded, text: t('history_founded') }]),
+        ...papers.map((p) => ({
+            year: String(new Date(p.date).getFullYear()),
+            text: t('history_paper', { title: p.title }),
+            href: `${prefix}/research/${p.slug}`,
+        })),
+    ].sort((a, b) => a.year.localeCompare(b.year));
+
+    const registrations = [
+        { entity: LEGAL_ENTITIES.sg, place: t('legal_sg'), reg: t('legal_sg_reg') },
+        { entity: LEGAL_ENTITIES.id, place: t('legal_id'), reg: t('legal_id_reg') },
     ];
 
     return (
-        <div className="min-h-screen bg-canvas pt-24 pb-32" role="main">
-
-            {/* Structured Data - JSON-LD for About Page */}
+        <div className="min-h-screen bg-canvas" role="main">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "AboutPage",
-                        "name": "About ScaleJade",
-                        "description": "ScaleJade is a technology firm building and running software for regulated institutions. Engineers in Singapore and Jakarta.",
-                    })
+                        '@context': 'https://schema.org',
+                        '@type': 'AboutPage',
+                        name: 'About ScaleJade',
+                        url: localizedUrl(locale, '/about'),
+                        about: { '@id': `${BASE}/#organization` },
+                        isPartOf: { '@id': `${BASE}/#website` },
+                    }),
                 }}
             />
 
-            {/* 1. Header */}
-            <section className="px-6 max-w-4xl mx-auto text-center mb-32" aria-labelledby="about-heading">
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-scalejade-800/20 bg-surface text-scalejade-800 text-sm font-medium tracking-wide uppercase"
-                >
-                    {t('intro_badge')}
-                </motion.div>
-
-                {/* HIDDEN — `intro_title` is still the "[N] engineers in Singapore
-                    and Jakarta." placeholder. The visible headline is hidden until
-                    the real headcount is confirmed; restore the block below and
-                    delete the sr-only <h1> to bring it back.
-
-                <motion.h1
-                    id="about-heading"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 mb-8"
-                >
-                    {t('intro_title')}
-                </motion.h1>
-                */}
-
-                {/* Keeps the page's single <h1> and the section's aria-labelledby
-                    target intact while the headline above is hidden. */}
-                <h1 id="about-heading" className="sr-only">
-                    {t('intro_badge')}
-                </h1>
-
-                <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-lg md:text-2xl text-slate-500 font-light leading-relaxed max-w-2xl mx-auto"
-                >
-                    {t('intro_text')}
-                </motion.p>
+            {/* 1. Hero — HRT's "Built by coders, led by coders." */}
+            <section className="px-6 pt-24 pb-16 md:pt-32 md:pb-20" aria-labelledby="about-heading">
+                <div className="max-w-5xl mx-auto">
+                    <p className="text-sm font-medium text-scalejade-600 mb-5">{t('label')}</p>
+                    <h1
+                        id="about-heading"
+                        className="text-4xl md:text-6xl font-semibold tracking-tight text-slate-900 leading-[1.05] mb-6 max-w-[18ch]"
+                    >
+                        {t('title')}
+                    </h1>
+                    <p className="text-lg md:text-xl text-slate-700 leading-relaxed max-w-[58ch]">{t('intro')}</p>
+                </div>
             </section>
 
-            {/* 2. Founding Story */}
-            <section className="px-6 max-w-7xl mx-auto mb-32" aria-labelledby="founding-heading">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="bg-scalejade-900 rounded-3xl p-12 md:p-20 relative overflow-hidden"
-                >
-                    <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent pointer-events-none" />
-
-                    <div className="relative z-10 max-w-3xl">
-                        <h2 id="founding-heading" className="text-scalejade-400 font-semibold tracking-widest uppercase text-sm mb-6">
-                            {t('founding_title')}
-                        </h2>
-                        <p className="text-2xl md:text-3xl text-white font-medium leading-relaxed">
-                            {t('founding_text')}
-                        </p>
-                    </div>
-                </motion.div>
-            </section>
-
-            {/* HIDDEN — the team section. `team_title` / `team_intro` are still
-                placeholder copy and TEAM below is placeholder people. Restore this
-                block, and the TEAM / PAPER_LINKS constants at the top of the file,
-                once the real team is ready to publish.
-
-            3. The Team
-            <section className="px-6 max-w-6xl mx-auto mb-32" aria-labelledby="team-heading">
-                <div className="text-center mb-16">
-                    <h2 id="team-heading" className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-6">
-                        {t('team_title')}
+            {/* 2. Story with the facts woven in — Jane Street's "Established in 2000." */}
+            <section className="px-6 py-16 md:py-20 border-t border-slate-200" aria-labelledby="story-heading">
+                <div className="max-w-5xl mx-auto grid grid-cols-1 gap-10 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-16">
+                    <h2 id="story-heading" className="text-2xl md:text-3xl font-semibold text-slate-900 tracking-tight leading-tight">
+                        {t('story_title', { year: founded })}
                     </h2>
-                    <p className="text-lg text-slate-500 font-light max-w-2xl mx-auto leading-relaxed">
-                        {t('team_intro')}
+                    <div className="space-y-5 text-lg text-slate-700 leading-relaxed max-w-[62ch]">
+                        <p>{t('story_text', { sectors: CORE_SECTORS.length })}</p>
+                        {!isDraft(founding) && <p>{founding}</p>}
+                    </div>
+                </div>
+
+                <dl className={`max-w-5xl mx-auto mt-16 grid grid-cols-2 ${stats.length % 3 === 0 ? 'md:grid-cols-3' : 'md:grid-cols-4'} gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200`}>
+                    {stats.map((s) => (
+                        <div key={s.label} className="bg-white p-6">
+                            <dd className="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight mb-1">{s.value}</dd>
+                            <dt className="text-sm text-slate-600 leading-snug">{s.label}</dt>
+                        </div>
+                    ))}
+                </dl>
+            </section>
+
+            {/* 3. Values as commitments — Jane Street's wording, Monzo's cards. */}
+            <section className="px-6 py-16 md:py-20 bg-surface border-t border-slate-200" aria-labelledby="values-heading">
+                <div className="max-w-5xl mx-auto">
+                    <SectionTitle id="values-heading">{t('values_title')}</SectionTitle>
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {values.map((v) => (
+                            <li key={v.title} className="rounded-xl border border-slate-200 bg-white p-8">
+                                <h3 className="text-lg font-semibold text-slate-900 tracking-tight mb-3">{v.title}</h3>
+                                <p className="text-slate-700 leading-relaxed">{v.text}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </section>
+
+            {/* 4. Working with us — appears once the engagement copy is final. */}
+            {working.length > 0 && (
+                <section className="px-6 py-16 md:py-20 border-t border-slate-200" aria-labelledby="working-heading">
+                    <div className="max-w-5xl mx-auto">
+                        <SectionTitle id="working-heading">{t('working_title')}</SectionTitle>
+                        <dl className="divide-y divide-slate-200 border-y border-slate-200">
+                            {working.map((w) => (
+                                <div key={w.title} className="grid grid-cols-1 gap-3 py-6 md:grid-cols-[minmax(0,16rem)_1fr] md:gap-12">
+                                    <dt className="font-semibold text-slate-900">{w.title}</dt>
+                                    <dd className="text-slate-700 leading-relaxed">{w.text}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </div>
+                </section>
+            )}
+
+            {/* 5. History — HRT's dated timeline. */}
+            {history.length > 0 && (
+                <section className="px-6 py-16 md:py-20 border-t border-slate-200" aria-labelledby="history-heading">
+                    <div className="max-w-5xl mx-auto">
+                        <SectionTitle id="history-heading">{t('history_title')}</SectionTitle>
+                        <ol className="border-l border-slate-200 ml-2">
+                            {history.map((h) => (
+                                <li key={h.text} className="relative pl-8 pb-8 last:pb-0">
+                                    <span
+                                        aria-hidden="true"
+                                        className="absolute -left-[5px] top-2 h-2.5 w-2.5 rounded-full bg-scalejade-600"
+                                    />
+                                    <p className="text-sm font-semibold text-scalejade-700 mb-1">{h.year}</p>
+                                    {h.href ? (
+                                        <Link href={h.href} className="text-slate-800 leading-relaxed hover:text-scalejade-700">
+                                            {h.text}
+                                        </Link>
+                                    ) : (
+                                        <p className="text-slate-800 leading-relaxed">{h.text}</p>
+                                    )}
+                                </li>
+                            ))}
+                        </ol>
+                    </div>
+                </section>
+            )}
+
+            {/* 6. Offices — HRT's directory. */}
+            <section className="px-6 py-16 md:py-20 border-t border-slate-200" aria-labelledby="offices-heading">
+                <div className="max-w-5xl mx-auto">
+                    <SectionTitle id="offices-heading">{t('offices_title')}</SectionTitle>
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {OFFICES.map((o) => (
+                            <li key={o.city} className="rounded-xl border border-slate-200 p-8">
+                                <h3 className="text-xl font-semibold text-slate-900 tracking-tight mb-1">{o.city}</h3>
+                                <p className="text-sm text-scalejade-700 font-medium mb-4">{o.entity}</p>
+                                <address className="not-italic text-slate-700 leading-relaxed">
+                                    {o.lines.map((line) => (
+                                        <span key={line} className="block">{line}</span>
+                                    ))}
+                                </address>
+                            </li>
+                        ))}
+                    </ul>
+                    <p className="mt-6 text-slate-700">
+                        <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-scalejade-700 underline underline-offset-4 hover:text-scalejade-800">
+                            {CONTACT_EMAIL}
+                        </a>
                     </p>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-                    {TEAM.map((person, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.08 }}
-                            className="group"
-                        >
-                            <div className="aspect-square bg-surface border border-slate-200 rounded-2xl flex items-center justify-center mb-5 overflow-hidden">
-                                <span className="text-5xl font-bold text-scalejade-800/25 select-none">
-                                    {person.initials}
-                                </span>
-                            </div>
-                            <h3 className="text-xl font-bold text-slate-900 tracking-tight">
-                                {person.name}
-                            </h3>
-                            <p className="text-sm text-scalejade-600 font-medium mb-3">
-                                {person.role}
-                            </p>
-                            <p className="text-sm text-slate-600 leading-relaxed mb-2">
-                                {person.history}
-                            </p>
-                            <p className="text-xs text-slate-400 mb-3">
-                                {person.prior}
-                            </p>
-                            <div className="flex items-center gap-4 text-xs">
-                                <a
-                                    href={person.linkedin}
-                                    className="text-scalejade-600 hover:text-scalejade-800 font-medium transition-colors"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    LinkedIn
-                                </a>
-                                {person.papers.map((slug) => (
-                                    <Link
-                                        key={slug}
-                                        href={PAPER_LINKS[slug] || '#'}
-                                        className="text-scalejade-600 hover:text-scalejade-800 font-medium transition-colors inline-flex items-center gap-1"
-                                    >
-                                        Paper <ArrowUpRight className="w-3 h-3" />
-                                    </Link>
-                                ))}
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
             </section>
 
-            */}
-
-            {/* 4. How We Work */}
-            <section className="px-6 max-w-6xl mx-auto mb-32" aria-labelledby="how-we-work-heading">
-                <div className="text-center mb-16">
-                    <h2 id="how-we-work-heading" className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
-                        {t('how_we_work_title')}
-                    </h2>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="bg-surface border border-slate-200 p-10 rounded-2xl"
-                    >
-                        <h3 className="text-lg font-bold text-slate-900 mb-3 tracking-tight">
-                            {t('engagement_title')}
-                        </h3>
-                        <p className="text-slate-600 leading-relaxed">
-                            {t('engagement_text')}
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="bg-surface border border-slate-200 p-10 rounded-2xl"
-                    >
-                        <h3 className="text-lg font-bold text-slate-900 mb-3 tracking-tight">
-                            {t('composition_title')}
-                        </h3>
-                        <p className="text-slate-600 leading-relaxed">
-                            {t('composition_text')}
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.15 }}
-                        className="bg-surface border border-slate-200 p-10 rounded-2xl"
-                    >
-                        <h3 className="text-lg font-bold text-slate-900 mb-3 tracking-tight">
-                            {t('ownership_title')}
-                        </h3>
-                        <p className="text-slate-600 leading-relaxed">
-                            {t('ownership_text')}
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="bg-surface border border-slate-200 p-10 rounded-2xl"
-                    >
-                        <h3 className="text-lg font-bold text-slate-900 mb-3 tracking-tight">
-                            {t('start_title')}
-                        </h3>
-                        <p className="text-slate-600 leading-relaxed">
-                            {t('start_text')}
-                        </p>
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* 5. Evidence (replacing values) */}
-            <section className="px-6 max-w-6xl mx-auto mb-32" aria-labelledby="evidence-heading">
-                <div className="text-center mb-16">
-                    <h2 id="evidence-heading" className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
-                        {t('evidence_title')}
-                    </h2>
-                </div>
-
-                <div className="space-y-1">
-                    {[
-                        { label: t('evidence_1_label'), text: t('evidence_1_text') },
-                        { label: t('evidence_2_label'), text: t('evidence_2_text') },
-                        { label: t('evidence_3_label'), text: t('evidence_3_text') },
-                        { label: t('evidence_4_label'), text: t('evidence_4_text') },
-                    ].map((item, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, y: 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.08 }}
-                            className="flex flex-col md:flex-row gap-4 md:gap-8 py-6 border-b border-slate-200 last:border-b-0"
-                        >
-                            <span className="text-sm font-bold text-scalejade-600 tracking-widest uppercase shrink-0 md:w-48">
-                                {item.label}
-                            </span>
-                            <p className="text-slate-600 leading-relaxed">
-                                {item.text}
-                            </p>
-                        </motion.div>
-                    ))}
-                </div>
-            </section>
-
-            {/* 6. The Facts */}
-            <section className="px-6 max-w-4xl mx-auto mb-32" aria-labelledby="facts-heading">
-                <h2 id="facts-heading" className="text-sm font-bold text-scalejade-600 tracking-widest uppercase mb-10 text-center">
-                    {t('facts_title')}
-                </h2>
-
-                <div className="font-mono text-sm">
-                    {facts.map((item, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, y: 6 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.05 }}
-                            className="flex flex-col md:flex-row gap-2 md:gap-8 py-4 border-t border-slate-200"
-                        >
-                            <span className="text-xs font-medium text-slate-400 tracking-widest uppercase shrink-0 md:w-44">
-                                {item.label}
-                            </span>
-                            <span className="text-slate-700">
-                                {item.value}
-                            </span>
-                        </motion.div>
-                    ))}
-                </div>
-            </section>
-
-            {/* 7. Research */}
-            <section className="px-6 max-w-4xl mx-auto mb-32 text-center" aria-labelledby="research-heading">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="bg-surface border border-slate-200 rounded-3xl p-12 md:p-16"
-                >
-                    <h2 id="research-heading" className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-4">
+            {/* 7. Research — only once there is research to read. */}
+            {papers.length > 0 && (
+            <section className="px-6 py-16 md:py-20 bg-surface border-t border-slate-200" aria-labelledby="research-heading">
+                <div className="max-w-5xl mx-auto grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,20rem)_1fr] md:gap-16">
+                    <h2 id="research-heading" className="text-2xl md:text-3xl font-semibold text-slate-900 tracking-tight">
                         {t('research_title')}
                     </h2>
-                    <p className="text-slate-600 leading-relaxed max-w-xl mx-auto mb-8">
-                        {t('research_text')}
-                    </p>
-                    <Link
-                        href="/research"
-                        className="inline-flex items-center gap-2 text-scalejade-600 font-semibold hover:text-scalejade-800 transition-colors"
-                    >
-                        {t('research_cta')} <ArrowUpRight className="w-4 h-4" />
-                    </Link>
-                </motion.div>
+                    <div>
+                        <p className="text-lg text-slate-700 leading-relaxed max-w-[58ch] mb-6">{t('research_text')}</p>
+                        <Link
+                            href={`${prefix}/research`}
+                            className="inline-flex items-center gap-2 font-medium text-scalejade-700 hover:text-scalejade-800"
+                        >
+                            {t('research_cta')}
+                            <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                        </Link>
+                    </div>
+                </div>
+            </section>
+            )}
+
+            {/* 8. Close — contact first, careers second (HRT ends on "Join us"). */}
+            <section className="px-6 py-16 md:py-20 border-t border-slate-200">
+                <div className="max-w-5xl mx-auto grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <div className="rounded-2xl bg-[var(--color-ink-900,#0f1a13)] p-10">
+                        <h2 className="text-2xl md:text-3xl font-semibold text-white tracking-tight mb-8">
+                            {t('contact_title')}
+                        </h2>
+                        <Link
+                            href={`${prefix}/contact`}
+                            className="inline-flex items-center gap-2 bg-white text-ink-900 font-medium px-6 py-3.5 rounded-[3px] hover:bg-scalejade-50 transition-colors"
+                        >
+                            {t('contact_cta')}
+                            <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                        </Link>
+                    </div>
+                    <div className="rounded-2xl border border-slate-200 p-10">
+                        <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 tracking-tight mb-4">
+                            {t('careers_title')}
+                        </h2>
+                        <p className="text-slate-700 leading-relaxed mb-6">{t('careers_text')}</p>
+                        <Link
+                            href={`${prefix}/contact`}
+                            className="inline-flex items-center gap-2 font-medium text-scalejade-700 hover:text-scalejade-800"
+                        >
+                            {t('careers_cta')}
+                            <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                        </Link>
+                    </div>
+                </div>
             </section>
 
-            {/* 8. Careers / CTA */}
-            <section className="px-6 max-w-4xl mx-auto text-center" aria-labelledby="careers-heading">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                >
-                    <h2 id="careers-heading" className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-4">
-                        {t('careers_title')}
+            {/* 9. Legal entities — Jane Street's per-entity disclosure, shown on
+                the page the way Monzo shows its FCA register number. */}
+            <section className="px-6 py-12 border-t border-slate-200" aria-labelledby="legal-heading">
+                <div className="max-w-5xl mx-auto">
+                    <h2 id="legal-heading" className="text-sm font-semibold text-slate-900 mb-2">
+                        {t('legal_title')}
                     </h2>
-                    <p className="text-slate-500 leading-relaxed max-w-xl mx-auto mb-8">
-                        {t('careers_text')}
-                    </p>
-                    <Link
-                        href="/contact"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-scalejade-600 text-white font-semibold rounded-xl hover:bg-scalejade-700 transition-colors"
-                    >
-                        {t('careers_cta')} <ArrowUpRight className="w-4 h-4" />
-                    </Link>
-                </motion.div>
+                    <p className="text-sm text-slate-600 leading-relaxed mb-4">{t('legal_text')}</p>
+                    <ul className="space-y-1 text-sm text-slate-600">
+                        {registrations.map((r) => (
+                            <li key={r.entity}>
+                                <span className="font-medium text-slate-800">{r.entity}</span> — {r.place}
+                                {!isDraft(r.reg) && <>, {r.reg}</>}.
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </section>
-
         </div>
     );
 }

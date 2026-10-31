@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
 import { getAllPapers, topicsOf } from '@/data/papers';
 import { PapersIndex } from '@/components/PapersIndex';
+import { Pagination, PAGE_SIZE, paginate } from '@/components/Pagination';
 
 export async function generateMetadata({
     params,
@@ -20,7 +21,7 @@ export async function generateMetadata({
 
     return {
         metadataBase: new URL(BASE),
-        title,
+        title: { absolute: title },
         description,
         alternates: localeAlternates(locale, '/research'),
         openGraph: {
@@ -38,13 +39,29 @@ export async function generateMetadata({
 
 export default async function ResearchPage({
     params,
+    searchParams,
 }: {
     params: Promise<{ locale: string }>;
+    searchParams: Promise<{ topic?: string; page?: string }>;
 }) {
     const { locale } = await params;
+    const { topic, page } = await searchParams;
     const isId = locale === 'id';
     const papers = await getAllPapers();
     const topics = topicsOf(papers);
+    const prefix = locale === 'en' ? '' : `/${locale}`;
+
+    const activeTopic = topic && topics.includes(topic) ? topic : null;
+    const filtered = activeTopic ? papers.filter((p) => p.topics.includes(activeTopic)) : papers;
+    const { currentPage, totalPages, pageItems } = paginate(filtered, page, PAGE_SIZE.papers);
+
+    const hrefFor = (t: string | null, n = 1) => {
+        const query = new URLSearchParams();
+        if (t) query.set('topic', t);
+        if (n > 1) query.set('page', String(n));
+        const qs = query.toString();
+        return `${prefix}/research${qs ? `?${qs}` : ''}`;
+    };
 
     const badge = isId ? 'Riset' : 'Research';
     const heading = isId ? 'Riset & Publikasi' : 'Research & Papers';
@@ -82,7 +99,7 @@ export default async function ResearchPage({
             {/* Header */}
             <section className="px-6 max-w-6xl mx-auto mb-16">
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
-                    <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-scalejade-800/20 bg-surface px-3 py-1 text-sm font-medium uppercase tracking-wide text-scalejade-800">
+                    <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-scalejade-800/20 bg-surface px-3 py-1 text-sm font-medium text-scalejade-800">
                         {badge}
                     </span>
                     <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-slate-900 md:text-6xl">
@@ -94,7 +111,30 @@ export default async function ResearchPage({
 
             {/* Filterable papers grid */}
             <section className="px-6 max-w-6xl mx-auto">
-                <PapersIndex papers={papers} topics={topics} locale={locale} allLabel={allLabel} />
+                {papers.length > 0 ? (
+                    <>
+                        <PapersIndex
+                            papers={pageItems}
+                            locale={locale}
+                            chips={[
+                                { label: allLabel, href: hrefFor(null), active: activeTopic === null },
+                                ...topics.map((t) => ({ label: t, href: hrefFor(t), active: activeTopic === t })),
+                            ]}
+                        />
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            hrefFor={(n) => hrefFor(activeTopic, n)}
+                            locale={locale}
+                        />
+                    </>
+                ) : (
+                    <p className="text-lg text-slate-700 leading-relaxed max-w-[62ch] border-t border-slate-200 pt-10">
+                        {isId
+                            ? 'Belum ada makalah yang dipublikasikan. Tulisan riset pertama kami sedang disusun.'
+                            : 'No papers are published yet. Our first research write-ups are in progress.'}
+                    </p>
+                )}
             </section>
         </div>
     );

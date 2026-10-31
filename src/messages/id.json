@@ -15,7 +15,7 @@
   "Capabilities": {
     "section_label": "Layanan Kami",
     "heading": "Lima Layanan. Satu Standar.",
-    "subheading": "Tidak semua perusahaan teknologi beroperasi di industri yang teregulasi. Kami beroperasi — dan kami membangun praktik kami di sekitar batasan, persyaratan kepatuhan, dan konsekuensi yang datang bersama wilayah tersebut.",
+    "subheading": "Setiap layanan dirancang cakupannya dan dibangun oleh insinyur yang sama, serta dirancang terhadap regulasi yang harus dipenuhinya — bukan terhadap gagasan umum tentang \"siap patuh\".",
     "software_title": "Rekayasa Perangkat Lunak",
     "software_desc": "Perangkat lunak kustom, direkayasa untuk berkembang dan dibangun untuk bertahan.",
     "software_link": "Pelajari lebih lanjut →",
@@ -29,7 +29,7 @@
     "cloud_desc": "Cloud yang aman dan patuh regulasi untuk sistem yang tidak boleh berhenti.",
     "cloud_link": "Pelajari lebih lanjut →",
     "blockchain_title": "Blockchain & Buku Besar Terdistribusi",
-    "blockchain_desc": "Infrastruktur buku besar yang dapat diaudit untuk integritas catatan yang mutlak.",
+    "blockchain_desc": "Infrastruktur buku besar yang dapat diaudit, dengan catatan yang dapat diverifikasi secara independen.",
     "blockchain_link": "Pelajari lebih lanjut →",
     "flagship_label": "Layanan Unggulan",
     "supporting_label": "Kemampuan Pendukung"
@@ -87,7 +87,7 @@
     "advantage_title": "Keunggulan\nKompetitif Kami"
   },
   "TrustSection": {
-    "badge": "Mitra Kami",
+    "badge": "Klien & mitra",
     "title_main": "Bekerja bersama institusi di Asia Tenggara, tempat satu kegagalan adalah ",
     "title_highlight": "peristiwa yang wajib dilaporkan.",
     "tag_1": "Institusi Keuangan",
@@ -95,60 +95,129 @@
     "tag_3": "Pendidikan & Riset"
   },
   "About": {
-    "intro_badge": "Tentang",
-    "intro_title": "[N] insinyur di Singapura dan Jakarta.",
-    "intro_text": "Kami membangun dan menjalankan perangkat lunak untuk institusi tempat kegagalan adalah peristiwa yang wajib dilaporkan. Tanpa manajer akun, tanpa lapisan pengiriman, tanpa bangku cadangan.",
-    "founding_title": "Mengapa kami ada",
+    "label": "Tentang",
+    "title": "Dibangun oleh insinyur, dipimpin oleh insinyur.",
+    "intro": "Kami membangun dan menjalankan perangkat lunak untuk institusi tempat kegagalan adalah peristiwa yang wajib dilaporkan. Tanpa manajer akun, tanpa lapisan pengiriman, tanpa bangku cadangan.",
+    "story_title": "Berdiri sejak {year}. Dibangun untuk bertahan.",
+    "story_text": "Insinyur ScaleJade telah menjalankan sistem produksi di bawah regulasi yang sama dengan yang dipatuhi klien kami. Kami bekerja dari Singapura dan Jakarta di {sectors} sektor inti — institusi keuangan, sektor publik, dan pendidikan — dan setiap keterlibatan dikerjakan oleh orang yang menyusun cakupannya.",
     "founding_text": "[Founder] menghabiskan [N] tahun membangun [sistem spesifik] di [institusi]. Masalah yang berulang bukanlah teknologi — melainkan bahwa perusahaan yang mampu melakukan rekayasa tidak memahami regulasi, dan perusahaan yang memahami regulasi mensubkontrakkan rekayasanya. ScaleJade hadir untuk menjadi satu tim yang melakukan keduanya.",
-    "team_title": "Tim",
-    "team_intro": "Kami adalah [N] insinyur di Singapura dan Jakarta. Tanpa manajer akun, tanpa lapisan pengiriman, tanpa bangku cadangan. Orang yang menentukan cakupan proyek Anda adalah orang yang membangunnya, dan orang yang Anda email jam 11 malam adalah orang yang menulis kodenya.",
-    "how_we_work_title": "Cara kami bekerja",
-    "engagement_title": "Model keterlibatan",
-    "engagement_text": "Kami menawarkan [dua/tiga] model keterlibatan: [pengiriman dengan cakupan tetap untuk proyek yang terdefinisi dengan baik, tim tertanam untuk pekerjaan produk berkelanjutan, dan operasi terkelola untuk sistem yang harus tetap berjalan]. Masing-masing dimulai dengan pertanyaan yang sama: apa yang tidak boleh gagal, dan apa yang terjadi jika gagal.",
-    "composition_title": "Komposisi tim",
-    "composition_text": "Keterlibatan tipikal terdiri dari [N] insinyur, salah satunya adalah seorang principal, selama [N] bulan. Anda mendapatkan orang yang Anda temui di panggilan penentuan cakupan — bukan tim yang berbeda di hari pertama. Tanpa junior yang ditagih dengan tarif senior, tanpa serah terima ke luar negeri.",
-    "ownership_title": "Apa yang dimiliki klien",
-    "ownership_text": "Anda memiliki kode, dokumentasi, konfigurasi infrastruktur, dan kekayaan intelektual. Setiap keterlibatan mencakup paket serah terima yang ditulis selama pembangunan — bukan dirangkai di akhir — sehingga tim Anda dapat mengoperasikan dan memperluas sistem tanpa kami.",
-    "start_title": "Bagaimana kami memulai",
-    "start_text": "Kami memulai dengan penemuan berbayar selama [dua minggu]. Kami mempelajari arsitektur Anda, batasan Anda, dan tim Anda yang ada. Di akhir, Anda menerima dokumen cakupan dengan jadwal tetap, tim tetap, dan harga tetap. Jika kami bukan mitra yang tepat, kami akan memberi tahu dan Anda tidak berutang apa pun.",
-    "evidence_title": "Fondasi kami",
-    "evidence_1_label": "Keandalan",
-    "evidence_1_text": "SLA standar: [waktu respons / komitmen uptime]. Model on-call: [deskripsi]. Kebijakan tinjauan insiden: [deskripsi]. Uptime terukur di seluruh keterlibatan: [metrik].",
-    "evidence_2_label": "Keamanan",
-    "evidence_2_text": "Status ISO 27001: [tersertifikasi / dalam proses, target QX 20XX]. Frekuensi uji penetrasi: [frekuensi], dilakukan oleh [perusahaan]. Data klien dihosting di [yurisdiksi]. Akses produksi: [siapa yang memegangnya, dengan kontrol apa].",
-    "evidence_3_label": "Kepatuhan",
-    "evidence_3_text": "Kerangka kerja yang telah kami bangun: [POJK / Pedoman MAS TRM / UU PDP No. 27/2022 / PDPA / ISO 20022 / lainnya]. Kami merancang dan mendokumentasikan sesuai regulasi yang disebutkan, bukan klaim 'siap regulasi' yang generik.",
-    "evidence_4_label": "Keberlanjutan",
-    "evidence_4_text": "Escrow kode sumber: [penyedia, ketentuan]. Kepemilikan IP: klien memilikinya, dinyatakan dalam kontrak. Kebijakan serah terima terdokumentasi: termasuk dalam setiap keterlibatan. Jika perusahaan berhenti beroperasi: [kode Anda, infrastruktur Anda, jalur migrasi Anda].",
-    "facts_title": "Fakta",
-    "fact_founded": "Didirikan",
-    "fact_founded_value": "[tahun]",
-    "fact_team": "Tim",
-    "fact_team_value": "[N] insinyur · Singapura, Jakarta",
-    "fact_entities": "Entitas",
-    "fact_entities_value": "ScaleJade Technology Ltd (Singapura) · UEN [nomor]  PT Skala Kecerdasan Nusantara (Indonesia) · NIB [nomor]",
-    "fact_clients": "Klien",
-    "fact_clients_value": "[N] institusi di bidang perbankan, pendidikan, sektor publik",
-    "fact_certifications": "Sertifikasi",
-    "fact_certifications_value": "ISO 27001 — [status] · SOC 2 — [status]",
-    "fact_data_residency": "Residensi data",
-    "fact_data_residency_value": "[tempat data klien dihosting, berdasarkan yurisdiksi]",
-    "fact_languages": "Bahasa",
-    "fact_languages_value": "Inggris · Bahasa Indonesia · [lainnya]",
+    "stats_label": "ScaleJade dalam angka",
+    "stat_founded": "Didirikan",
+    "stat_founded_value": "2024",
+    "stat_offices": "Kantor, di Singapura dan Jakarta",
+    "stat_sectors": "Sektor teregulasi inti",
+    "stat_papers": "Makalah riset terpublikasi",
+    "stat_engineers": "Insinyur",
+    "stat_engineers_value": "[N]",
+    "stat_clients": "Institusi yang dilayani",
+    "stat_clients_value": "[N]",
+    "values_title": "Yang kami pegang",
+    "values": [
+      {
+        "title": "Yang menyusun cakupan, dia yang membangun.",
+        "text": "Tanpa manajer akun, tanpa lapisan pengiriman, tanpa bangku cadangan. Insinyur di panggilan penentuan cakupan adalah insinyur yang menulis kodenya — dan yang menjawab ketika ada yang rusak."
+      },
+      {
+        "title": "Regulasi yang disebutkan, bukan \"siap patuh\".",
+        "text": "Kami merancang dan mendokumentasikan sesuai regulasi yang berlaku: POJK dan ketentuan pembayaran Bank Indonesia untuk keuangan, SPBE dan UU PDP untuk sektor publik, serta UU PDP, PDDIKTI, dan PDPA Singapura untuk pendidikan."
+      },
+      {
+        "title": "Anda memiliki apa yang kami bangun.",
+        "text": "Anda memiliki kode, dokumentasi, konfigurasi infrastruktur, dan kekayaan intelektual. Setiap keterlibatan mencakup paket serah terima yang ditulis selama pembangunan — bukan dirangkai di akhir — sehingga tim Anda dapat mengoperasikan dan memperluas sistem tanpa kami."
+      },
+      {
+        "title": "Kami mempublikasikan buktinya.",
+        "text": "Tolok ukur kami dipublikasikan, termasuk bagian yang tidak menguntungkan modelnya. Riset ditulis oleh insinyur yang sama yang membangun sistem klien.",
+        "requires": "papers"
+      }
+    ],
+    "commitments": [
+      {
+        "title": "Keandalan",
+        "text": "SLA standar: [waktu respons / komitmen uptime]. Model on-call: [deskripsi]. Kebijakan tinjauan insiden: [deskripsi]. Uptime terukur di seluruh keterlibatan: [metrik]."
+      },
+      {
+        "title": "Keamanan",
+        "text": "Status ISO 27001: [tersertifikasi / dalam proses, target QX 20XX]. Frekuensi uji penetrasi: [frekuensi], dilakukan oleh [perusahaan]. Data klien dihosting di [yurisdiksi]. Akses produksi: [siapa yang memegangnya, dengan kontrol apa]."
+      },
+      {
+        "title": "Keberlanjutan",
+        "text": "Escrow kode sumber: [penyedia, ketentuan]. Kepemilikan IP: klien memilikinya, dinyatakan dalam kontrak. Kebijakan serah terima terdokumentasi: termasuk dalam setiap keterlibatan. Jika perusahaan berhenti beroperasi: [kode Anda, infrastruktur Anda, jalur migrasi Anda]."
+      }
+    ],
+    "working_title": "Bekerja dengan kami",
+    "working": [
+      {
+        "title": "Bagaimana kami memulai",
+        "text": "Kami memulai dengan penemuan berbayar selama [dua minggu]. Kami mempelajari arsitektur Anda, batasan Anda, dan tim Anda yang ada. Di akhir, Anda menerima dokumen cakupan dengan jadwal tetap, tim tetap, dan harga tetap. Jika kami bukan mitra yang tepat, kami akan memberi tahu dan Anda tidak berutang apa pun."
+      },
+      {
+        "title": "Model keterlibatan",
+        "text": "Kami menawarkan [dua/tiga] model keterlibatan: [pengiriman dengan cakupan tetap untuk proyek yang terdefinisi dengan baik, tim tertanam untuk pekerjaan produk berkelanjutan, dan operasi terkelola untuk sistem yang harus tetap berjalan]. Masing-masing dimulai dengan pertanyaan yang sama: apa yang tidak boleh gagal, dan apa yang terjadi jika gagal."
+      },
+      {
+        "title": "Komposisi tim",
+        "text": "Keterlibatan tipikal terdiri dari [N] insinyur, salah satunya adalah seorang principal, selama [N] bulan. Anda mendapatkan orang yang Anda temui di panggilan penentuan cakupan — bukan tim yang berbeda di hari pertama. Tanpa junior yang ditagih dengan tarif senior, tanpa serah terima ke luar negeri."
+      }
+    ],
+    "history_title": "Sejarah",
+    "history_founded": "ScaleJade didirikan.",
+    "history_paper": "Menerbitkan “{title}”.",
+    "offices_title": "Kantor",
+    "legal_title": "Entitas hukum",
+    "legal_text": "ScaleJade beroperasi melalui dua perusahaan, satu di setiap negara tempat kami bekerja.",
+    "legal_sg": "Didirikan di Singapura",
+    "legal_id": "Didirikan di Indonesia",
+    "legal_sg_reg": "UEN [nomor]",
+    "legal_id_reg": "NIB [nomor]",
     "research_title": "Riset",
-    "research_text": "Preprint riset kami ditulis oleh orang-orang di halaman ini. Kami mempublikasikan secara terbuka karena institusi yang kami layani perlu melihat pekerjaannya sebelum mereka mempercayai implementasinya.",
+    "research_text": "Riset kami ditulis oleh insinyur yang membangun dan menjalankan sistem klien. Kami mempublikasikannya secara terbuka karena institusi yang kami layani perlu melihat pekerjaannya sebelum memercayai implementasinya.",
     "research_cta": "Baca riset kami",
     "careers_title": "Bergabunglah",
     "careers_text": "Kami merekrut sesekali dan dengan sengaja. Jika Anda membangun sistem produksi di lingkungan yang teregulasi dan ingin bekerja pada masalah di mana kebenaran tidak bisa ditawar, perkenalkan diri Anda.",
-    "careers_cta": "Hubungi kami"
+    "careers_cta": "Perkenalkan diri Anda",
+    "contact_title": "Mengerjakan sesuatu yang tidak boleh gagal?",
+    "contact_cta": "Bicara dengan insinyur"
   },
   "Portfolio": {
     "badge": "Karya Kami",
     "title": "Proyek yang Kami Banggakan.",
-    "subtitle": "Pilihan karya yang telah kami lakukan untuk klien di berbagai industri — dari platform keuangan hingga sistem berbasis AI dan jaringan blockchain.",
+    "subtitle": "Pilihan keterlibatan di sektor keuangan, energi, rekayasa, dan pendidikan. Semuanya dimulai dengan pertanyaan yang sama: apa yang tidak boleh gagal, dan apa yang terjadi jika gagal.",
     "view_live": "Lihat Studi Kasus",
-    "metrics_header": "Hasil Utama",
-    "tech_header": "Teknologi yang Digunakan"
+    "metrics_header": "Sorotan rekayasa",
+    "tech_header": "Teknologi yang Digunakan",
+    "filter_label": "Saring berdasarkan sektor",
+    "filter_all": "Semua sektor",
+    "nda_note": "Nama klien tidak dicantumkan apabila perjanjian kami mengharuskannya. Panggilan referensi dapat diatur atas permintaan, dengan persetujuan klien.",
+    "empty": "Belum ada keterlibatan yang dipublikasikan di sektor ini.",
+    "cta_title": "Menghadapi sistem serupa?",
+    "cta_body": "Bicaralah dengan insinyur yang membangun pekerjaan semacam ini. Ceritakan batasan yang tidak dapat Anda hindari.",
+    "cta_button": "Bicara dengan insinyur",
+    "read_case": "Baca studi kasus",
+    "back": "Semua proyek",
+    "challenge": "Tantangannya",
+    "constraints": "Batasan regulasi",
+    "built": "Yang kami bangun",
+    "engagement": "Keterlibatan",
+    "role": "Peran kami",
+    "team": "Tim",
+    "duration": "Durasi",
+    "outcomes": "Hasil",
+    "sector_link": "Cara kami bekerja di sektor ini",
+    "reference": "Panggilan referensi tersedia atas permintaan, dengan persetujuan klien.",
+    "client": "Klien",
+    "confidential_note": "Nama klien dirahasiakan berdasarkan NDA.",
+    "gallery_title": "Di lapangan",
+    "gallery_open": "Buka gambar",
+    "gallery_close": "Tutup",
+    "gallery_previous": "Gambar sebelumnya",
+    "gallery_next": "Gambar berikutnya",
+    "kind_field": "Di lokasi",
+    "kind_product": "Sistem yang berjalan",
+    "kind_architecture": "Arsitektur",
+    "kind_team": "Tim",
+    "kind_other": "",
+    "none": "Kami sedang menyusun studi kasus kami. Sampai dipublikasikan, tanyakan langsung kepada kami tentang pekerjaan di sektor Anda."
   },
   "Demo": {
     "badge": "Mari Bekerja Sama",
@@ -160,7 +229,14 @@
     "form_req": "Apa yang sedang Anda kerjakan?",
     "form_submit": "Kirim Pesan",
     "cal_title": "Jadwalkan Panggilan",
-    "cal_desc": "Pilih waktu yang sesuai untuk terhubung dengan salah satu insinyur senior kami."
+    "cal_desc": "Pilih waktu yang sesuai untuk terhubung dengan salah satu insinyur senior kami.",
+    "response_time": "Seorang insinyur akan membalas dalam satu hari kerja.",
+    "email_label": "Lebih suka email?",
+    "org_placeholder": "mis. nama bank, universitas, atau instansi",
+    "email_placeholder": "nama@organisasi.com",
+    "req_placeholder": "Sistemnya, batasannya, dan tenggat waktunya — sebanyak yang dapat Anda bagikan.",
+    "privacy_note": "Kami hanya menggunakan informasi yang Anda kirim untuk membalas pertanyaan Anda. Lihat <link>Kebijakan Privasi</link> kami.",
+    "cal_iframe_title": "Jadwalkan panggilan dengan ScaleJade"
   },
   "Research": {
     "intro_badge": "Riset",
@@ -364,5 +440,24 @@
       "body": "Kami akan mengatakan sejujurnya apakah kami tim yang tepat untuk itu.",
       "cta": "Bicara dengan insinyur kami"
     }
+  },
+  "Footer": {
+    "tagline": "Perangkat lunak, AI, dan infrastruktur buku besar untuk institusi teregulasi di Singapura dan Indonesia — dibangun oleh insinyur yang tetap menjalankannya.",
+    "entity_sg": "Singapura",
+    "entity_id": "Indonesia",
+    "offices": "Kantor",
+    "company": "Perusahaan",
+    "contact": "Kontak",
+    "link_work": "Proyek",
+    "link_about": "Tentang Kami",
+    "link_insights": "Wawasan",
+    "link_research": "Riset",
+    "link_contact": "Kontak",
+    "book_call": "Jadwalkan panggilan",
+    "follow_x": "Ikuti kami di X",
+    "follow_linkedin": "Ikuti kami di LinkedIn",
+    "rights": "Hak cipta dilindungi.",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Ketentuan Penggunaan"
   }
 }

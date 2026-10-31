@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/data/blog';
 import { getAllPapers } from '@/data/papers';
 import { localizedUrl } from '@/lib/locale-url';
+import { getAllProjects } from '@/data/projects';
 
 const locales = ['en', 'id'] as const;
 
@@ -20,8 +21,11 @@ const staticRoutes = [
     '/portfolio',
     '/about',
     '/research',
+    '/insights',
     '/blog',
     '/contact',
+    '/privacy',
+    '/terms',
 ];
 
 // hreflang alternates respecting the `as-needed` prefix (en has no prefix).
@@ -77,5 +81,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }))
     );
 
-    return [...staticEntries, ...serviceEntries, ...blogEntries, ...paperEntries];
+    const projects = await getAllProjects();
+    const caseStudyEntries = projects.flatMap(study =>
+        locales.map(locale => ({
+            url: localizedUrl(locale, `/portfolio/${study.slug}`),
+            lastModified: new Date(study.updatedAt),
+            changeFrequency: 'monthly' as const,
+            priority: 0.75,
+            alternates: { languages: languages(`/portfolio/${study.slug}`) },
+        }))
+    );
+
+    return [...staticEntries, ...serviceEntries, ...caseStudyEntries, ...blogEntries, ...paperEntries];
 }

@@ -1,6 +1,3 @@
-'use client';
-
-import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import * as motion from 'framer-motion/client';
 import { ArrowUpRight } from 'lucide-react';
@@ -14,52 +11,42 @@ function formatDate(iso: string, locale: string) {
     });
 }
 
+// Server component. Filtering and pagination happen in the page via
+// ?topic= and ?page=, so the chips are plain links and every view is crawlable.
 export function PapersIndex({
     papers,
-    topics,
+    chips,
     locale,
-    allLabel,
 }: {
+    /** The papers for the current page, already filtered. */
     papers: Paper[];
-    topics: string[];
+    chips: { label: string; href: string; active: boolean }[];
     locale: string;
-    allLabel: string;
 }) {
-    const [active, setActive] = useState<string>('__all__');
-
-    const filtered = useMemo(
-        () => (active === '__all__' ? papers : papers.filter((p) => p.topics.includes(active))),
-        [papers, active]
-    );
-
-    const chips = [{ key: '__all__', label: allLabel }, ...topics.map((t) => ({ key: t, label: t }))];
-
     return (
         <>
             {/* Topic filter */}
-            <div className="flex flex-wrap gap-2 mb-12">
-                {chips.map((chip) => {
-                    const isActive = active === chip.key;
-                    return (
-                        <button
-                            key={chip.key}
-                            onClick={() => setActive(chip.key)}
-                            aria-pressed={isActive}
-                            className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
-                                isActive
-                                    ? 'bg-scalejade-900 text-white border-scalejade-900'
-                                    : 'bg-surface text-slate-600 border-slate-200 hover:border-scalejade-600/50'
-                            }`}
-                        >
-                            {chip.label}
-                        </button>
-                    );
-                })}
-            </div>
+            <nav className="flex flex-wrap gap-2 mb-12" aria-label={locale === 'id' ? 'Topik' : 'Topics'}>
+                {chips.map((chip) => (
+                    <Link
+                        key={chip.href}
+                        href={chip.href}
+                        scroll={false}
+                        aria-current={chip.active ? 'true' : undefined}
+                        className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+                            chip.active
+                                ? 'bg-scalejade-900 text-white border-scalejade-900'
+                                : 'bg-surface text-slate-600 border-slate-200 hover:border-scalejade-600/50'
+                        }`}
+                    >
+                        {chip.label}
+                    </Link>
+                ))}
+            </nav>
 
             {/* Papers grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                {filtered.map((paper, idx) => (
+                {papers.map((paper, idx) => (
                     <motion.div
                         key={paper.slug}
                         initial={{ opacity: 0, y: 16 }}
@@ -68,10 +55,10 @@ export function PapersIndex({
                         transition={{ delay: Math.min(idx * 0.05, 0.3) }}
                     >
                         <Link
-                            href={`/${locale}/research/${paper.slug}`}
+                            href={`${locale === 'en' ? '' : `/${locale}`}/research/${paper.slug}`}
                             className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-surface p-8 transition-all hover:border-scalejade-600/50 hover:shadow-lg hover:shadow-scalejade-900/5"
                         >
-                            <div className="mb-4 flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-scalejade-700">
+                            <div className="mb-4 flex items-center gap-2 text-xs font-medium text-scalejade-700">
                                 {paper.topics.slice(0, 3).map((topic) => (
                                     <span key={topic} className="rounded-full bg-scalejade-50 px-2.5 py-1">
                                         {topic}

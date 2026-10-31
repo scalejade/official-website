@@ -43,8 +43,6 @@ export type CoreSector = {
     regulations: string[];
     /** ids from clients.json, filtered to this sector. */
     clientIds: string[];
-    /** ids from portfolio.json. */
-    workIds: string[];
     /** slugs from the papers table. */
     paperSlugs: string[];
     /** null until the team page ships — the block is skipped rather than faked. */
@@ -66,7 +64,6 @@ export const CORE_SECTORS: CoreSector[] = [
             'MAS TRM Guidelines',
         ],
         clientIds: ['bank-indonesia', 'bni', 'finnova'],
-        workIds: ['bni-core-settlement', 'finnova-banking-cloud'],
         paperSlugs: ['ledgerproof', 'driftguard'],
         lead: null,
     },
@@ -81,10 +78,9 @@ export const CORE_SECTORS: CoreSector[] = [
             'BSSN baselines',
             'IM8',
         ],
-        // No published work or papers in this sector yet. The proof block renders
-        // empty rather than borrowing evidence from another sector.
+        // No published papers in this sector yet. The proof block renders empty
+        // rather than borrowing evidence from another sector.
         clientIds: [],
-        workIds: [],
         paperSlugs: [],
         lead: null,
     },
@@ -99,7 +95,6 @@ export const CORE_SECTORS: CoreSector[] = [
             'ISO 27001',
         ],
         clientIds: ['sbmitb', 'smu'],
-        workIds: ['smu-research-network', 'sbmitb-academic-ledger'],
         paperSlugs: ['tutorbench'],
         lead: null,
     },

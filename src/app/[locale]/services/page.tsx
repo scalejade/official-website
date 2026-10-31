@@ -90,7 +90,7 @@ export default function ServicesPage() {
             id: 'blockchain',
             icon: ShieldCheck,
             title: 'Blockchain & Distributed Ledger',
-            oneLine: 'Auditable ledger infrastructure for absolute record integrity.',
+            oneLine: 'Auditable ledger infrastructure with records that can be verified independently.',
             desc: 'Permissioned ledger networks for institutions where every record matters — settlement, compliance, and supply-chain traceability built to hold up under the highest scrutiny.',
             slug: 'blockchain',
         },
@@ -126,7 +126,7 @@ export default function ServicesPage() {
                         "provider": {
                             "@type": "Organization",
                             "name": "ScaleJade",
-                            "alternateName": ["ScaleJade Technology", "PT Skala Kecerdasan Nusantara", "ScaleJade Technology Ltd"],
+                            "alternateName": ["ScaleJade Technology", "PT Skala Kecerdasan Nusantara", "ScaleJade Technology Pte. Ltd."],
                             "url": "https://www.scalejade.com"
                         },
                         "mainEntity": {
@@ -152,7 +152,7 @@ export default function ServicesPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="max-w-3xl"
                     >
-                        <span className="text-scalejade-600 font-semibold tracking-widest uppercase text-xs mb-4 block">
+                        <span className="text-scalejade-600 font-semibold text-xs mb-4 block">
                             {t('header_badge')}
                         </span>
                         <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-5">
@@ -168,7 +168,7 @@ export default function ServicesPage() {
             {/* ── 2. Flagship Services ── */}
             <section className="pt-12 md:pt-20 pb-6 md:pb-8 px-4 sm:px-6" aria-labelledby="flagship-heading">
                 <div className="max-w-7xl mx-auto">
-                    <span className="text-scalejade-600 font-bold tracking-widest uppercase text-xs mb-6 md:mb-10 block">Flagship Services</span>
+                    <span className="text-scalejade-600 font-bold text-xs mb-6 md:mb-10 block">Flagship Services</span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                         {flagship.map((service, idx) => {
                             const Icon = service.icon;
@@ -210,7 +210,7 @@ export default function ServicesPage() {
             {/* ── 3. Supporting Capabilities ── */}
             <section className="pt-6 md:pt-8 pb-12 md:pb-20 px-4 sm:px-6" aria-labelledby="supporting-heading">
                 <div className="max-w-7xl mx-auto">
-                    <span className="text-slate-400 font-bold tracking-widest uppercase text-xs mb-6 md:mb-10 block">Supporting Capabilities</span>
+                    <span className="text-slate-400 font-bold text-xs mb-6 md:mb-10 block">Supporting Capabilities</span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                         {supporting.map((service, idx) => {
                             const Icon = service.icon;
@@ -257,7 +257,7 @@ export default function ServicesPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <span className="text-white font-bold tracking-widest uppercase text-xs mb-6 block">
+                        <span className="text-white font-bold text-xs mb-6 block">
                             {a('advantage_label')}
                         </span>
                         <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white tracking-tight leading-tight whitespace-pre-line max-w-2xl">
@@ -294,7 +294,7 @@ export default function ServicesPage() {
                         className="grid md:grid-cols-[220px_1fr] gap-6 md:gap-10 items-start bg-slate-50 rounded-2xl md:rounded-3xl px-6 py-10 md:px-16 md:py-16 border border-slate-100"
                     >
                         <div>
-                            <span className="text-scalejade-600 font-bold tracking-widest uppercase text-xs">
+                            <span className="text-scalejade-600 font-bold text-xs">
                                 {a('label')}
                             </span>
                         </div>
@@ -314,7 +314,7 @@ export default function ServicesPage() {
                         viewport={{ once: true }}
                         className="md:sticky md:top-32"
                     >
-                        <span className="text-scalejade-600 font-bold tracking-widest uppercase text-xs mb-4 block">
+                        <span className="text-scalejade-600 font-bold text-xs mb-4 block">
                             {a('story_label')}
                         </span>
                         <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
@@ -325,7 +325,7 @@ export default function ServicesPage() {
                         </p>
                         <div className="mt-10 flex items-center gap-3">
                             <div className="w-8 h-px bg-scalejade-900" />
-                            <span className="text-xs text-slate-400 tracking-widest uppercase">ScaleJade Engineering</span>
+                            <span className="text-xs text-slate-400 font-medium">ScaleJade Engineering</span>
                         </div>
                     </motion.div>
 

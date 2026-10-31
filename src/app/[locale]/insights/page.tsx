@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
 import { getAllPosts } from '@/data/blog';
 import { getAllPapers } from '@/data/papers';
+import { Pagination, PAGE_SIZE, paginate } from '@/components/Pagination';
 
 // One reverse-chronological stream of everything ScaleJade publishes. /blog and
 // /research stay live as filtered views, so existing links and canonicals survive.
@@ -35,7 +36,7 @@ export async function generateMetadata({
 
     return {
         metadataBase: new URL(BASE),
-        title,
+        title: { absolute: title },
         description,
         alternates: localeAlternates(locale, '/insights'),
         openGraph: {
@@ -56,10 +57,10 @@ export default async function InsightsPage({
     searchParams,
 }: {
     params: Promise<{ locale: string }>;
-    searchParams: Promise<{ type?: string }>;
+    searchParams: Promise<{ type?: string; page?: string }>;
 }) {
     const { locale } = await params;
-    const { type } = await searchParams;
+    const { type, page } = await searchParams;
     const isId = locale === 'id';
     const prefix = isId ? `/${locale}` : '';
 
@@ -86,7 +87,15 @@ export default async function InsightsPage({
         })),
     ].sort((a, b) => b.date.localeCompare(a.date));
 
-    const shown = active === 'all' ? entries : entries.filter((e) => e.kind === active);
+    const filtered = active === 'all' ? entries : entries.filter((e) => e.kind === active);
+    const { currentPage, totalPages, pageItems: shown } = paginate(filtered, page, PAGE_SIZE.posts);
+    const pageHref = (n: number) => {
+        const query = new URLSearchParams();
+        if (active !== 'all') query.set('type', active);
+        if (n > 1) query.set('page', String(n));
+        const qs = query.toString();
+        return `${prefix}/insights${qs ? `?${qs}` : ''}`;
+    };
 
     const label: Record<Filter, string> = {
         all: isId ? 'Semua' : 'All',
@@ -113,7 +122,7 @@ export default async function InsightsPage({
 
             <section className="pt-24 md:pt-32 pb-12 px-6 border-b border-slate-100">
                 <div className="max-w-4xl mx-auto">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-scalejade-600 mb-5 block">
+                    <span className="text-sm font-medium text-scalejade-600 mb-5 block">
                         {isId ? 'Wawasan' : 'Insights'}
                     </span>
                     <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-slate-900 tracking-tight leading-[1.05] mb-6">
@@ -135,7 +144,7 @@ export default async function InsightsPage({
                                 key={f}
                                 href={f === 'all' ? `${prefix}/insights` : `${prefix}/insights?type=${f}`}
                                 aria-current={active === f ? 'true' : undefined}
-                                className={`rounded-[3px] border px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] transition-colors ${
+                                className={`rounded-[3px] border px-3.5 py-1.5 text-sm font-medium transition-colors ${
                                     active === f
                                         ? 'border-scalejade-600 bg-scalejade-50 text-scalejade-700'
                                         : 'border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900'
@@ -155,7 +164,7 @@ export default async function InsightsPage({
                             {shown.map((entry) => (
                                 <li key={entry.slug}>
                                     <Link href={entry.slug} className="group block py-8">
-                                        <div className="flex flex-wrap items-center gap-3 mb-3 font-mono text-[10px] uppercase tracking-[0.16em]">
+                                        <div className="flex flex-wrap items-center gap-3 mb-3 text-sm font-medium">
                                             <span
                                                 className={
                                                     entry.kind === 'paper'
@@ -183,6 +192,7 @@ export default async function InsightsPage({
                             ))}
                         </ul>
                     )}
+                    <Pagination currentPage={currentPage} totalPages={totalPages} hrefFor={pageHref} locale={locale} />
                 </div>
             </section>
         </div>

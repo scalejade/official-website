@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 const CORS_HEADERS: Record<string, string> = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-api-key',
     'Access-Control-Max-Age': '86400',
 };
@@ -12,9 +12,9 @@ export function OPTIONS() {
 }
 
 const spec = {
-    name: 'ScaleJade Blog API',
+    name: 'ScaleJade Content API',
     version: '1.0.0',
-    description: 'Create and list blog posts stored in Supabase.',
+    description: 'Create and manage blog posts, projects (case studies) and media stored in Supabase. Research papers: see /api/docs/research.',
     baseUrl: '/api',
     auth: {
         type: 'API token',
@@ -47,7 +47,7 @@ const spec = {
             method: 'POST',
             path: '/api/posts',
             auth: true,
-            description: 'Create a post. `slug` and `reading_time` are auto-generated if omitted.',
+            description: 'Create a post. `slug` and `reading_time` are auto-generated if omitted. The blog keeps the newest 300 posts (by date): creating one beyond that deletes the oldest, and their slugs are returned as `pruned`.',
             body: {
                 title: 'string (required)',
                 sections:
@@ -124,6 +124,146 @@ const spec = {
   -H "Authorization: Bearer $BLOG_API_TOKEN"`,
             },
         },
+        {
+            method: 'PATCH',
+            path: '/api/posts/{slug}',
+            auth: true,
+            description: 'Update any subset of a post. Send `isPublished: false` to unpublish without deleting.',
+            body: {
+                title: 'string', slug: 'string (renames the URL)', excerpt: 'string', category: 'string',
+                author: 'string', date: 'YYYY-MM-DD', readingTime: 'string', coverImage: 'string | null',
+                sections: 'Array<{ heading?, paragraphs: string[], image?, imageCaption? }>', isPublished: 'boolean',
+            },
+            responses: { '200': '{ post }', '400': 'Validation error', '401': 'Unauthorized', '404': 'Not found', '409': 'Slug taken' },
+            example: {
+                curl: `curl -X PATCH https://scalejade.com/api/posts/how-we-ship-reliable-software \\
+  -H "Authorization: Bearer $BLOG_API_TOKEN" -H "Content-Type: application/json" \\
+  -d '{ "excerpt": "Updated summary", "isPublished": true }'`,
+            },
+        },
+        {
+            method: 'POST',
+            path: '/api/media',
+            auth: true,
+            description:
+                'Upload an image to the public media bucket and get its URL — use it as a post coverImage / section image, a project clientLogoUrl, or a project image. Types: jpeg, png, webp, avif, gif (no SVG).',
+            body: {
+                'multipart/form-data': 'file (≤4 MB), folder? (projects | blog | papers | misc) -> 201 { url, path }',
+                'application/json': '{ contentType, folder? } -> 201 { uploadUrl, token, path, url }. Then PUT the bytes to uploadUrl with the same Content-Type. Use this for files over 4 MB.',
+            },
+            example: {
+                curl: `curl -X POST https://scalejade.com/api/media \\
+  -H "Authorization: Bearer $BLOG_API_TOKEN" \\
+  -F "file=@cover.jpg" -F "folder=blog"`,
+            },
+        },
+        {
+            method: 'GET',
+            path: '/api/projects',
+            auth: false,
+            description:
+                'List published projects in display order. Confidential projects are redacted: clientName, clientLogoUrl and quote.name are null, and images flagged isConfidential are omitted. With the token and ?all=true: every project, unredacted, including unpublished.',
+            response: {
+                projects: [
+                    {
+                        slug: 'string', title: 'string', summary: 'string',
+                        clientName: 'string | null', clientClassification: 'string', clientLogoUrl: 'string | null',
+                        isConfidential: 'boolean',
+                        sector: 'finance | public | education | energy_mining | manufacturing | healthcare | wholesale',
+                        challenge: 'string | null', constraints: 'string[]', built: 'string[]',
+                        role: 'string | null', team: 'string | null', duration: 'string | null',
+                        highlights: 'string[]', outcomes: '{ value, label }[]', techStack: 'string[]',
+                        quote: '{ text, name | null, role } | null', isFeatured: 'boolean', sortOrder: 'number',
+                        images: '{ id, url, alt, caption, kind, sortOrder }[]',
+                    },
+                ],
+            },
+        },
+        {
+            method: 'GET',
+            path: '/api/projects/{slug}',
+            auth: false,
+            description: 'One project, redacted as above. With the token: unredacted, including unpublished.',
+        },
+        {
+            method: 'POST',
+            path: '/api/projects',
+            auth: true,
+            description:
+                'Create a project. Every case-study field is optional; the page shows a section only when it is filled. isConfidential defaults to true. `images` may reference external URLs or `path`s returned by POST /api/media.',
+            body: {
+                title: 'string (required)',
+                sector: 'string (required): finance | public | education | energy_mining | manufacturing | healthcare | wholesale',
+                slug: 'string (optional, from title)', summary: 'string',
+                clientName: 'string | null', clientClassification: 'string, e.g. "Indonesian state-owned bank"',
+                clientLogoUrl: 'string | null', isConfidential: 'boolean (default true)',
+                challenge: 'string', constraints: 'string[] (named regulations)', built: 'string[]',
+                role: 'string', team: 'string', duration: 'string',
+                highlights: 'string[]', outcomes: '{ value: string, label: string }[]', techStack: 'string[]',
+                quote: '{ text, name, role } | null',
+                isPublished: 'boolean (default true)', isFeatured: 'boolean (home-page highlight)', sortOrder: 'integer (ascending)',
+                images: 'Array<{ url | path, alt?, caption?, kind?: field | product | architecture | team | other, isConfidential?, sortOrder? }>',
+            },
+            responses: { '201': '{ project } (unredacted)', '400': 'Validation error', '401': 'Unauthorized', '409': 'Slug taken' },
+            example: {
+                curl: `curl -X POST https://scalejade.com/api/projects \\
+  -H "Authorization: Bearer $BLOG_API_TOKEN" -H "Content-Type: application/json" \\
+  -d '{
+    "title": "Real-time AML Screening",
+    "sector": "finance",
+    "clientName": "Example Bank",
+    "clientClassification": "Indonesian private bank",
+    "isConfidential": true,
+    "summary": "Screening inside the payment path, under 50 ms at p99.",
+    "constraints": ["APU-PPT", "BI-FAST"],
+    "outcomes": [{ "value": "< 50 ms", "label": "p99 screening latency in production" }],
+    "techStack": ["Go", "Kafka", "PostgreSQL"],
+    "images": [{ "url": "https://…/dashboard.jpg", "alt": "Screening dashboard", "kind": "product" }]
+  }'`,
+            },
+        },
+        {
+            method: 'PATCH',
+            path: '/api/projects/{slug}',
+            auth: true,
+            description: 'Update any subset of fields (same names as POST, except images). E.g. { "isConfidential": false } once the client approves being named.',
+        },
+        {
+            method: 'DELETE',
+            path: '/api/projects/{slug}',
+            auth: true,
+            description: 'Delete a project, its gallery rows and their uploaded files.',
+        },
+        {
+            method: 'POST',
+            path: '/api/projects/{slug}/images',
+            auth: true,
+            description:
+                'Add a gallery image. kind: field (implementation on site) | product (the live app) | architecture | team | other. isConfidential: hide this image while the project is confidential (e.g. it shows the client\'s branding).',
+            body: {
+                'multipart/form-data': 'file (≤4 MB), alt, caption, kind, isConfidential ("true"/"false"), sortOrder',
+                'application/json': '{ path } from POST /api/media, or { url } for an external image; plus alt, caption, kind, isConfidential, sortOrder',
+            },
+            responses: { '201': '{ image }', '400': 'Validation error', '401': 'Unauthorized', '404': 'Project not found', '413': 'Too large — use a signed upload', '415': 'Unsupported type' },
+            example: {
+                curl: `curl -X POST https://scalejade.com/api/projects/core-banking-settlement/images \\
+  -H "Authorization: Bearer $BLOG_API_TOKEN" \\
+  -F "file=@ops-room.jpg" -F "alt=Operations room during cut-over" \\
+  -F "caption=Cut-over weekend, Jakarta" -F "kind=field" -F "isConfidential=true"`,
+            },
+        },
+        {
+            method: 'PATCH',
+            path: '/api/projects/{slug}/images/{id}',
+            auth: true,
+            description: 'Update alt, caption, kind, isConfidential or sortOrder of a gallery image.',
+        },
+        {
+            method: 'DELETE',
+            path: '/api/projects/{slug}/images/{id}',
+            auth: true,
+            description: 'Remove a gallery image and its uploaded file.',
+        },
     ],
 };
 
@@ -187,7 +327,9 @@ function html(): string {
                 )
                     .map(([k, v]) => `<tr><td><code>${k}</code></td><td class="muted">${v}</td></tr>`)
                     .join('')}</table>`
-              : `<h4>Response</h4><pre>${JSON.stringify(e.response, null, 2)}</pre>`
+              : 'response' in e && e.response
+                ? `<h4>Response</h4><pre>${JSON.stringify(e.response, null, 2)}</pre>`
+                : ''
       }
       ${'example' in e && e.example ? `<h4>Example</h4><pre>${e.example.curl}</pre>` : ''}
     </div>`

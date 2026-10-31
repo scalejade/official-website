@@ -83,9 +83,9 @@ const serviceData: Record<string, ServiceData> = {
     },
     "blockchain": {
         name: "Blockchain & Distributed Ledger",
-        oneLine: "Auditable ledger infrastructure for absolute record integrity.",
+        oneLine: "Auditable ledger infrastructure with records that can be verified independently.",
         heroParagraph: "Distributed ledger technology is valuable precisely when trust between parties is limited or when the cost of a disputed record is high. We work with institutions that understand this — and need the implementation to be as rigorous as the use case demands.",
-        overview: "We build transparent, auditable ledger infrastructure for institutions that require absolute record integrity. Not because blockchain is fashionable — because for certain problems in settlement, compliance, and supply chain, it is genuinely the right architecture. We design permissioned networks that meet institutional requirements and hold up under regulatory scrutiny.",
+        overview: "We build transparent, auditable ledger infrastructure for institutions whose records have to stand up to independent verification. Not because blockchain is fashionable — because for certain problems in settlement, compliance, and supply chain, it is genuinely the right architecture. We design permissioned networks that meet institutional requirements and hold up under regulatory scrutiny.",
         overviewPull: "Every implementation we deliver is designed to be explainable to regulators, auditable by counterparties, and operable by your own teams long after we're gone.",
         subServices: [
             { title: "DLT network design & implementation", desc: "Permissioned ledger networks designed around institutional requirements — governance, access control, and node architecture that fit the operational reality of regulated industries." },
@@ -122,16 +122,8 @@ export async function generateMetadata({
 
     return {
         metadataBase: new URL(BASE),
-        title,
+        title: { absolute: title },
         description,
-        keywords: [
-            service.name.toLowerCase(),
-            'enterprise technology',
-            'ScaleJade',
-            'Singapore',
-            'Indonesia',
-            ...service.subServices.map(s => s.title.toLowerCase()),
-        ],
         alternates: localeAlternates(locale, `/services/${slug}`),
         openGraph: {
             type: 'website',
@@ -234,7 +226,7 @@ export default async function ServiceDetailPage({
             <section className="py-12 md:py-20 px-4 sm:px-6 border-b border-slate-100">
                 <div className="max-w-7xl mx-auto grid md:grid-cols-[180px_1fr] lg:grid-cols-[220px_1fr] gap-6 md:gap-12 items-start">
                     <div>
-                        <span className="text-scalejade-600 font-bold tracking-widest uppercase text-xs">How We Approach It</span>
+                        <span className="text-scalejade-600 font-bold text-xs">How We Approach It</span>
                     </div>
                     <motion.div
                         initial={{ opacity: 0, y: 16 }}
@@ -261,7 +253,7 @@ export default async function ServiceDetailPage({
                         viewport={{ once: true }}
                         className="mb-8 md:mb-12"
                     >
-                        <span className="text-scalejade-600 font-bold tracking-widest uppercase text-xs mb-3 block">What We Deliver</span>
+                        <span className="text-scalejade-600 font-bold text-xs mb-3 block">What We Deliver</span>
                         <h2 className="text-xl md:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
                             Service Areas
                         </h2>
@@ -289,7 +281,7 @@ export default async function ServiceDetailPage({
             <section className="py-10 md:py-16 px-4 sm:px-6 bg-slate-50 border-b border-slate-100">
                 <div className="max-w-7xl mx-auto">
                     <div className="mb-5">
-                        <span className="text-scalejade-600 font-bold tracking-widest uppercase text-xs">Industries We Serve</span>
+                        <span className="text-scalejade-600 font-bold text-xs">Industries We Serve</span>
                     </div>
                     <div className="flex flex-wrap gap-2 md:gap-3">
                         {sectors.map((sector, idx) => (

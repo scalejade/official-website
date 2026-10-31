@@ -1,19 +1,17 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { isOptimizable } from '@/lib/images';
+import { linkify } from '@/lib/linkify';
 import * as motion from "framer-motion/client";
 import { ArrowRight, ChevronRight, Share2, Mail } from 'lucide-react';
 import { Metadata } from 'next';
 import { getAllPosts, getPostBySlug, getCoverImage } from '@/data/blog';
 import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
 
-export async function generateStaticParams() {
-    const locales = ["en", "id"];
-    const posts = await getAllPosts();
-    return locales.flatMap(locale =>
-        posts.map(post => ({ locale, slug: post.slug }))
-    );
-}
+// Posts arrive through /api/posts at any time (the daily agent), so this page
+// renders per request. Pre-building a list here made every post created after
+// the build fail in production (DYNAMIC_SERVER_USAGE).
 
 export async function generateMetadata({
     params,
@@ -32,7 +30,6 @@ export async function generateMetadata({
         metadataBase: new URL(BASE),
         title,
         description: post.excerpt,
-        keywords: [post.category.toLowerCase(), 'ScaleJade', 'enterprise technology', 'insights'],
         authors: [{ name: post.author, url: BASE }],
         category: post.category,
         alternates: localeAlternates(locale, `/blog/${slug}`),
@@ -132,7 +129,7 @@ export default async function BlogPostPage({
                     <nav className="flex items-center flex-wrap gap-1.5 text-xs text-slate-400 mb-6 font-medium tracking-wide" aria-label="Breadcrumb">
                         <Link href={`/${locale}`} className="hover:text-scalejade-600 transition-colors">Home</Link>
                         <ChevronRight className="w-3 h-3 shrink-0" />
-                        <Link href={`/${locale}/blog`} className="hover:text-scalejade-600 transition-colors">Insights</Link>
+                        <Link href={`${locale === 'en' ? '' : `/${locale}`}/blog`} className="hover:text-scalejade-600 transition-colors">Insights</Link>
                         <ChevronRight className="w-3 h-3 shrink-0" />
                         <span className="text-slate-600 truncate max-w-[180px] sm:max-w-none">{post.title}</span>
                     </nav>
@@ -145,6 +142,7 @@ export default async function BlogPostPage({
                                 alt={post.title}
                                 fill
                                 priority
+                                unoptimized={!isOptimizable(getCoverImage(post))}
                                 sizes="100vw"
                                 className="object-cover"
                             />
@@ -159,7 +157,7 @@ export default async function BlogPostPage({
                             transition={{ duration: 0.5 }}
                             className="relative md:absolute md:bottom-0 md:left-0 bg-white md:max-w-3xl lg:max-w-4xl md:pt-8 md:pr-12 mt-6 md:mt-0"
                         >
-                            <span className="block text-scalejade-600 text-xs font-bold tracking-[0.2em] uppercase mb-4">
+                            <span className="block text-scalejade-600 text-xs font-bold mb-4">
                                 Blog · {post.category}
                             </span>
                             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-medium text-slate-900 tracking-tight leading-[1.05]">
@@ -185,9 +183,9 @@ export default async function BlogPostPage({
                         <span>{post.readingTime}</span>
                     </div>
                     <div className="flex items-center gap-2 text-slate-400">
-                        <span className="text-xs font-semibold tracking-widest uppercase mr-1">{locale === 'id' ? 'Bagikan' : 'Share'}</span>
+                        <span className="text-xs font-semibold mr-1">{locale === 'id' ? 'Bagikan' : 'Share'}</span>
                         <a
-                            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${BASE}/${locale}/blog/${slug}`)}`}
+                            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(localizedUrl(locale, `/blog/${slug}`))}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Share on LinkedIn"
@@ -196,7 +194,7 @@ export default async function BlogPostPage({
                             <Share2 className="w-4 h-4" />
                         </a>
                         <a
-                            href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(`${BASE}/${locale}/blog/${slug}`)}`}
+                            href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(localizedUrl(locale, `/blog/${slug}`))}`}
                             aria-label="Share via email"
                             className="w-8 h-8 inline-flex items-center justify-center rounded-md border border-slate-200 hover:border-scalejade-600/50 hover:text-scalejade-700 transition-colors"
                         >
@@ -231,7 +229,7 @@ export default async function BlogPostPage({
                                             : 'text-lg text-slate-600 leading-relaxed font-light mb-5'
                                     }
                                 >
-                                    {para}
+                                    {linkify(para)}
                                 </p>
                             ))}
 
@@ -242,6 +240,7 @@ export default async function BlogPostPage({
                                             src={section.image}
                                             alt={section.imageCaption ?? section.heading ?? post.title}
                                             fill
+                                            unoptimized={!isOptimizable(section.image)}
                                             sizes="(max-width: 768px) 100vw, 768px"
                                             className="object-cover"
                                         />
@@ -278,18 +277,18 @@ export default async function BlogPostPage({
             {related.length > 0 && (
                 <section className="py-16 md:py-20 px-4 sm:px-6 border-t border-slate-100 bg-canvas">
                     <div className="max-w-6xl mx-auto">
-                        <h2 className="text-sm font-bold text-scalejade-600 tracking-widest uppercase mb-2">
+                        <h2 className="text-sm font-bold text-scalejade-600 mb-2">
                             {locale === 'id' ? 'Artikel Lainnya' : 'More Insights'}
                         </h2>
                         <div className="divide-y divide-slate-200 border-t-2 border-slate-900 mt-6">
                             {related.map((rel) => (
                                 <Link
                                     key={rel.slug}
-                                    href={`/${locale}/blog/${rel.slug}`}
+                                    href={`${locale === 'en' ? '' : `/${locale}`}/blog/${rel.slug}`}
                                     className="group grid md:grid-cols-[200px_1fr_auto] gap-3 md:gap-12 items-baseline py-8 md:py-10"
                                 >
                                     <div className="flex md:flex-col gap-3 md:gap-3">
-                                        <span className="text-xs font-semibold tracking-[0.15em] uppercase text-scalejade-600">
+                                        <span className="text-xs font-semibold text-scalejade-600">
                                             {rel.category}
                                         </span>
                                         <span className="text-sm text-slate-400 font-medium">

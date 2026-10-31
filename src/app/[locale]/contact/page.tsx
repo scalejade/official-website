@@ -1,10 +1,11 @@
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import Link from 'next/link';
 import * as motion from "framer-motion/client";
-import { Mail, CalendarDays, ArrowRight, ShieldAlert } from 'lucide-react';
+import { Mail, CalendarDays, ArrowRight, ShieldAlert, Clock } from 'lucide-react';
+import { CONTACT_EMAIL } from '@/lib/company';
 import { Metadata } from 'next';
 
-const BASE = 'https://scalejade.com';
-import { localizedUrl, localeAlternates } from '@/lib/locale-url';
+import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
 
 export async function generateMetadata({
     params,
@@ -22,7 +23,7 @@ export async function generateMetadata({
 
     return {
         metadataBase: new URL(BASE),
-        title,
+        title: { absolute: title },
         description,
         alternates: localeAlternates(locale, '/contact'),
         openGraph: {
@@ -35,12 +36,13 @@ export async function generateMetadata({
             images: [{ url: `${BASE}/opengraph-image`, width: 1200, height: 630, alt: 'Contact ScaleJade' }],
         },
         twitter: { card: 'summary_large_image', title, description, images: [`${BASE}/opengraph-image`] },
-        robots: { index: false, follow: false },
     };
 }
 
 export default function DemoPage() {
     const t = useTranslations('Demo');
+    const locale = useLocale();
+    const prefix = locale === 'en' ? '' : `/${locale}`;
     const calendlyUrl = "https://calendly.com/connect-scalejade/30min";
 
     return (
@@ -55,11 +57,11 @@ export default function DemoPage() {
                         "@type": "ContactPage",
                         "name": "Schedule a Consultation with ScaleJade",
                         "description": "Connect with ScaleJade senior engineers to discuss your technology needs",
+                        "url": localizedUrl(locale, '/contact'),
                         "mainEntity": {
                             "@type": "ContactPoint",
-                            "telephone": "+1-XXX-XXX-XXXX",
                             "contactType": "sales",
-                            "email": "connect@scalejade.com",
+                            "email": CONTACT_EMAIL,
                             "availableLanguage": ["English", "Indonesian"]
                         }
                     })
@@ -71,7 +73,7 @@ export default function DemoPage() {
                 <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-scalejade-800/20 bg-surface text-scalejade-800 text-sm font-medium tracking-wide uppercase"
+                    className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-scalejade-800/20 bg-surface text-scalejade-800 text-sm font-medium"
                 >
                     <ShieldAlert className="w-4 h-4" />
                     {t('badge')}
@@ -95,6 +97,19 @@ export default function DemoPage() {
                 >
                     {t('subtitle')}
                 </motion.p>
+
+                <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-sm text-slate-700">
+                    <span className="inline-flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-scalejade-600" aria-hidden="true" />
+                        {t('response_time')}
+                    </span>
+                    <span className="inline-flex items-center gap-2">
+                        {t('email_label')}{' '}
+                        <a href={`mailto:${CONTACT_EMAIL}`} className="font-medium text-scalejade-700 underline underline-offset-4 hover:text-scalejade-800">
+                            {CONTACT_EMAIL}
+                        </a>
+                    </span>
+                </div>
             </section>
 
             {/* 2. Interactive Portal Grid */}
@@ -121,10 +136,10 @@ export default function DemoPage() {
                 Action mailto: akan membuka aplikasi email pengguna (Outlook/Gmail) 
                 dan otomatis mengisi connect@scalejade.com 
             */}
-                        <form action="mailto:connect@scalejade.com" method="post" encType="text/plain" className="space-y-6">
+                        <form action={`mailto:${CONTACT_EMAIL}`} method="post" encType="text/plain" className="space-y-6">
 
                             <div>
-                                <label htmlFor="organization" className="block text-sm font-semibold text-slate-700 mb-2 uppercase tracking-wide">
+                                <label htmlFor="organization" className="block text-sm font-semibold text-slate-700 mb-2">
                                     {t('form_org')}
                                 </label>
                                 <input
@@ -133,13 +148,13 @@ export default function DemoPage() {
                                     name="Organization"
                                     required
                                     className="w-full bg-white border border-slate-300 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-scalejade-600/50 focus:border-scalejade-600 transition-all"
-                                    placeholder="e.g. Central Bank of..."
+                                    placeholder={t('org_placeholder')}
                                     aria-required="true"
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2 uppercase tracking-wide">
+                                <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
                                     {t('form_email')}
                                 </label>
                                 <input
@@ -148,13 +163,13 @@ export default function DemoPage() {
                                     name="Email"
                                     required
                                     className="w-full bg-white border border-slate-300 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-scalejade-600/50 focus:border-scalejade-600 transition-all"
-                                    placeholder="name@organization.com"
+                                    placeholder={t('email_placeholder')}
                                     aria-required="true"
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="requirements" className="block text-sm font-semibold text-slate-700 mb-2 uppercase tracking-wide">
+                                <label htmlFor="requirements" className="block text-sm font-semibold text-slate-700 mb-2">
                                     {t('form_req')}
                                 </label>
                                 <textarea
@@ -163,7 +178,7 @@ export default function DemoPage() {
                                     required
                                     rows={4}
                                     className="w-full bg-white border border-slate-300 rounded-lg px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-scalejade-600/50 focus:border-scalejade-600 transition-all resize-none"
-                                    placeholder="Describe your architectural needs..."
+                                    placeholder={t('req_placeholder')}
                                     aria-required="true"
                                 ></textarea>
                             </div>
@@ -175,6 +190,18 @@ export default function DemoPage() {
                                 {t('form_submit')}
                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </button>
+
+                            {/* The form collects personal data, so UU PDP and PDPA
+                                both require the notice to sit where it is collected. */}
+                            <p className="text-xs text-slate-600 leading-relaxed">
+                                {t.rich('privacy_note', {
+                                    link: (chunks) => (
+                                        <Link href={`${prefix}/privacy`} className="underline underline-offset-2 hover:text-slate-900">
+                                            {chunks}
+                                        </Link>
+                                    ),
+                                })}
+                            </p>
 
                         </form>
                     </motion.div>
@@ -207,7 +234,7 @@ export default function DemoPage() {
                                 width="100%"
                                 height="100%"
                                 frameBorder="0"
-                                title="Schedule a Consultation with ScaleJade"
+                                title={t('cal_iframe_title')}
                                 className="absolute inset-0"
                                 loading="lazy"
                             ></iframe>

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import * as motion from "framer-motion/client";
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { Pagination, PAGE_SIZE, paginate } from '@/components/Pagination';
 import { Metadata } from 'next';
 import { getAllPosts } from '@/data/blog';
 import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
@@ -62,7 +63,6 @@ function formatDate(iso: string, locale: string) {
     });
 }
 
-const PER_PAGE = 10;
 
 export default async function BlogPage({
     params,
@@ -106,16 +106,14 @@ export default async function BlogPage({
         ],
     };
 
-    const [featured, ...rest] = blogPosts;
-
-    const totalPages = Math.max(1, Math.ceil(rest.length / PER_PAGE));
-    const currentPage = Math.min(totalPages, Math.max(1, Number(page) || 1));
+    // 10 posts per page in total; on page 1 the first one is the featured lead.
+    const { currentPage, totalPages, pageItems: pagePosts } = paginate(blogPosts, page, PAGE_SIZE.posts);
     const isFirstPage = currentPage === 1;
-    const start = (currentPage - 1) * PER_PAGE;
-    const pageItems = rest.slice(start, start + PER_PAGE);
+    const featured = isFirstPage ? pagePosts[0] : undefined;
+    const pageItems = isFirstPage ? pagePosts.slice(1) : pagePosts;
 
-    const pageHref = (p: number) =>
-        p <= 1 ? `/${locale}/blog` : `/${locale}/blog?page=${p}`;
+    const prefix = locale === 'en' ? '' : `/${locale}`;
+    const pageHref = (p: number) => (p <= 1 ? `${prefix}/blog` : `${prefix}/blog?page=${p}`);
 
     return (
         <div className="min-h-screen bg-canvas pt-24 pb-32">
@@ -134,7 +132,7 @@ export default async function BlogPage({
                 <motion.span
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="block text-scalejade-600 text-xs font-semibold tracking-[0.2em] uppercase mb-6"
+                    className="block text-scalejade-600 text-xs font-semibold mb-6"
                 >
                     {locale === 'id' ? 'Wawasan' : 'Insights'}
                 </motion.span>
@@ -161,6 +159,16 @@ export default async function BlogPage({
                 </motion.p>
             </section>
 
+            {blogPosts.length === 0 && (
+                <section className="px-6 max-w-6xl mx-auto">
+                    <p className="text-lg text-slate-700 leading-relaxed max-w-[62ch] border-t border-slate-200 pt-10">
+                        {locale === 'id'
+                            ? 'Belum ada artikel yang dipublikasikan. Tulisan pertama kami sedang disiapkan.'
+                            : 'No articles are published yet. Our first pieces are on the way.'}
+                    </p>
+                </section>
+            )}
+
             {/* Featured — full-width editorial lead with category badge (Claude). Page 1 only. */}
             {isFirstPage && featured && (
             <section className="px-6 max-w-6xl mx-auto mb-4 md:mb-8" aria-label="Featured article">
@@ -171,7 +179,7 @@ export default async function BlogPage({
                     className="border-t-2 border-slate-900 pt-8 md:pt-10"
                 >
                     <Link
-                        href={`/${locale}/blog/${featured.slug}`}
+                        href={`${prefix}/blog/${featured.slug}`}
                         className="group grid md:grid-cols-[200px_1fr] gap-6 md:gap-12"
                     >
                         <div className="flex md:flex-col gap-3 md:gap-4">
@@ -211,11 +219,11 @@ export default async function BlogPage({
                             transition={{ delay: idx * 0.08 }}
                         >
                             <Link
-                                href={`/${locale}/blog/${post.slug}`}
+                                href={`${prefix}/blog/${post.slug}`}
                                 className="group grid md:grid-cols-[200px_1fr_auto] gap-3 md:gap-12 items-baseline py-8 md:py-10"
                             >
                                 <div className="flex md:flex-col gap-3 md:gap-3">
-                                    <span className="text-xs font-semibold tracking-[0.15em] uppercase text-scalejade-600">
+                                    <span className="text-xs font-semibold text-scalejade-600">
                                         {post.category}
                                     </span>
                                     <span className="text-sm text-slate-500 font-medium">
@@ -240,63 +248,7 @@ export default async function BlogPage({
                 </div>
 
                 {/* Pagination */}
-                {totalPages > 1 && (
-                    <nav
-                        className="mt-12 md:mt-16 flex items-center justify-between border-t border-slate-200 pt-8"
-                        aria-label="Pagination"
-                    >
-                        {currentPage > 1 ? (
-                            <Link
-                                href={pageHref(currentPage - 1)}
-                                className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-scalejade-700 transition-colors"
-                            >
-                                <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                                {locale === 'id' ? 'Sebelumnya' : 'Previous'}
-                            </Link>
-                        ) : (
-                            <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300 cursor-not-allowed">
-                                <ChevronLeft className="w-4 h-4" />
-                                {locale === 'id' ? 'Sebelumnya' : 'Previous'}
-                            </span>
-                        )}
-
-                        <div className="hidden sm:flex items-center gap-1">
-                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                                <Link
-                                    key={p}
-                                    href={pageHref(p)}
-                                    aria-current={p === currentPage ? 'page' : undefined}
-                                    className={
-                                        p === currentPage
-                                            ? 'w-9 h-9 inline-flex items-center justify-center rounded-md bg-scalejade-900 text-white text-sm font-semibold'
-                                            : 'w-9 h-9 inline-flex items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 text-sm font-medium transition-colors'
-                                    }
-                                >
-                                    {p}
-                                </Link>
-                            ))}
-                        </div>
-
-                        <span className="sm:hidden text-sm font-medium text-slate-500">
-                            {currentPage} / {totalPages}
-                        </span>
-
-                        {currentPage < totalPages ? (
-                            <Link
-                                href={pageHref(currentPage + 1)}
-                                className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-scalejade-700 transition-colors"
-                            >
-                                {locale === 'id' ? 'Berikutnya' : 'Next'}
-                                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                        ) : (
-                            <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-300 cursor-not-allowed">
-                                {locale === 'id' ? 'Berikutnya' : 'Next'}
-                                <ChevronRight className="w-4 h-4" />
-                            </span>
-                        )}
-                    </nav>
-                )}
+                <Pagination currentPage={currentPage} totalPages={totalPages} hrefFor={pageHref} locale={locale} />
             </section>
 
         </div>

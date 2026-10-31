@@ -3,16 +3,11 @@ import Link from 'next/link';
 import * as motion from 'framer-motion/client';
 import { ArrowLeft, FileText, ExternalLink, Code2, Database } from 'lucide-react';
 import { Metadata } from 'next';
-import { getAllPapers, getPaperBySlug } from '@/data/papers';
+import { getPaperBySlug } from '@/data/papers';
 import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
 
-export async function generateStaticParams() {
-    const locales = ['en', 'id'];
-    const papers = await getAllPapers();
-    return locales.flatMap((locale) =>
-        papers.map((paper) => ({ locale, slug: paper.slug }))
-    );
-}
+// Papers arrive through /api/papers at any time, so this page renders per
+// request rather than from a list built at deploy time.
 
 export async function generateMetadata({
     params,
@@ -29,7 +24,6 @@ export async function generateMetadata({
         metadataBase: new URL(BASE),
         title: paper.title,
         description: paper.summary,
-        keywords: [...paper.topics.map((t) => t.toLowerCase()), 'ScaleJade', 'research', 'paper'],
         authors: paper.authors.map((name) => ({ name })),
         alternates: localeAlternates(locale, `/research/${slug}`),
         openGraph: {
@@ -106,7 +100,7 @@ export default async function PaperDetailPage({
 
                 {/* Header */}
                 <motion.header initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
-                    <div className="mb-5 flex flex-wrap items-center gap-2 text-xs font-medium uppercase tracking-wide text-scalejade-700">
+                    <div className="mb-5 flex flex-wrap items-center gap-2 text-xs font-medium text-scalejade-700">
                         {paper.topics.map((topic) => (
                             <span key={topic} className="rounded-full bg-scalejade-50 px-2.5 py-1">
                                 {topic}
@@ -148,7 +142,7 @@ export default async function PaperDetailPage({
 
                 {/* Abstract */}
                 <section className="mt-14" aria-labelledby="abstract-heading">
-                    <h2 id="abstract-heading" className="mb-3 text-sm font-bold uppercase tracking-widest text-scalejade-600">
+                    <h2 id="abstract-heading" className="mb-3 text-sm font-bold text-scalejade-600">
                         {isId ? 'Abstrak' : 'Abstract'}
                     </h2>
                     <p className="text-lg leading-relaxed text-slate-700">{paper.abstract}</p>
@@ -169,7 +163,7 @@ export default async function PaperDetailPage({
                 {/* BibTeX */}
                 {paper.bibtex && (
                     <section className="mt-16" aria-labelledby="cite-heading">
-                        <h2 id="cite-heading" className="mb-3 text-sm font-bold uppercase tracking-widest text-scalejade-600">
+                        <h2 id="cite-heading" className="mb-3 text-sm font-bold text-scalejade-600">
                             {isId ? 'Sitasi' : 'Cite'}
                         </h2>
                         <pre className="overflow-x-auto rounded-xl border border-slate-200 bg-slate-50 p-5 text-sm leading-relaxed text-slate-700">

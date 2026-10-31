@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 import { TrustSection } from '@/components/TrustSection';
 import { CORE_SECTORS } from '@/data/sectors';
 import { getAllPapers } from '@/data/papers';
-import portfolioData from '@/data/portfolio.json';
+import { getFeaturedProject } from '@/data/projects';
 
 import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
 
@@ -29,7 +29,7 @@ export async function generateMetadata({
 
     return {
         metadataBase: new URL(BASE),
-        title,
+        title: { absolute: title },
         description,
         alternates: localeAlternates(locale, ''),
         openGraph: {
@@ -63,12 +63,13 @@ export default async function HomePage({
     const c = await getTranslations({ locale, namespace: 'Capabilities' });
     const h = await getTranslations({ locale, namespace: 'Home' });
     const sectorNames = await getTranslations({ locale, namespace: 'Sectors' });
+    const p = await getTranslations({ locale, namespace: 'Portfolio' });
 
     const problems = h.raw('problems.items') as { title: string; body: string }[];
 
     // One case study, not a portfolio. It is the answer to the fear stated
     // directly above it — that is what makes proof land structurally.
-    const highlight = portfolioData[0];
+    const highlight = await getFeaturedProject();
 
     const papers = (await getAllPapers()).slice(0, 3);
 
@@ -110,7 +111,7 @@ export default async function HomePage({
                         it does the work the pill was doing, without the SaaS tic. */}
                     <div className="reveal">
                         <span aria-hidden className="block h-[2px] w-10 bg-scalejade-600" />
-                        <p className="mt-5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-500">
+                        <p className="mt-5 text-sm font-medium text-ink-500">
                             {t('badge')}
                         </p>
                     </div>
@@ -187,26 +188,35 @@ export default async function HomePage({
                         {h('proof.body')}
                     </p>
 
+                    {highlight && (
+                    <>
                     <div className="rounded-2xl border border-white/15 p-8 md:p-10">
-                        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-scalejade-400 mb-4">
+                        <p className="text-sm font-medium text-scalejade-400 mb-4">
                             {h('proof.label')}
                         </p>
                         <h3 className="text-2xl md:text-3xl font-semibold text-white tracking-tight mb-3">
                             {highlight.title}
                         </h3>
                         <p className="text-sm text-scalejade-100/85 leading-relaxed max-w-[70ch] mb-8">
-                            {highlight.description}
+                            {highlight.summary}
                         </p>
                         <dl className="grid grid-cols-1 sm:grid-cols-3 gap-6 border-t border-white/15 pt-8">
-                            {highlight.metrics.map((metric) => (
+                            {highlight.highlights.map((metric) => (
                                 <div key={metric}>
-                                    <dt className="sr-only">{highlight.client_classification}</dt>
-                                    <dd className="font-mono text-sm uppercase tracking-[0.08em] text-white">{metric}</dd>
+                                    <dt className="sr-only">{highlight.clientClassification}</dt>
+                                    <dd className="text-sm font-medium text-white">{metric}</dd>
                                 </div>
                             ))}
                         </dl>
                     </div>
 
+                    <Link
+                        href={`${prefix}/portfolio/${highlight.slug}`}
+                        className="mt-8 mr-8 inline-flex items-center gap-2 text-sm font-medium text-white hover:text-scalejade-400 transition-colors"
+                    >
+                        {p('read_case')}
+                        <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    </Link>
                     <Link
                         href={`${prefix}/portfolio`}
                         className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-scalejade-400 hover:text-white transition-colors"
@@ -214,13 +224,15 @@ export default async function HomePage({
                         {h('proof.cta')}
                         <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </Link>
+                    </>
+                    )}
                 </div>
             </section>
 
             {/* 4. Sectors */}
             <section className="px-6 py-16 md:py-24" aria-labelledby="home-sectors-heading">
                 <div className="max-w-5xl mx-auto">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-scalejade-600 mb-5 block">
+                    <span className="text-sm font-medium text-scalejade-600 mb-5 block">
                         {h('sectors.label')}
                     </span>
                     <h2 id="home-sectors-heading" className="text-3xl md:text-5xl font-semibold text-slate-900 tracking-tight mb-10">
@@ -236,7 +248,7 @@ export default async function HomePage({
                                     <h3 className="text-lg font-semibold text-slate-900 tracking-tight mb-3">
                                         {sectorNames(sector.messageKey)}
                                     </h3>
-                                    <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-slate-600 leading-relaxed">
+                                    <p className="text-sm font-medium text-slate-600 leading-relaxed">
                                         {sector.regulations.slice(0, 3).join(' · ')}
                                     </p>
                                 </Link>
@@ -262,7 +274,7 @@ export default async function HomePage({
                         viewport={{ once: true }}
                         className="mb-10 md:mb-20"
                     >
-                        <span className="text-scalejade-600 font-semibold tracking-widest uppercase text-xs mb-5 block">
+                        <span className="text-scalejade-600 font-semibold text-xs mb-5 block">
                             {c('section_label')}
                         </span>
                         <div className="flex flex-col md:flex-row md:items-end gap-6 md:gap-20">
@@ -347,10 +359,12 @@ export default async function HomePage({
                 </div>
             </section>
 
-            {/* 6. Research — published, which is what makes it evidence. */}
+            {/* 6. Research — published, which is what makes it evidence. Hidden
+                until there is something published to point at. */}
+            {papers.length > 0 && (
             <section className="px-6 py-16 md:py-24 bg-surface border-t border-slate-100" aria-labelledby="home-research-heading">
                 <div className="max-w-5xl mx-auto">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-scalejade-600 mb-5 block">
+                    <span className="text-sm font-medium text-scalejade-600 mb-5 block">
                         {h('research.label')}
                     </span>
                     <h2 id="home-research-heading" className="text-3xl md:text-5xl font-semibold text-slate-900 tracking-tight mb-4 max-w-[24ch]">
@@ -379,6 +393,7 @@ export default async function HomePage({
                     </Link>
                 </div>
             </section>
+            )}
 
             {/* 7. Clients — after the evidence, not before it. */}
             <TrustSection />

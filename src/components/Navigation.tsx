@@ -230,7 +230,7 @@ export function Navigation({ locale }: { locale: string }) {
                                         active ? 'text-scalejade-400' : 'text-scalejade-100'
                                     }`}
                                 >
-                                    <span className="font-mono text-[10px] text-scalejade-400" aria-hidden="true">
+                                    <span className="text-sm text-scalejade-400" aria-hidden="true">
                                         {String(index + 1).padStart(2, '0')}
                                     </span>
                                     {t(key)}
@@ -249,7 +249,7 @@ export function Navigation({ locale }: { locale: string }) {
                         <LanguageToggle pathname={pathname} label={t('language')} tone="dark" />
                         <a
                             href="mailto:connect@scalejade.com"
-                            className="block font-mono text-xs text-scalejade-400"
+                            className="block text-xs text-scalejade-400"
                         >
                             connect@scalejade.com
                         </a>
@@ -288,8 +288,8 @@ function LanguageToggle({
     const state = (active: boolean) => {
         if (active) {
             return tone === 'dark'
-                ? 'font-semibold uppercase tracking-[0.06em] text-white'
-                : 'font-semibold uppercase tracking-[0.06em] text-ink-900';
+                ? 'font-semibold text-white'
+                : 'font-semibold text-ink-900';
         }
         return tone === 'dark'
             ? 'font-normal lowercase text-scalejade-100/50 hover:text-white'

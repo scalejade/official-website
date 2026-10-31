@@ -15,7 +15,7 @@
   "Capabilities": {
     "section_label": "Our Services",
     "heading": "Five Services. One Standard.",
-    "subheading": "Not every technology firm works in regulated industries. We do — and we've built our practice around the constraints, the compliance requirements, and the consequences that come with that territory.",
+    "subheading": "Each one is scoped and built by the same engineers, and designed against the regulation it has to satisfy — not against a generic idea of \"compliance-ready\".",
     "software_title": "Software Engineering",
     "software_desc": "Custom software, engineered to scale and built to last.",
     "software_link": "Learn more →",
@@ -29,7 +29,7 @@
     "cloud_desc": "Secure, compliant cloud for systems that can't go down.",
     "cloud_link": "Learn more →",
     "blockchain_title": "Blockchain & Distributed Ledger",
-    "blockchain_desc": "Auditable ledger infrastructure for absolute record integrity.",
+    "blockchain_desc": "Auditable ledger infrastructure with records that can be verified independently.",
     "blockchain_link": "Learn more →",
     "flagship_label": "Flagship Services",
     "supporting_label": "Supporting Capabilities"
@@ -87,7 +87,7 @@
     "advantage_title": "Our Competitive\nEdge"
   },
   "TrustSection": {
-    "badge": "Our Partners",
+    "badge": "Clients & partners",
     "title_main": "Working with institutions across Southeast Asia where ",
     "title_highlight": "a failure is a reportable event.",
     "tag_1": "Financial Institutions",
@@ -95,60 +95,129 @@
     "tag_3": "Education & Research"
   },
   "About": {
-    "intro_badge": "About",
-    "intro_title": "[N] engineers in Singapore and Jakarta.",
-    "intro_text": "We build and run software for institutions where a failure is a reportable event. No account managers, no delivery layer, no bench.",
-    "founding_title": "Why we exist",
+    "label": "About",
+    "title": "Built by engineers, led by engineers.",
+    "intro": "We build and run software for institutions where a failure is a reportable event. No account managers, no delivery layer, no bench.",
+    "story_title": "Established in {year}. Built to last.",
+    "story_text": "ScaleJade's engineers have run production systems under the same regulations our clients answer to. We work from Singapore and Jakarta across {sectors} core sectors — financial institutions, the public sector and education — and every engagement is delivered by the people who scoped it.",
     "founding_text": "[Founder] spent [N] years building [specific system] at [institution]. The recurring problem was not technology — it was that the firms capable of the engineering did not understand the regulation, and the firms that understood the regulation subcontracted the engineering. ScaleJade exists to be one team that does both.",
-    "team_title": "The team",
-    "team_intro": "We are [N] engineers across Singapore and Jakarta. No account managers, no delivery layer, no bench. The person who scopes your engagement is the person who builds it, and the person you email at 11pm is the person who wrote the code.",
-    "how_we_work_title": "How we work",
-    "engagement_title": "Engagement models",
-    "engagement_text": "We offer [two/three] engagement models: [fixed-scope delivery for well-defined projects, embedded team for ongoing product work, and managed operations for systems that need to run]. Each starts with the same question: what cannot fail, and what happens when it does.",
-    "composition_title": "Team composition",
-    "composition_text": "A typical engagement is [N] engineers, one of whom is a principal, for [N] months. You get the people you met in the scoping call — not a different team on day one. No juniors billed at senior rates, no offshore handoff.",
-    "ownership_title": "What the client owns",
-    "ownership_text": "You own the code, the documentation, the infrastructure configuration, and the IP. Every engagement includes a handover package written during the build — not assembled at the end — so your team can operate and extend the system without us.",
-    "start_title": "How we start",
-    "start_text": "We begin with a [two-week] paid discovery. We study your architecture, your constraints, and your existing team. At the end you receive a scoping document with a fixed timeline, a fixed team, and a fixed price. If we are not the right fit, we tell you and you owe nothing further.",
-    "evidence_title": "What we're built on",
-    "evidence_1_label": "Reliability",
-    "evidence_1_text": "Standard SLA: [response time / uptime commitment]. On-call model: [description]. Incident review policy: [description]. Measured uptime across engagements: [metric].",
-    "evidence_2_label": "Security",
-    "evidence_2_text": "ISO 27001 status: [certified / in progress, targeting QX 20XX]. Penetration-test cadence: [frequency], performed by [firm]. Client data hosted in [jurisdiction]. Production access: [who holds it, under what controls].",
-    "evidence_3_label": "Compliance",
-    "evidence_3_text": "Frameworks we have built against: [POJK / MAS TRM Guidelines / UU PDP No. 27/2022 / PDPA / ISO 20022 / others]. We design and document to the named regulation, not to a generic 'compliance-ready' claim.",
-    "evidence_4_label": "Continuity",
-    "evidence_4_text": "Source-code escrow: [provider, terms]. IP ownership: the client owns it, stated in contract. Documented handover policy: included in every engagement. If the firm ceases trading: [your code, your infrastructure, your migration path].",
-    "facts_title": "The facts",
-    "fact_founded": "Founded",
-    "fact_founded_value": "[year]",
-    "fact_team": "Team",
-    "fact_team_value": "[N] engineers · Singapore, Jakarta",
-    "fact_entities": "Entities",
-    "fact_entities_value": "ScaleJade Technology Ltd (Singapore) · UEN [number]  PT Skala Kecerdasan Nusantara (Indonesia) · NIB [number]",
-    "fact_clients": "Clients",
-    "fact_clients_value": "[N] institutions across banking, education, public sector",
-    "fact_certifications": "Certifications",
-    "fact_certifications_value": "ISO 27001 — [status] · SOC 2 — [status]",
-    "fact_data_residency": "Data residency",
-    "fact_data_residency_value": "[where client data is hosted, by jurisdiction]",
-    "fact_languages": "Languages",
-    "fact_languages_value": "English · Bahasa Indonesia · [others]",
+    "stats_label": "ScaleJade in numbers",
+    "stat_founded": "Founded",
+    "stat_founded_value": "2024",
+    "stat_offices": "Offices, in Singapore and Jakarta",
+    "stat_sectors": "Core regulated sectors",
+    "stat_papers": "Published research papers",
+    "stat_engineers": "Engineers",
+    "stat_engineers_value": "[N]",
+    "stat_clients": "Institutions served",
+    "stat_clients_value": "[N]",
+    "values_title": "What we hold to",
+    "values": [
+      {
+        "title": "The person who scopes it builds it.",
+        "text": "No account managers, no delivery layer, no bench. The engineer in the scoping call is the engineer who writes the code — and the one who answers when something breaks."
+      },
+      {
+        "title": "Named regulations, not \"compliance-ready\".",
+        "text": "We design and document to the regulation that applies: POJK and Bank Indonesia payment rules for finance, SPBE and UU PDP for the public sector, UU PDP, PDDIKTI and Singapore's PDPA for education."
+      },
+      {
+        "title": "You own what we build.",
+        "text": "You own the code, the documentation, the infrastructure configuration, and the IP. Every engagement includes a handover package written during the build — not assembled at the end — so your team can operate and extend the system without us."
+      },
+      {
+        "title": "We publish the evidence.",
+        "text": "Our benchmarks are published, including the parts that did not flatter the model. Research is written by the same engineers who build client systems.",
+        "requires": "papers"
+      }
+    ],
+    "commitments": [
+      {
+        "title": "Reliability",
+        "text": "Standard SLA: [response time / uptime commitment]. On-call model: [description]. Incident review policy: [description]. Measured uptime across engagements: [metric]."
+      },
+      {
+        "title": "Security",
+        "text": "ISO 27001 status: [certified / in progress, targeting QX 20XX]. Penetration-test cadence: [frequency], performed by [firm]. Client data hosted in [jurisdiction]. Production access: [who holds it, under what controls]."
+      },
+      {
+        "title": "Continuity",
+        "text": "Source-code escrow: [provider, terms]. IP ownership: the client owns it, stated in contract. Documented handover policy: included in every engagement. If the firm ceases trading: [your code, your infrastructure, your migration path]."
+      }
+    ],
+    "working_title": "Working with us",
+    "working": [
+      {
+        "title": "How we start",
+        "text": "We begin with a [two-week] paid discovery. We study your architecture, your constraints, and your existing team. At the end you receive a scoping document with a fixed timeline, a fixed team, and a fixed price. If we are not the right fit, we tell you and you owe nothing further."
+      },
+      {
+        "title": "Engagement models",
+        "text": "We offer [two/three] engagement models: [fixed-scope delivery for well-defined projects, embedded team for ongoing product work, and managed operations for systems that need to run]. Each starts with the same question: what cannot fail, and what happens when it does."
+      },
+      {
+        "title": "Team composition",
+        "text": "A typical engagement is [N] engineers, one of whom is a principal, for [N] months. You get the people you met in the scoping call — not a different team on day one. No juniors billed at senior rates, no offshore handoff."
+      }
+    ],
+    "history_title": "History",
+    "history_founded": "ScaleJade founded.",
+    "history_paper": "Published “{title}”.",
+    "offices_title": "Offices",
+    "legal_title": "Legal entities",
+    "legal_text": "ScaleJade operates through two companies, one in each country we work from.",
+    "legal_sg": "Incorporated in Singapore",
+    "legal_id": "Incorporated in Indonesia",
+    "legal_sg_reg": "UEN [number]",
+    "legal_id_reg": "NIB [number]",
     "research_title": "Research",
-    "research_text": "Our research preprints are authored by the people on this page. We publish in the open because the institutions we serve need to see the work before they trust the implementation.",
+    "research_text": "Our research is written by the engineers who build and run client systems. We publish in the open because the institutions we serve need to see the work before they trust the implementation.",
     "research_cta": "Read our research",
     "careers_title": "Join us",
     "careers_text": "We hire occasionally and deliberately. If you build production systems in regulated environments and you want to work on problems where correctness is non-negotiable, introduce yourself.",
-    "careers_cta": "Talk to us"
+    "careers_cta": "Introduce yourself",
+    "contact_title": "Working on something that can't fail?",
+    "contact_cta": "Talk to an engineer"
   },
   "Portfolio": {
     "badge": "Our Work",
     "title": "Projects We're Proud Of.",
-    "subtitle": "A selection of work we've done for clients across industries — from financial platforms to AI-powered systems and blockchain networks.",
+    "subtitle": "Selected engagements in finance, energy, engineering and education. Each one started with the same question: what cannot fail, and what happens when it does.",
     "view_live": "View Case Study",
-    "metrics_header": "Key Results",
-    "tech_header": "Technologies Used"
+    "metrics_header": "Engineering highlights",
+    "tech_header": "Technologies Used",
+    "filter_label": "Filter by sector",
+    "filter_all": "All sectors",
+    "nda_note": "Client names are withheld where our agreements require it. Reference calls can be arranged on request, subject to the client's approval.",
+    "empty": "No published engagements in this sector yet.",
+    "cta_title": "Facing a similar system?",
+    "cta_body": "Talk to the engineers who build this kind of work. Tell us the constraint you cannot design around.",
+    "cta_button": "Talk to an engineer",
+    "read_case": "Read the case study",
+    "back": "All work",
+    "challenge": "The challenge",
+    "constraints": "Regulatory constraints",
+    "built": "What we built",
+    "engagement": "The engagement",
+    "role": "Our role",
+    "team": "Team",
+    "duration": "Duration",
+    "outcomes": "Outcomes",
+    "sector_link": "How we work in this sector",
+    "reference": "Reference call available on request, subject to the client's approval.",
+    "client": "Client",
+    "confidential_note": "Client name withheld under NDA.",
+    "gallery_title": "In the field",
+    "gallery_open": "Open image",
+    "gallery_close": "Close",
+    "gallery_previous": "Previous image",
+    "gallery_next": "Next image",
+    "kind_field": "On site",
+    "kind_product": "Live system",
+    "kind_architecture": "Architecture",
+    "kind_team": "Team",
+    "kind_other": "",
+    "none": "We're writing up our case studies. Until they're published, ask us directly about work in your sector."
   },
   "Demo": {
     "badge": "Let's Work Together",
@@ -160,7 +229,14 @@
     "form_req": "What are you working on?",
     "form_submit": "Send Message",
     "cal_title": "Schedule a Call",
-    "cal_desc": "Pick a time that suits you to connect with one of our senior engineers."
+    "cal_desc": "Pick a time that suits you to connect with one of our senior engineers.",
+    "response_time": "An engineer replies within one business day.",
+    "email_label": "Prefer email?",
+    "org_placeholder": "e.g. Bank, university or agency name",
+    "email_placeholder": "name@organization.com",
+    "req_placeholder": "The system, the constraint, and the deadline — as much as you can share.",
+    "privacy_note": "We use what you send only to reply to your enquiry. See our <link>Privacy Policy</link>.",
+    "cal_iframe_title": "Schedule a call with ScaleJade"
   },
   "Research": {
     "intro_badge": "Research",
@@ -364,5 +440,24 @@
       "body": "We'll tell you honestly whether we're the right team for it.",
       "cta": "Talk to an engineer"
     }
+  },
+  "Footer": {
+    "tagline": "Software, AI and ledger infrastructure for regulated institutions in Singapore and Indonesia — built by the engineers who stay on to run it.",
+    "entity_sg": "Singapore",
+    "entity_id": "Indonesia",
+    "offices": "Offices",
+    "company": "Company",
+    "contact": "Contact",
+    "link_work": "Work",
+    "link_about": "About",
+    "link_insights": "Insights",
+    "link_research": "Research",
+    "link_contact": "Contact",
+    "book_call": "Book a call",
+    "follow_x": "Follow us on X",
+    "follow_linkedin": "Follow us on LinkedIn",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
   }
 }

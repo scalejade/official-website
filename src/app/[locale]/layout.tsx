@@ -1,4 +1,4 @@
-import { DM_Sans, IBM_Plex_Mono } from 'next/font/google';
+import { DM_Sans } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -12,14 +12,11 @@ const dmSans = DM_Sans({
   variable: '--font-dm-sans',
 });
 
-// Label/spec face: regulation names, sector eyebrows, small uppercase labels.
-const plexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-plex-mono',
-});
-
 const locales = ['en', 'id'];
+
+// Namespaces used by "use client" components (Navigation, TrustSection).
+// Add to this list when a client component starts calling useTranslations.
+const CLIENT_NAMESPACES = ['Nav', 'TrustSection'] as const;
 
 const BASE = 'https://www.scalejade.com';
 
@@ -99,10 +96,16 @@ export default async function RootLayout({
 
   if (!locales.includes(locale)) notFound();
 
-  const messages = await getMessages();
+  // Only the namespaces client components read. Server components get their
+  // messages from the request config, so shipping the whole catalogue would
+  // only put every string — drafts included — into each page's source.
+  const allMessages = await getMessages();
+  const messages = Object.fromEntries(
+    CLIENT_NAMESPACES.map((ns) => [ns, allMessages[ns]])
+  );
 
   return (
-    <html lang={locale} className={`${dmSans.variable} ${plexMono.variable} antialiased scroll-smooth`}>
+    <html lang={locale} className={`${dmSans.variable} antialiased scroll-smooth`}>
       <head>
         <script
           type="application/ld+json"
@@ -114,7 +117,7 @@ export default async function RootLayout({
               "@type": "Organization",
               "@id": "https://www.scalejade.com/#organization",
               "name": "ScaleJade",
-              "alternateName": ["ScaleJade Technology", "PT Skala Kecerdasan Nusantara", "ScaleJade Technology Ltd"],
+              "alternateName": ["ScaleJade Technology", "PT Skala Kecerdasan Nusantara", "ScaleJade Technology Pte. Ltd."],
               "url": "https://www.scalejade.com",
               "logo": "https://www.scalejade.com/scalejade-green-withtext.svg",
               "description": "ScaleJade builds and operates software, AI and ledger infrastructure for banks, universities and public institutions in Singapore and Indonesia.",
@@ -206,7 +209,7 @@ export default async function RootLayout({
             {children}
           </main>
           
-          <Footer />
+          <Footer locale={locale} />
           
         </NextIntlClientProvider>
       </body>

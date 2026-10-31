@@ -12,8 +12,13 @@ export function TrustSection() {
     // The three core sectors from src/data/sectors.ts, localised.
     const tags = [t('tag_1'), t('tag_2'), t('tag_3')];
 
-    // Kita gandakan data array agar efek marquee tidak terputus
-    const duplicatedClients = [...clientData, ...clientData];
+    // The list is rendered twice so the marquee loops without a gap. The second
+    // copy is decorative: hidden from assistive tech and given empty alt text, so
+    // screen readers and crawlers see each client once.
+    const marquee = [
+        ...clientData.map((client) => ({ ...client, copy: false })),
+        ...clientData.map((client) => ({ ...client, copy: true })),
+    ];
 
     return (
         <section className="py-20 bg-canvas border-y border-slate-100 overflow-hidden" aria-labelledby="trust-heading">
@@ -67,23 +72,24 @@ export function TrustSection() {
             </div>
 
             {/* Marquee of Client Logos */}
-            <div className="w-full relative flex overflow-x-hidden group" aria-label="Trusted client logos">
-                <div className="flex w-max animate-marquee items-center gap-16 md:gap-24 px-8">
-                    {duplicatedClients.map((client, idx) => (
-                        <div
-                            key={`${client.id}-${idx}`}
-                            className="relative w-32 h-12 md:w-40 md:h-16 lg:w-48 lg:h-20 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 flex-shrink-0 flex items-center justify-center cursor-pointer"
+            <div className="w-full relative flex overflow-x-hidden group">
+                <ul className="flex w-max animate-marquee items-center gap-16 md:gap-24 px-8" aria-label={t('badge')}>
+                    {marquee.map((client) => (
+                        <li
+                            key={`${client.id}-${client.copy ? 'b' : 'a'}`}
+                            aria-hidden={client.copy || undefined}
+                            className="relative w-32 h-12 md:w-40 md:h-16 lg:w-48 lg:h-20 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300 flex-shrink-0 flex items-center justify-center"
                         >
                             <Image
                                 src={client.logo_url}
-                                alt={`${client.name} Logo`}
+                                alt={client.copy ? '' : client.name}
                                 fill
                                 className="object-contain"
                                 sizes="(max-width: 768px) 128px, (max-width: 1024px) 160px, 192px"
                             />
-                        </div>
+                        </li>
                     ))}
-                </div>
+                </ul>
             </div>
         </section>
     );

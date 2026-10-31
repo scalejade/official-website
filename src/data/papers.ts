@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase';
 
 // Research papers for /research (papers index) and /research/[slug] (detail).
-// Backed by Supabase — see supabase/migrations/0004_create_papers.sql.
+// Backed by Supabase — see supabase/schema.sql, section 3.
 
 export type PaperSection = {
     heading: string;

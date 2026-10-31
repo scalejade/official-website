@@ -4,7 +4,8 @@ import type { PaperSection, PaperLinks } from '@/data/papers';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 // Prefer the service-role key for writes (bypasses RLS); fall back to the
-// publishable key (requires insert RLS policies — see migration 0006).
+// publishable key, which can only read: supabase/schema.sql grants writes to
+// service_role alone, so POST/DELETE need SUPABASE_SERVICE_ROLE_KEY.
 const writeKey =
     process.env.SUPABASE_SERVICE_ROLE_KEY ||
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
