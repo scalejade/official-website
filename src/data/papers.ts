@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { publicDb } from '@/lib/supabase';
 
 // Research papers for /research (papers index) and /research/[slug] (detail).
 // Backed by Supabase — see supabase/schema.sql, section 3.
@@ -69,7 +69,9 @@ const SELECT_COLUMNS =
     'slug, title, summary, abstract, authors, published_at, topics, venue, links, sections, bibtex';
 
 export async function getAllPapers(): Promise<Paper[]> {
-    const { data, error } = await supabase
+    const db = publicDb();
+    if (!db) return [];
+    const { data, error } = await db
         .from('papers')
         .select(SELECT_COLUMNS)
         .eq('is_published', true)
@@ -84,7 +86,9 @@ export async function getAllPapers(): Promise<Paper[]> {
 }
 
 export async function getPaperBySlug(slug: string): Promise<Paper | undefined> {
-    const { data, error } = await supabase
+    const db = publicDb();
+    if (!db) return undefined;
+    const { data, error } = await db
         .from('papers')
         .select(SELECT_COLUMNS)
         .eq('slug', slug)

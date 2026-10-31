@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { publicDb } from '@/lib/supabase';
 
 export type BlogSection = {
     heading?: string;
@@ -104,7 +104,9 @@ const SELECT_COLUMNS =
     'slug, title, excerpt, category, author, published_at, reading_time, cover_image, sections';
 
 export async function getAllPosts(): Promise<BlogPost[]> {
-    const { data, error } = await supabase
+    const db = publicDb();
+    if (!db) return [];
+    const { data, error } = await db
         .from('blog_posts')
         .select(SELECT_COLUMNS)
         .eq('is_published', true)
@@ -119,7 +121,9 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | undefined> {
-    const { data, error } = await supabase
+    const db = publicDb();
+    if (!db) return undefined;
+    const { data, error } = await db
         .from('blog_posts')
         .select(SELECT_COLUMNS)
         .eq('slug', slug)

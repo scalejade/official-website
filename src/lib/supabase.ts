@@ -1,14 +1,23 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_PUBLISHABLE_KEY;
+// Public (publishable-key) client for reading published posts and papers.
+//
+// Created on first use, not at import: a missing setting must not stop the
+// site from building (the sitemap and other pages import this module during
+// `next build`). Without settings the readers below return empty results and
+// log why, so the site still deploys and shows its empty states.
 
-if (!supabaseUrl || !supabaseKey) {
-    throw new Error(
-        'Missing Supabase environment variables. Set SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY.'
-    );
+let client: SupabaseClient | null | undefined;
+
+export function publicDb(): SupabaseClient | null {
+    if (client !== undefined) return client;
+    const url = process.env.SUPABASE_URL;
+    const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+    if (!url || !key) {
+        console.error('Missing SUPABASE_URL or SUPABASE_PUBLISHABLE_KEY; posts and papers will be empty.');
+        client = null;
+        return client;
+    }
+    client = createClient(url, key, { auth: { persistSession: false } });
+    return client;
 }
-
-export const supabase = createClient(supabaseUrl, supabaseKey, {
-    auth: { persistSession: false },
-});
