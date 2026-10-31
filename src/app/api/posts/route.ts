@@ -4,7 +4,7 @@ import type { BlogSection } from '@/data/blog';
 import { isAllowedImageUrl } from '@/lib/images';
 import { pathFromPublicUrl, removeObject } from '@/lib/media';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseUrl = process.env.SUPABASE_URL;
 // Prefer the service-role key for writes (bypasses RLS); fall back to the
 // publishable key, which can only read: supabase/schema.sql grants writes to
 // service_role alone, so POST/PATCH/DELETE need SUPABASE_SERVICE_ROLE_KEY.

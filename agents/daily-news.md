@@ -1,6 +1,6 @@
 # SETTINGS — edit this line before pasting
 
-- API token:`498123f53dad3e698e9588b88542adf7e34059d763d82036`
+- API token: PASTE_YOUR_BLOG_API_TOKEN_HERE
 
 ---
 

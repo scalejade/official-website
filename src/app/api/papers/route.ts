@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import type { PaperSection, PaperLinks } from '@/data/papers';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseUrl = process.env.SUPABASE_URL;
 // Prefer the service-role key for writes (bypasses RLS); fall back to the
 // publishable key, which can only read: supabase/schema.sql grants writes to
 // service_role alone, so POST/DELETE need SUPABASE_SERVICE_ROLE_KEY.
