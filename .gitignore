@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agent prompts with secrets (copy agents/*.example.md and fill in)
+agents/daily-news.md
