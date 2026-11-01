@@ -24,3 +24,23 @@ export function isAllowedImageUrl(url: string): boolean {
         return false;
     }
 }
+
+/**
+ * Check a cover image an API caller picked. Unsplash URLs must point at a photo
+ * that actually exists (an agent can make up a plausible photo ID), and are
+ * normalised to one size so every cover crops the same way. Returns the URL to
+ * store, or null when the photo cannot be found, so the caller falls back to the
+ * category image instead of saving a broken one.
+ */
+export async function verifyCoverImage(url: string): Promise<string | null> {
+    const u = new URL(url);
+    if (u.hostname !== 'images.unsplash.com') return url; // our own uploads
+    if (!/^\/photo-[\w-]+$/.test(u.pathname)) return null;
+    const normalised = `https://images.unsplash.com${u.pathname}?auto=format&fit=crop&w=1600&q=80`;
+    try {
+        const res = await fetch(normalised, { method: 'HEAD', cache: 'no-store', signal: AbortSignal.timeout(5000) });
+        return res.ok && res.headers.get('content-type')?.startsWith('image/') ? normalised : null;
+    } catch {
+        return null;
+    }
+}

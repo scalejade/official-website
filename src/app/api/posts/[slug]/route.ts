@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import type { BlogSection } from '@/data/blog';
 import { slugify } from '@/lib/api';
-import { isAllowedImageUrl } from '@/lib/images';
+import { isAllowedImageUrl, verifyCoverImage } from '@/lib/images';
 import { env } from '@/lib/env';
 
 const supabaseUrl = env('SUPABASE_URL');
@@ -157,6 +157,12 @@ export async function PATCH(
         return json({ error: 'Images must be https URLs from images.unsplash.com or uploaded through /api/media.' }, 400);
     }
 
+    const warnings: string[] = [];
+    if (payload.coverImage) {
+        payload.coverImage = await verifyCoverImage(payload.coverImage);
+        if (!payload.coverImage) warnings.push('coverImage could not be found, so the post uses its category image.');
+    }
+
     const row: Record<string, unknown> = {};
     for (const [key, column] of Object.entries(PATCH_COLUMNS)) {
         const value = payload[key as keyof PostPatch];
@@ -177,7 +183,7 @@ export async function PATCH(
 
         if (error) return json({ error: error.message, code: error.code }, error.code === '23505' ? 409 : 500);
         if (!data) return json({ error: 'Not found' }, 404);
-        return json({ post: data });
+        return json({ post: data, ...(warnings.length ? { warnings } : {}) });
     } catch (e) {
         return json({ error: (e as Error).message }, 500);
     }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import type { BlogSection } from '@/data/blog';
-import { isAllowedImageUrl } from '@/lib/images';
+import { isAllowedImageUrl, verifyCoverImage } from '@/lib/images';
 import { pathFromPublicUrl, removeObject } from '@/lib/media';
 import { env } from '@/lib/env';
 
@@ -157,6 +157,13 @@ export async function POST(req: NextRequest) {
         return json({ error: 'Images must be https URLs from images.unsplash.com or uploaded through /api/media.' }, 400);
     }
 
+    const warnings: string[] = [];
+    let coverImage: string | null = null;
+    if (payload.coverImage) {
+        coverImage = await verifyCoverImage(payload.coverImage);
+        if (!coverImage) warnings.push('coverImage could not be found, so the post uses its category image.');
+    }
+
     const sections = payload.sections as BlogSection[];
     const row = {
         slug: payload.slug ? slugify(payload.slug) : slugify(payload.title),
@@ -166,7 +173,7 @@ export async function POST(req: NextRequest) {
         author: payload.author ?? 'ScaleJade',
         published_at: payload.date ?? new Date().toISOString().slice(0, 10),
         reading_time: payload.readingTime ?? estimateReadingTime(sections),
-        cover_image: payload.coverImage ?? null,
+        cover_image: coverImage,
         sections,
         is_published: payload.isPublished ?? true,
     };
@@ -190,7 +197,7 @@ export async function POST(req: NextRequest) {
         } catch (e) {
             console.error('Failed to prune old blog posts:', (e as Error).message);
         }
-        return json({ post: data, ...(pruned.length ? { pruned } : {}) }, 201);
+        return json({ post: data, ...(pruned.length ? { pruned } : {}), ...(warnings.length ? { warnings } : {}) }, 201);
     } catch (e) {
         return json({ error: (e as Error).message }, 500);
     }

@@ -20,7 +20,7 @@ export type BlogPost = {
 };
 
 // Default cover photography per category (Unsplash, free to use). A post with
-// no coverImage of its own — e.g. every post from the daily news agent — gets one
+// no coverImage of its own (or whose Unsplash photo the API could not find) gets one
 // of its category's photos, chosen from the slug so it never changes between
 // visits and neighbouring posts rarely share one.
 const unsplash = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=80`;
