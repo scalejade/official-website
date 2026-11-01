@@ -41,7 +41,7 @@ export async function generateMetadata({
         metadataBase: new URL(BASE),
         title,
         description,
-        alternates,
+        alternates: { ...alternates, types: { 'application/rss+xml': [{ url: `${BASE}/feed.xml`, title: 'ScaleJade Insights' }] } },
         openGraph: {
             type: 'website',
             url: canonical,

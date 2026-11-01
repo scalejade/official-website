@@ -32,11 +32,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE),
   title: {
-    default: "ScaleJade | Software, AI & Blockchain Engineering for Regulated Industries",
+    default: "ScaleJade - Software & AI Engineering for Regulated Institutions",
     template: '%s | ScaleJade',
   },
   description:
-    "ScaleJade builds and runs software, AI systems, blockchain networks, data platforms and cloud infrastructure for banks, universities and public institutions in Singapore and Indonesia. Built to perform, built to last.",
+    "ScaleJade builds and runs software, AI, data and cloud systems for banks, universities and public institutions in Singapore and Indonesia.",
   authors: [{ name: 'ScaleJade', url: BASE }],
   creator: 'ScaleJade',
   publisher: 'ScaleJade',
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: BASE,
     siteName: 'ScaleJade',
-    title: "ScaleJade | Software, AI & Blockchain Engineering for Regulated Industries",
+    title: "ScaleJade - Software & AI Engineering for Regulated Institutions",
     description: "Software, AI, blockchain and cloud engineering for institutions in Southeast Asia where a failure is a reportable event.",
     images: [
       {
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@ScaleJade',
     creator: '@ScaleJade',
-    title: "ScaleJade | Software, AI & Blockchain Engineering for Regulated Industries",
+    title: "ScaleJade - Software & AI Engineering for Regulated Institutions",
     description: "Software, AI, blockchain and cloud engineering for institutions in Southeast Asia where a failure is a reportable event.",
     images: [`${BASE}/opengraph-image`],
   },

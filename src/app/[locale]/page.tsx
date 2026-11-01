@@ -21,11 +21,11 @@ export async function generateMetadata({
     const canonical = localizedUrl(locale, '');
 
     const title = isId
-        ? 'ScaleJade | Rekayasa Perangkat Lunak, AI & Blockchain untuk Industri Teregulasi'
-        : 'ScaleJade | Software, AI & Blockchain Engineering for Regulated Industries';
+        ? 'ScaleJade - Rekayasa Software & AI untuk Institusi Teregulasi'
+        : 'ScaleJade - Software & AI Engineering for Regulated Institutions';
     const description = isId
-        ? 'ScaleJade membangun dan mengoperasikan perangkat lunak, sistem AI, jaringan blockchain, platform data, dan infrastruktur cloud untuk bank, universitas, dan institusi publik di Singapura dan Indonesia. Dibangun untuk berkinerja, dibangun untuk bertahan.'
-        : 'ScaleJade builds and runs software, AI systems, blockchain networks, data platforms and cloud infrastructure for banks, universities and public institutions in Singapore and Indonesia. Built to perform, built to last.';
+        ? 'ScaleJade membangun dan mengoperasikan software, AI, data, dan cloud untuk bank, universitas, dan institusi publik di Singapura dan Indonesia.'
+        : 'ScaleJade builds and runs software, AI, data and cloud systems for banks, universities and public institutions in Singapore and Indonesia.';
 
     return {
         metadataBase: new URL(BASE),

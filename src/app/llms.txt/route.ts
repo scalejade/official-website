@@ -1,5 +1,6 @@
 import { SITE_URL } from '@/lib/locale-url';
 import { getAllPapers } from '@/data/papers';
+import { getAllPosts } from '@/data/blog';
 
 /**
  * /llms.txt — agent-facing infrastructure, not a citation lever.
@@ -39,7 +40,7 @@ const link = ([label, path]: string[]) => `- [${label}](${SITE_URL}${path})`;
 export const revalidate = 3600;
 
 export async function GET() {
-    const papers = await getAllPapers();
+    const [papers, posts] = await Promise.all([getAllPapers(), getAllPosts()]);
 
     const body = `# ScaleJade
 
@@ -55,6 +56,10 @@ ${SECTORS.map(link).join('\n')}
 
 ## Research
 ${papers.map((p) => `- [${p.title}](${SITE_URL}/research/${p.slug})`).join('\n')}
+
+## Latest insights
+${posts.slice(0, 20).map((p) => `- [${p.title}](${SITE_URL}/blog/${p.slug}): ${p.excerpt}`).join('\n')}
+- [All insights (RSS)](${SITE_URL}/feed.xml)
 
 ## About
 ${ABOUT.map(link).join('\n')}

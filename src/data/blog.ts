@@ -110,7 +110,8 @@ export async function getAllPosts(): Promise<BlogPost[]> {
         .from('blog_posts')
         .select(SELECT_COLUMNS)
         .eq('is_published', true)
-        .order('published_at', { ascending: false });
+        .order('published_at', { ascending: false })
+        .order('created_at', { ascending: false });
 
     if (error) {
         console.error('Failed to load blog posts from Supabase:', error.message);

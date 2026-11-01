@@ -7,22 +7,33 @@ import * as motion from "framer-motion/client";
 import { ArrowRight, ChevronRight, Share2, Mail } from 'lucide-react';
 import { Metadata } from 'next';
 import { getAllPosts, getPostBySlug, getCoverImage } from '@/data/blog';
-import { SITE_URL as BASE, localizedUrl, localeAlternates } from '@/lib/locale-url';
+import { SITE_URL as BASE, localizedUrl } from '@/lib/locale-url';
 
 // Posts arrive through /api/posts at any time (the daily agent), so this page
 // renders per request. Pre-building a list here made every post created after
 // the build fail in production (DYNAMIC_SERVER_USAGE).
+
+// Posts are written in English only. The /id/blog/... route shows the same
+// text, so every locale points search engines at the English URL instead of
+// presenting an "Indonesian" duplicate of each article.
+const postUrl = (slug: string) => localizedUrl('en', `/blog/${slug}`);
+
+/** URLs listed in a post's "Sources" section, for schema.org `citation`. */
+function sourceUrls(post: { sections: { heading?: string; paragraphs: string[] }[] }): string[] {
+    const sources = post.sections.find((s) => s.heading?.trim().toLowerCase() === 'sources');
+    return (sources?.paragraphs ?? []).flatMap((p) => p.match(/https?:\/\/\S+/g) ?? []).map((u) => u.replace(/[.,;)]+$/, ''));
+}
 
 export async function generateMetadata({
     params,
 }: {
     params: Promise<{ slug: string; locale: string }>;
 }): Promise<Metadata> {
-    const { slug, locale } = await params;
+    const { slug } = await params;
     const post = await getPostBySlug(slug);
     if (!post) return {};
 
-    const canonical = localizedUrl(locale, `/blog/${slug}`);
+    const canonical = postUrl(slug);
     const title = post.title;
     const cover = getCoverImage(post);
 
@@ -32,14 +43,18 @@ export async function generateMetadata({
         description: post.excerpt,
         authors: [{ name: post.author, url: BASE }],
         category: post.category,
-        alternates: localeAlternates(locale, `/blog/${slug}`),
+        alternates: {
+            canonical,
+            languages: { en: canonical, 'x-default': canonical },
+            types: { 'application/rss+xml': [{ url: `${BASE}/feed.xml`, title: 'ScaleJade Insights' }] },
+        },
         openGraph: {
             type: 'article',
             url: canonical,
             title,
             description: post.excerpt,
             siteName: 'ScaleJade',
-            locale: locale === 'id' ? 'id_ID' : 'en_US',
+            locale: 'en_US',
             publishedTime: new Date(post.date).toISOString(),
             modifiedTime: new Date(post.date).toISOString(),
             authors: [post.author],
@@ -68,11 +83,16 @@ export default async function BlogPostPage({
 
     if (!post) notFound();
 
-    const allPosts = await getAllPosts();
-    const related = allPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
+    // Same-category posts first: tighter internal linking for readers and crawlers.
+    const others = (await getAllPosts()).filter((p) => p.slug !== post.slug);
+    const related = [
+        ...others.filter((p) => p.category === post.category),
+        ...others.filter((p) => p.category !== post.category),
+    ].slice(0, 3);
 
-    const url = localizedUrl(locale, `/blog/${slug}`);
+    const url = postUrl(slug);
     const cover = getCoverImage(post);
+    const citations = sourceUrls(post);
     const wordCount = post.sections
         .flatMap((s) => [s.heading ?? '', ...s.paragraphs])
         .join(' ')
@@ -81,16 +101,18 @@ export default async function BlogPostPage({
 
     const jsonLd = {
         "@context": "https://schema.org",
-        "@type": "BlogPosting",
+        "@type": "NewsArticle",
         "headline": post.title,
         "description": post.excerpt,
         "image": [cover],
         "datePublished": new Date(post.date).toISOString(),
         "dateModified": new Date(post.date).toISOString(),
         "url": url,
-        "inLanguage": locale === 'id' ? 'id-ID' : 'en-US',
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
         "articleSection": post.category,
         "wordCount": wordCount,
+        ...(citations.length ? { "citation": citations } : {}),
         "author": { "@type": "Organization", "name": post.author, "url": BASE },
         "publisher": {
             "@type": "Organization",
@@ -105,8 +127,8 @@ export default async function BlogPostPage({
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": localizedUrl(locale, '') },
-            { "@type": "ListItem", "position": 2, "name": "Insights", "item": localizedUrl(locale, '/blog') },
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": localizedUrl('en', '') },
+            { "@type": "ListItem", "position": 2, "name": "Insights", "item": localizedUrl('en', '/blog') },
             { "@type": "ListItem", "position": 3, "name": post.title, "item": url },
         ],
     };
@@ -185,7 +207,7 @@ export default async function BlogPostPage({
                     <div className="flex items-center gap-2 text-slate-400">
                         <span className="text-xs font-semibold mr-1">{locale === 'id' ? 'Bagikan' : 'Share'}</span>
                         <a
-                            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(localizedUrl(locale, `/blog/${slug}`))}`}
+                            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Share on LinkedIn"
@@ -194,7 +216,7 @@ export default async function BlogPostPage({
                             <Share2 className="w-4 h-4" />
                         </a>
                         <a
-                            href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(localizedUrl(locale, `/blog/${slug}`))}`}
+                            href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(url)}`}
                             aria-label="Share via email"
                             className="w-8 h-8 inline-flex items-center justify-center rounded-md border border-slate-200 hover:border-scalejade-600/50 hover:text-scalejade-700 transition-colors"
                         >

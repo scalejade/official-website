@@ -60,15 +60,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }))
     );
 
-    const blogEntries = blogPosts.flatMap(post =>
-        locales.map(locale => ({
-            url: localizedUrl(locale, `/blog/${post.slug}`),
-            lastModified: new Date(post.date),
-            changeFrequency: 'monthly' as const,
-            priority: 0.7,
-            alternates: { languages: languages(`/blog/${post.slug}`) },
-        }))
-    );
+    // Posts are English only; the /id copies canonicalise to these URLs.
+    const blogEntries = blogPosts.map(post => ({
+        url: localizedUrl('en', `/blog/${post.slug}`),
+        lastModified: new Date(post.date),
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+    }));
 
     const papers = await getAllPapers();
     const paperEntries = papers.flatMap(paper =>
